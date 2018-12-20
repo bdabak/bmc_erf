@@ -1,0 +1,32 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Dialog cd:operation="{candidateModel>/type/operation}" contentWidth="40%" title="{i18n>EDIT_EMAIL_ADDRESS}"
+		cd:path="{candidateModel>/type/path}">
+		<content>
+			<f:Form editable="true">
+				<f:layout>
+					<f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0"
+						emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+				</f:layout>
+				<f:formContainers>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement label="{i18n>CANDIDATE_EMAIL_ADDRESS}">
+								<f:fields>
+									<Input value="{path:'candidateProcessModel>/CandidateProcess/Email'}" maxLength="241"
+										placeholder="{i18n>CANDIDATE_EMAIL_ADDRESS_PLACEHOLDER}"/>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+			</f:Form>
+		</content>
+		<beginButton>
+			<Button type="Accept" text="{i18n>SAVE_ACTION}" press="onCandidateUpdateEmailSave"/>
+		</beginButton>
+		<endButton>
+			<Button type="Reject" text="{i18n>CANCEL_ACTION}" press="onCandidateUpdateEmailCancel"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

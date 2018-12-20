@@ -1,0 +1,491 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<FlexBox direction="Column" width="100%">
+		<f:Form editable="true" id="idCandidateInterviewPlanForm">
+			<f:layout>
+				<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false"
+					emptySpanXL="{= ${candidateProcessModel>/CandidateInterviewPlan/PlanHr} &amp;&amp; ${candidateProcessModel>/CandidateInterviewPlan/PlanDp} ? 2 : 4 }"
+					emptySpanL="{= ${candidateProcessModel>/CandidateInterviewPlan/PlanHr} &amp;&amp; ${candidateProcessModel>/CandidateInterviewPlan/PlanDp} ? 2 : 4 }"
+					emptySpanM="{= ${candidateProcessModel>/CandidateInterviewPlan/PlanHr} &amp;&amp; ${candidateProcessModel>/CandidateInterviewPlan/PlanDp} ? 1 : 3 }"
+					emptySpanS="0" columnsXL="2" columnsL="2" columnsM="1"/>
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer title="{i18n>PLAN_FIRST_INTERVIEW}" visible="{candidateProcessModel>/CandidateInterviewPlan/PlanHr}">
+					<f:formElements>
+						<f:FormElement label="{i18n>INTERVIEW_RESPONSIBLE}">
+							<f:fields>
+								<Input
+									value="{ parts: [{ path: 'candidateProcessModel>/CandidateInterviewPlan/IntvwHr' }, { path: 'candidateProcessModel>/CandidateInterviewPlan/IntvnHr'}], formatter: '.formatter.convertZeroObjectNumber'}"
+									valueHelpOnly="true" valueHelpRequest="onEmployeeValueRequest" showValueHelp="true" cd:sourceField="IntvwHr"/>
+								<Button icon="sap-icon://reset" press="onResetEmployee" type="Reject" tooltip="{i18n>RESET_FIELD}" cd:sourceField="IntvwHr">
+									<layoutData>
+										<l:GridData span="XL1 L1 M1 S3"/>
+									</layoutData>
+								</Button>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>INTERVIEW_DATE}">
+							<f:fields>
+								<DatePicker id="idPlannedInterviewDateHr" placeholder="{i18n>ENTER_HR_INTERVIEW_DATE}"
+									value="{path:'candidateProcessModel>/CandidateInterviewPlan/IntdtHr', type: 'sap.ui.model.type.Date', formatOptions:{ UTC: true, pattern: 'dd.MM.yyyy'}}"
+									minDate="{path: 'candidateProcessModel>/CandidateInterviewPlan/IntdtHr', formatter:'.formatter.setRestrictPastDate'}"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>INTERVIEW_TIME}">
+							<f:fields>
+								<TimePicker id="idPlannedInterviewTimeHr" placeholder="{i18n>ENTER_HR_INTERVIEW_TIME}"
+									value="{path:'candidateProcessModel>/CandidateInterviewPlan/InttmHr', type: 'sap.ui.model.odata.type.Time', formatOptions:{pattern:'HH:mm'}}"
+									displayFormat="HH:mm"/>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer title="{i18n>PLAN_SECOND_INTERVIEW}"
+					visible="{= ${candidateProcessModel>/CandidateInterviewPlan/PlanDp} || ${candidateProcessModel>/CandidateInterviewPlan/Inttg} }">
+					<f:formElements>
+						<f:FormElement label="{i18n>INTERVIEW_RESPONSIBLE}">
+							<f:fields>
+								<Input
+									value="{ parts: [{ path: 'candidateProcessModel>/CandidateInterviewPlan/IntvwDp' }, { path: 'candidateProcessModel>/CandidateInterviewPlan/IntvnDp'}], formatter: '.formatter.convertZeroObjectNumber'}"
+									valueHelpOnly="true" valueHelpRequest="onEmployeeValueRequest" showValueHelp="true" cd:sourceField="IntvwDp"/>
+								<Button icon="sap-icon://reset" press="onResetEmployee" type="Reject" tooltip="{i18n>RESET_FIELD}" cd:sourceField="IntvwDp">
+									<layoutData>
+										<l:GridData span="XL1 L1 M1 S3"/>
+									</layoutData>
+								</Button>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>INTERVIEW_DATE}" visible="{= !${candidateProcessModel>/CandidateInterviewPlan/PlanHr}}">
+							<f:fields>
+								<DatePicker id="idPlannedInterviewDateDp" placeholder="{i18n>ENTER_HR_INTERVIEW_DATE}"
+									value="{path:'candidateProcessModel>/CandidateInterviewPlan/IntdtDp', type: 'sap.ui.model.type.Date', formatOptions:{ UTC: true, pattern: 'dd.MM.yyyy'}}"
+									minDate="{path: 'candidateProcessModel>/CandidateInterviewPlan/IntdtHr', formatter:'.formatter.setRestrictPastDate'}"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>INTERVIEW_TIME}" visible="{= !${candidateProcessModel>/CandidateInterviewPlan/PlanHr}}">
+							<f:fields>
+								<TimePicker id="idPlannedInterviewTimeDp" placeholder="{i18n>ENTER_HR_INTERVIEW_TIME}"
+									value="{path:'candidateProcessModel>/CandidateInterviewPlan/InttmDp', type: 'sap.ui.model.odata.type.Time', formatOptions:{pattern:'HH:mm'}}"
+									displayFormat="HH:mm"/>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+		<f:Form editable="true" id="idCandidateInterviewPlanParticipants">
+			<f:layout>
+				<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false"
+					emptySpanXL="{= ${candidateProcessModel>/CandidateInterviewPlan/PlanHr} &amp;&amp; ${candidateProcessModel>/CandidateInterviewPlan/PlanDp} ? 2 : 4 }"
+					emptySpanL="{= ${candidateProcessModel>/CandidateInterviewPlan/PlanHr} &amp;&amp; ${candidateProcessModel>/CandidateInterviewPlan/PlanDp} ? 2 : 4 }"
+					emptySpanM="{= ${candidateProcessModel>/CandidateInterviewPlan/PlanHr} &amp;&amp; ${candidateProcessModel>/CandidateInterviewPlan/PlanDp} ? 1 : 3 }"
+					emptySpanS="0" columnsXL="2" columnsL="2" columnsM="1"/>
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer visible="{candidateProcessModel>/CandidateInterviewPlan/PlanHr}">
+					<f:formElements>
+						<f:FormElement>
+							<f:fields>
+								<Table items="{candidateProcessModel>/CandidateInterviewPlan/ParticipantsHr}">
+									<headerToolbar>
+										<Toolbar>
+											<content>
+												<Title text="{i18n>FIRST_INTERVIEW_PARTICIPANTS}" level="H6"/>
+												<ToolbarSpacer/>
+												<Button icon="sap-icon://sys-add" type="Accept" text="{i18n>ADD_NEW_PARTICIPANT}" press="onAddNewParticipant"
+													cd:targetPath="/CandidateInterviewPlan/ParticipantsHr"
+													enabled="{path: 'candidateProcessModel>/CandidateInterviewPlan/ParticipantsHr', formatter: '._checkMaxParticipant' }"></Button>
+											</content>
+										</Toolbar>
+									</headerToolbar>
+									<columns>
+										<Column>
+											<Text text="{i18n>PARTICIPANT_NAME}"/>
+										</Column>
+										<Column hAlign="Center" demandPopin="true" minScreenWidth="Tablet" popinDisplay="WithoutHeader">
+											<Text text="{i18n>ACTION_LIST}"/>
+										</Column>
+									</columns>
+									<items>
+										<ColumnListItem>
+											<cells>
+												<HBox alignItems="Center">
+													<Image src="/sap/opu/odata/sap/ZHCM_GENERIC_SRV/EmployeeSearchSet('{candidateProcessModel>Inper}')/$value" width="50px"
+														class="sapUxAPObjectPageHeaderContentImageContainer sapUxAPObjectPageHeaderObjectImage-Circle sapMImg sapMImgFocusable sapUxAPObjectPageHeaderObjectImage"></Image>
+													<Text text="{candidateProcessModel>Inpnm}" class="sapUiSmallMarginBegin"/>
+												</HBox>
+												<Button type="Reject" icon="sap-icon://delete" press="onDeleteParticipant" cd:referencePernr="{candidateProcessModel>Inper}"
+													cd:sourcePath="/CandidateInterviewPlan/ParticipantsHr"/>
+											</cells>
+										</ColumnListItem>
+									</items>
+									<layoutData>
+										<l:GridData span="XL12 L12 M12 S12"/>
+									</layoutData>
+								</Table>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer
+					visible="{= ${candidateProcessModel>/CandidateInterviewPlan/PlanDp} || ${candidateProcessModel>/CandidateInterviewPlan/Inttg} }">
+					<f:formElements>
+						<f:FormElement>
+							<f:fields>
+								<Table items="{candidateProcessModel>/CandidateInterviewPlan/ParticipantsDp}">
+									<headerToolbar>
+										<Toolbar>
+											<content>
+												<Title text="{i18n>SECOND_INTERVIEW_PARTICIPANTS}" level="H6"/>
+												<ToolbarSpacer/>
+												<Button icon="sap-icon://sys-add" type="Accept" text="{i18n>ADD_NEW_PARTICIPANT}" press="onAddNewParticipant"
+													cd:targetPath="/CandidateInterviewPlan/ParticipantsDp"
+													enabled="{path: 'candidateProcessModel>/CandidateInterviewPlan/ParticipantsDp', formatter: '._checkMaxParticipant' }"></Button>
+											</content>
+										</Toolbar>
+									</headerToolbar>
+									<columns>
+										<Column>
+											<Text text="{i18n>PARTICIPANT_NAME}"/>
+										</Column>
+										<Column hAlign="Center" demandPopin="true" minScreenWidth="Tablet" popinDisplay="WithoutHeader">
+											<Text text="{i18n>ACTION_LIST}"/>
+										</Column>
+									</columns>
+									<items>
+										<ColumnListItem>
+											<cells>
+												<HBox alignItems="Center">
+													<Image src="/sap/opu/odata/sap/ZHCM_GENERIC_SRV/EmployeeSearchSet('{candidateProcessModel>Inper}')/$value" width="50px"
+														class="sapUxAPObjectPageHeaderContentImageContainer sapUxAPObjectPageHeaderObjectImage-Circle sapMImg sapMImgFocusable sapUxAPObjectPageHeaderObjectImage"></Image>
+													<Text text="{candidateProcessModel>Inpnm}" class="sapUiSmallMarginBegin"/>
+												</HBox>
+												<Button type="Reject" icon="sap-icon://delete" press="onDeleteParticipant" cd:referencePernr="{candidateProcessModel>Inper}"
+													cd:sourcePath="/CandidateInterviewPlan/ParticipantsDp"/>
+											</cells>
+										</ColumnListItem>
+									</items>
+									<layoutData>
+										<l:GridData span="XL12 L12 M12 S12"/>
+									</layoutData>
+								</Table>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+		<HBox width="100%" justifyContent="Center" class="sapUiSmallMarginTopBottom">
+			<Button
+				text="{= ${candidateProcessModel>/CandidateInterviewPlan/Inttg} ? ${i18n>PLAN_INTERVIEW_SEPERATE} : ${i18n>PLAN_INTERVIEW_TOGETHER}}"
+				icon="{= ${candidateProcessModel>/CandidateInterviewPlan/Inttg} ? 'sap-icon://gantt-bars' : 'sap-icon://appointment'}"
+				type="{= ${candidateProcessModel>/CandidateInterviewPlan/Inttg} ? 'Reject' : 'Accept'}" press="onTogglePlanInterview"
+				visible="{candidateProcessModel>/CandidateInterviewPlan/PlanHr}"/>
+		</HBox>
+		<f:Form editable="true" id="idCandidateInterviewPlanTravelTransferHr" visible="{candidateProcessModel>/CandidateInterviewPlan/PlanHr}">
+			<f:layout>
+				<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="2"
+					emptySpanL="2" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="1"/>
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer>
+					<f:formElements>
+						<f:FormElement visible="{= !${candidateProcessModel>/CandidateInterviewPlan/TraexHr} }">
+							<f:fields>
+								<FlexBox width="100%" justifyContent="Center">
+									<Button icon="sap-icon://flight" type="Accept" text="{i18n>ADD_TRAVEL_REQUEST}" class="erfProcessButton sapUiTinyMarginBottom"
+										press="onPlanTravelTransfer" cd:targetField="TraexHr"></Button>
+									<layoutData>
+										<l:GridData span="XL12 L12 M12 S12"/>
+									</layoutData>
+								</FlexBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement visible="{candidateProcessModel>/CandidateInterviewPlan/TraexHr}">
+							<f:fields>
+								<FlexBox width="100%" justifyContent="Center">
+									<Button icon="sap-icon://flight" type="Reject" text="{i18n>REMOVE_TRAVEL_REQUEST}" class="erfProcessButton sapUiTinyMarginBottom"
+										press="onCancelTravelTransfer" cd:targetField="TraexHr"></Button>
+									<layoutData>
+										<l:GridData span="XL12 L12 M12 S12"/>
+									</layoutData>
+								</FlexBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement visible="{candidateProcessModel>/CandidateInterviewPlan/TraexHr}">
+							<f:fields>
+								<FlexBox width="100%" justifyContent="Center">
+									<Title text="{i18n>TRAVEL_REQUEST}"/>
+									<layoutData>
+										<l:GridData span="XL12 L12 M12 S12"/>
+									</layoutData>
+								</FlexBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plcar}" visible="{candidateProcessModel>/CandidateInterviewPlan/TraexHr}">
+							<f:fields>
+								<TextArea value="{candidateProcessModel>/CandidateInterviewPlan/CandidateTravelFormHr/Plcar}" maxLength="360"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Cnard}" visible="{candidateProcessModel>/CandidateInterviewPlan/TraexHr}">
+							<f:fields>
+								<DatePicker minDate="{path: 'candidateProcessModel>/CandidateInterviewPlan/IntdtHr', formatter:'.formatter.setRestrictDateRelative'}"
+									value="{path: 'candidateProcessModel>/CandidateInterviewPlan/CandidateTravelFormHr/Cnard', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Cnart}" visible="{candidateProcessModel>/CandidateInterviewPlan/TraexHr}">
+							<f:fields>
+								<TimePicker
+									value="{path: 'candidateProcessModel>/CandidateInterviewPlan/CandidateTravelFormHr/Cnart', type: 'sap.ui.model.odata.type.Time', formatOptions:{pattern:'HH:mm'}}"
+									displayFormat="HH:mm"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plcdp}" visible="{candidateProcessModel>/CandidateInterviewPlan/TraexHr}">
+							<f:fields>
+								<TextArea value="{candidateProcessModel>/CandidateInterviewPlan/CandidateTravelFormHr/Plcdp}" maxLength="360"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plard}" visible="{candidateProcessModel>/CandidateInterviewPlan/TraexHr}">
+							<f:fields>
+								<DatePicker minDate="{path: 'candidateProcessModel>/CandidateInterviewPlan/IntdtHr', formatter:'.formatter.setRestrictDateRelative'}"
+									value="{path: 'candidateProcessModel>/CandidateInterviewPlan/CandidateTravelFormHr/Plard', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plart}" visible="{candidateProcessModel>/CandidateInterviewPlan/TraexHr}">
+							<f:fields>
+								<TimePicker
+									value="{path: 'candidateProcessModel>/CandidateInterviewPlan/CandidateTravelFormHr/Plart', type: 'sap.ui.model.odata.type.Time', formatOptions:{pattern:'HH:mm'}}"
+									displayFormat="HH:mm"/>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer>
+					<f:formElements>
+						<f:FormElement visible="{= !${candidateProcessModel>/CandidateInterviewPlan/TrnexHr} }">
+							<f:fields>
+								<FlexBox width="100%" justifyContent="Center">
+									<Button icon="sap-icon://car-rental" text="{i18n>ADD_TRANSFER_REQUEST}" class="erfProcessButton sapUiTinyMarginBottom"
+										press="onPlanTravelTransfer" cd:targetField="TrnexHr" type="Accept"></Button>
+									<layoutData>
+										<l:GridData span="XL12 L12 M12 S12"/>
+									</layoutData>
+								</FlexBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement visible="{candidateProcessModel>/CandidateInterviewPlan/TrnexHr}">
+							<f:fields>
+								<FlexBox width="100%" justifyContent="Center">
+									<Button icon="sap-icon://car-rental" type="Reject" text="{i18n>REMOVE_TRANSFER_REQUEST}" class="erfProcessButton sapUiTinyMarginBottom"
+										press="onCancelTravelTransfer" cd:targetField="TrnexHr"></Button>
+									<layoutData>
+										<l:GridData span="XL12 L12 M12 S12"/>
+									</layoutData>
+								</FlexBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement visible="{candidateProcessModel>/CandidateInterviewPlan/TrnexHr}">
+							<f:fields>
+								<FlexBox width="100%" justifyContent="Center">
+									<Title text="{i18n>TRANSFER_REQUEST}"/>
+									<layoutData>
+										<l:GridData span="XL12 L12 M12 S12"/>
+									</layoutData>
+								</FlexBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plcar}" visible="{candidateProcessModel>/CandidateInterviewPlan/TrnexHr}">
+							<f:fields>
+								<TextArea value="{candidateProcessModel>/CandidateInterviewPlan/CandidateTransferFormHr/Plcar}" maxLength="360"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Cnard}" visible="{candidateProcessModel>/CandidateInterviewPlan/TrnexHr}">
+							<f:fields>
+								<DatePicker minDate="{path: 'candidateProcessModel>/CandidateInterviewPlan/IntdtHr', formatter:'.formatter.setRestrictDateRelative'}"
+									value="{path: 'candidateProcessModel>/CandidateInterviewPlan/CandidateTransferFormHr/Cnard', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Cnart}" visible="{candidateProcessModel>/CandidateInterviewPlan/TrnexHr}">
+							<f:fields>
+								<TimePicker
+									value="{path: 'candidateProcessModel>/CandidateInterviewPlan/CandidateTransferFormHr/Cnart', type: 'sap.ui.model.odata.type.Time', formatOptions:{pattern:'HH:mm'}}"
+									displayFormat="HH:mm"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plcdp}" visible="{candidateProcessModel>/CandidateInterviewPlan/TrnexHr}">
+							<f:fields>
+								<TextArea value="{candidateProcessModel>/CandidateInterviewPlan/CandidateTransferFormHr/Plcdp}" maxLength="360"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plard}" visible="{candidateProcessModel>/CandidateInterviewPlan/TrnexHr}">
+							<f:fields>
+								<DatePicker minDate="{path: 'candidateProcessModel>/CandidateInterviewPlan/IntdtHr', formatter:'.formatter.setRestrictDateRelative'}"
+									value="{path: 'candidateProcessModel>/CandidateInterviewPlan/CandidateTransferFormHr/Plard', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plart}" visible="{candidateProcessModel>/CandidateInterviewPlan/TrnexHr}">
+							<f:fields>
+								<TimePicker
+									value="{path: 'candidateProcessModel>/CandidateInterviewPlan/CandidateTransferFormHr/Plart', type: 'sap.ui.model.odata.type.Time', formatOptions:{pattern:'HH:mm'}}"
+									displayFormat="HH:mm"/>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+		<f:Form editable="true" id="idCandidateInterviewPlanTravelTransferDp"
+			visible="{= ${candidateProcessModel>/CandidateInterviewPlan/PlanDp} &amp;&amp; !${candidateProcessModel>/CandidateInterviewPlan/Inttg} }">
+			<f:layout>
+				<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="2"
+					emptySpanL="2" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="1"/>
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer>
+					<f:formElements>
+						<f:FormElement visible="{= !${candidateProcessModel>/CandidateInterviewPlan/TraexDp} }">
+							<f:fields>
+								<FlexBox width="100%" justifyContent="Center">
+									<Button icon="sap-icon://flight" type="Accept" text="{i18n>ADD_TRAVEL_REQUEST}" class="erfProcessButton sapUiTinyMarginBottom"
+										press="onPlanTravelTransfer" cd:targetField="TraexDp"></Button>
+									<layoutData>
+										<l:GridData span="XL12 L12 M12 S12"/>
+									</layoutData>
+								</FlexBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement visible="{candidateProcessModel>/CandidateInterviewPlan/TraexDp}">
+							<f:fields>
+								<FlexBox width="100%" justifyContent="Center">
+									<Button icon="sap-icon://flight" type="Reject" text="{i18n>REMOVE_TRAVEL_REQUEST}" class="erfProcessButton sapUiTinyMarginBottom"
+										press="onCancelTravelTransfer" cd:targetField="TraexDp"></Button>
+									<layoutData>
+										<l:GridData span="XL12 L12 M12 S12"/>
+									</layoutData>
+								</FlexBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement visible="{candidateProcessModel>/CandidateInterviewPlan/TraexDp}">
+							<f:fields>
+								<FlexBox width="100%" justifyContent="Center">
+									<Title text="{i18n>TRAVEL_REQUEST}"/>
+									<layoutData>
+										<l:GridData span="XL12 L12 M12 S12"/>
+									</layoutData>
+								</FlexBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plcar}" visible="{candidateProcessModel>/CandidateInterviewPlan/TraexDp}">
+							<f:fields>
+								<TextArea value="{candidateProcessModel>/CandidateInterviewPlan/CandidateTravelFormDp/Plcar}" maxLength="360"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Cnard}" visible="{candidateProcessModel>/CandidateInterviewPlan/TraexDp}">
+							<f:fields>
+								<DatePicker minDate="{path: 'candidateProcessModel>/CandidateInterviewPlan/IntdtDp', formatter:'.formatter.setRestrictDateRelative'}"
+									value="{path: 'candidateProcessModel>/CandidateInterviewPlan/CandidateTravelFormDp/Cnard', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Cnart}" visible="{candidateProcessModel>/CandidateInterviewPlan/TraexDp}">
+							<f:fields>
+								<TimePicker
+									value="{path: 'candidateProcessModel>/CandidateInterviewPlan/CandidateTravelFormDp/Cnart', type: 'sap.ui.model.odata.type.Time', formatOptions:{pattern:'HH:mm'}}"
+									displayFormat="HH:mm"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plcdp}" visible="{candidateProcessModel>/CandidateInterviewPlan/TraexDp}">
+							<f:fields>
+								<TextArea value="{candidateProcessModel>/CandidateInterviewPlan/CandidateTravelFormDp/Plcdp}" maxLength="360"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plard}" visible="{candidateProcessModel>/CandidateInterviewPlan/TraexDp}">
+							<f:fields>
+								<DatePicker minDate="{path: 'candidateProcessModel>/CandidateInterviewPlan/IntdtDp', formatter:'.formatter.setRestrictDateRelative'}"
+									value="{path: 'candidateProcessModel>/CandidateInterviewPlan/CandidateTravelFormDp/Plard', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plart}" visible="{candidateProcessModel>/CandidateInterviewPlan/TraexDp}">
+							<f:fields>
+								<TimePicker
+									value="{path: 'candidateProcessModel>/CandidateInterviewPlan/CandidateTravelFormDp/Plart', type: 'sap.ui.model.odata.type.Time', formatOptions:{pattern:'HH:mm'}}"
+									displayFormat="HH:mm"/>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer>
+					<f:formElements>
+						<f:FormElement visible="{= !${candidateProcessModel>/CandidateInterviewPlan/TrnexDp} }">
+							<f:fields>
+								<FlexBox width="100%" justifyContent="Center">
+									<Button icon="sap-icon://car-rental" text="{i18n>ADD_TRANSFER_REQUEST}" class="erfProcessButton sapUiTinyMarginBottom"
+										press="onPlanTravelTransfer" cd:targetField="TrnexDp" type="Accept"></Button>
+									<layoutData>
+										<l:GridData span="XL12 L12 M12 S12"/>
+									</layoutData>
+								</FlexBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement visible="{candidateProcessModel>/CandidateInterviewPlan/TrnexDp}">
+							<f:fields>
+								<FlexBox width="100%" justifyContent="Center">
+									<Button icon="sap-icon://car-rental" type="Reject" text="{i18n>REMOVE_TRANSFER_REQUEST}" class="erfProcessButton sapUiTinyMarginBottom"
+										press="onCancelTravelTransfer" cd:targetField="TrnexDp"></Button>
+									<layoutData>
+										<l:GridData span="XL12 L12 M12 S12"/>
+									</layoutData>
+								</FlexBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement visible="{candidateProcessModel>/CandidateInterviewPlan/TrnexDp}">
+							<f:fields>
+								<FlexBox width="100%" justifyContent="Center">
+									<Title text="{i18n>TRANSFER_REQUEST}"/>
+									<layoutData>
+										<l:GridData span="XL12 L12 M12 S12"/>
+									</layoutData>
+								</FlexBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plcar}" visible="{candidateProcessModel>/CandidateInterviewPlan/TrnexDp}">
+							<f:fields>
+								<TextArea value="{candidateProcessModel>/CandidateInterviewPlan/CandidateTransferFormDp/Plcar}" maxLength="360"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Cnard}" visible="{candidateProcessModel>/CandidateInterviewPlan/TrnexDp}">
+							<f:fields>
+								<DatePicker minDate="{path: 'candidateProcessModel>/CandidateInterviewPlan/IntdtDp', formatter:'.formatter.setRestrictDateRelative'}"
+									value="{path: 'candidateProcessModel>/CandidateInterviewPlan/CandidateTransferFormDp/Cnard', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Cnart}" visible="{candidateProcessModel>/CandidateInterviewPlan/TrnexDp}">
+							<f:fields>
+								<TimePicker
+									value="{path: 'candidateProcessModel>/CandidateInterviewPlan/CandidateTransferFormDp/Cnart', type: 'sap.ui.model.odata.type.Time', formatOptions:{pattern:'HH:mm'}}"
+									displayFormat="HH:mm"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plcdp}" visible="{candidateProcessModel>/CandidateInterviewPlan/TrnexDp}">
+							<f:fields>
+								<TextArea value="{candidateProcessModel>/CandidateInterviewPlan/CandidateTransferFormDp/Plcdp}" maxLength="360"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plard}" visible="{candidateProcessModel>/CandidateInterviewPlan/TrnexDp}">
+							<f:fields>
+								<DatePicker minDate="{path: 'candidateProcessModel>/CandidateInterviewPlan/IntdtDp', formatter:'.formatter.setRestrictDateRelative'}"
+									value="{path: 'candidateProcessModel>/CandidateInterviewPlan/CandidateTransferFormDp/Plard', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plart}" visible="{candidateProcessModel>/CandidateInterviewPlan/TrnexDp}">
+							<f:fields>
+								<TimePicker
+									value="{path: 'candidateProcessModel>/CandidateInterviewPlan/CandidateTransferFormDp/Plart', type: 'sap.ui.model.odata.type.Time', formatOptions:{pattern:'HH:mm'}}"
+									displayFormat="HH:mm"/>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+	</FlexBox>
+</core:FragmentDefinition>

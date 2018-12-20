@@ -1,0 +1,44 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Table id="idCandidateNotesTable" inset="true" busy="{candidateModel>/busy}" busyIndicatorDelay="0"
+		items="{candidateModel>/candidateData/CandidateNotesSet}">
+		<headerToolbar>
+			<Toolbar>
+				<content>
+					<ToolbarSpacer/>
+					<Button icon="sap-icon://sys-add" type="Accept" text="{i18n>newRecord}" press="onNewDialogFragment" cd:ftype="CandidateNotes"></Button>
+				</content>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column width="15rem">
+				<Text text="{i18n>CANDIDATE_COMMENT_OWNER}"/>
+			</Column>
+			<Column width="20rem" demandPopin="true" minScreenWidth="Tablet" popinDisplay="WithoutHeader">
+				<Text text="{i18n>CANDIDATE_COMMENT}"/>
+			</Column>
+			<Column hAlign="Center" demandPopin="true" minScreenWidth="Desktop" popinDisplay="WithoutHeader">
+				<Text text="{i18n>CANDIDATE_COMMENT_DATE}"/>
+			</Column>
+			<Column hAlign="Center" demandPopin="true" minScreenWidth="Desktop" popinDisplay="WithoutHeader">
+				<Text text="{i18n>ACTION_LIST}"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="{candidateModel>Cmnon}"/>
+					<TextArea value="{candidateModel>Cmntx}" editable="false" rows="5" width="100%" cols="40"/>
+					<Text
+						text="{ path: 'candidateModel>Cmndt', type: 'sap.ui.model.type.Date',formatOptions: { UTC: true, pattern: 'dd.MM.yyyy'}} - { path: 'candidateModel>Cmntm', type: 'sap.ui.model.odata.type.Time', formatOptions:{pattern:'HH:mm'}}"/>
+					<HBox justifyContent="Center">
+						<Button type="Reject" class="sapUiSmallMarginEnd" icon="sap-icon://delete" press="onDelete" cd:mdl="CandidateNotesSet"
+							enabled="{= ${candidateModel>Cmnow} === ${candidateModel>/CurrentUser/Pernr} }"/>
+						<Button type="Emphasized" icon="sap-icon://edit" press="onEdit" cd:mdl="CandidateNotesSet"
+							enabled="{= ${candidateModel>Cmnow} === ${candidateModel>/CurrentUser/Pernr} }"/>
+					</HBox>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

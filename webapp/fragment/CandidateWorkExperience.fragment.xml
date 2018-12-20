@@ -1,0 +1,49 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Table id="idWorkExperience" busy="{candidateModel>/busy}" busyIndicatorDelay="0" inset="false"
+		items="{candidateModel>/candidateData/CandidateWorkExperienceSet}">
+		<headerToolbar>
+			<Toolbar>
+				<content>
+					<ToolbarSpacer/>
+					<Button icon="sap-icon://sys-add" type="Accept" text="{i18n>newRecord}" press="onNewDialogFragment" cd:ftype="CandidateWorkExperience"></Button>
+				</content>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column>
+				<Text text="{i18n>Arbgb}"/>
+			</Column>
+			<Column >
+				<Text text="{i18n>Plstx}"/>
+			</Column>
+			<Column>
+				<Text text="{i18n>BegdaWE}"/>
+			</Column>
+			<Column >
+				<Text text="{i18n>EnddaWE}"/>
+			</Column>
+			<Column>
+				<Text text="{i18n>Wtime}"/>
+			</Column>
+			<Column hAlign="Center">
+				<Text text="{i18n>Operation}"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="{candidateModel>Arbgb}"/>
+					<Text text="{candidateModel>ZzPlstx}"/>
+					<Text text="{ path: 'candidateModel>Begda', type: 'sap.ui.model.type.Date',formatOptions: { pattern: 'dd.MM.yyyy'}}"/>
+					<Text text="{ path: 'candidateModel>Endda', type: 'sap.ui.model.type.Date',formatOptions: { pattern: 'dd.MM.yyyy'}}"/>
+					<ObjectNumber number="{parts: [{path:'candidateModel>Begda'}, {path:'candidateModel>Endda'}], formatter: '.formatter.calcYear'}"/>
+					<HBox justifyContent="Center">
+						<Button type="Reject" class="sapUiSmallMarginEnd" icon="sap-icon://delete" press="onDelete" cd:mdl="CandidateWorkExperienceSet"/>
+						<Button type="Emphasized" icon="sap-icon://edit" press="onEdit" cd:mdl="CandidateWorkExperienceSet"/>
+					</HBox>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

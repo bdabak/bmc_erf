@@ -1,0 +1,189 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<FlexBox direction="Column" width="100%">
+		<f:Form editable="true" id="idCandidateProcessTravelTransferFormHR"
+			visible="{= ${candidateProcessModel>/CandidateTravelFormHR/Exist} || ${candidateProcessModel>/CandidateTransferFormHR/Exist} }">
+			<f:title>
+				<core:Title text="İK Mülakatı Seyahat ve Transfer Formları"/>
+			</f:title>
+			<f:layout>
+				<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="2"
+					emptySpanL="2" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="1"/>
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer title="Seyahat Formu" visible="{candidateProcessModel>/CandidateTravelFormHR/Exist}">
+					<f:formElements>
+						<f:FormElement label="{i18n>Plcar}">
+							<f:fields>
+								<TextArea editable="false" value="{candidateProcessModel>/CandidateTravelFormHR/Plcar}" maxLength="360"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Cnard}">
+							<f:fields>
+								<DatePicker editable="false"
+									value="{path: 'candidateProcessModel>/CandidateTravelFormHR/Cnard', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Cnart}">
+							<f:fields>
+								<TimePicker editable="false"
+									value="{path: 'candidateProcessModel>/CandidateTravelFormHR/Cnart', type: 'sap.ui.model.odata.type.Time', formatOptions:{pattern:'HH:mm'}}"
+									displayFormat="HH:mm"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plcdp}">
+							<f:fields>
+								<TextArea editable="false" value="{candidateProcessModel>/CandidateTravelFormHR/Plcdp}" maxLength="360"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plard}">
+							<f:fields>
+								<DatePicker editable="false"
+									value="{path: 'candidateProcessModel>/CandidateTravelFormHR/Plard', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plart}">
+							<f:fields>
+								<TimePicker editable="false"
+									value="{path: 'candidateProcessModel>/CandidateTravelFormHR/Plart', type: 'sap.ui.model.odata.type.Time', formatOptions:{pattern:'HH:mm'}}"
+									displayFormat="HH:mm"/>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer title="Transfer Formu" visible="{candidateProcessModel>/CandidateTransferFormHR/Exist}">
+					<f:formElements>
+						<f:FormElement label="{i18n>Plcar}">
+							<f:fields>
+								<TextArea editable="false" value="{candidateProcessModel>/CandidateTransferFormHR/Plcar}" maxLength="360"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Cnard}">
+							<f:fields>
+								<DatePicker editable="false"
+									value="{path: 'candidateProcessModel>/CandidateTransferFormHR/Cnard', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Cnart}">
+							<f:fields>
+								<TimePicker editable="false"
+									value="{path: 'candidateProcessModel>/CandidateTransferFormHR/Cnart', type: 'sap.ui.model.odata.type.Time', formatOptions:{pattern:'HH:mm'}}"
+									displayFormat="HH:mm"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plcdp}">
+							<f:fields>
+								<TextArea editable="false" value="{candidateProcessModel>/CandidateTransferFormHR/Plcdp}" maxLength="360"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plard}">
+							<f:fields>
+								<DatePicker editable="false"
+									value="{path: 'candidateProcessModel>/CandidateTransferFormHR/Plard', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plart}">
+							<f:fields>
+								<TimePicker editable="false"
+									value="{path: 'candidateProcessModel>/CandidateTransferFormHR/Plart', type: 'sap.ui.model.odata.type.Time', formatOptions:{pattern:'HH:mm'}}"
+									displayFormat="HH:mm"/>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+		<f:Form editable="true" id="idCandidateProcessTravelTransferFormDP"
+			visible="{= ${candidateProcessModel>/CandidateTravelFormDP/Exist} || ${candidateProcessModel>/CandidateTransferFormDP/Exist} }">
+			<f:title>
+				<core:Title text="Bölüm Mülakatı Seyahat ve Transfer Formları"/>
+			</f:title>
+			<f:layout>
+				<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="2"
+					emptySpanL="2" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="1"/>
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer title="Seyahat Formu" visible="{candidateProcessModel>/CandidateTravelFormDP/Exist}">
+					<f:formElements>
+						<f:FormElement label="{i18n>Plcar}">
+							<f:fields>
+								<TextArea editable="false" value="{candidateProcessModel>/CandidateTravelFormDP/Plcar}" maxLength="360"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Cnard}">
+							<f:fields>
+								<DatePicker editable="false"
+									value="{path: 'candidateProcessModel>/CandidateTravelFormDP/Cnard', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Cnart}">
+							<f:fields>
+								<TimePicker editable="false"
+									value="{path: 'candidateProcessModel>/CandidateTravelFormDP/Cnart', type: 'sap.ui.model.odata.type.Time', formatOptions:{pattern:'HH:mm'}}"
+									displayFormat="HH:mm"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plcdp}">
+							<f:fields>
+								<TextArea editable="false" value="{candidateProcessModel>/CandidateTravelFormDP/Plcdp}" maxLength="360"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plard}">
+							<f:fields>
+								<DatePicker editable="false"
+									value="{path: 'candidateProcessModel>/CandidateTravelFormDP/Plard', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plart}">
+							<f:fields>
+								<TimePicker editable="false"
+									value="{path: 'candidateProcessModel>/CandidateTravelFormDP/Plart', type: 'sap.ui.model.odata.type.Time', formatOptions:{pattern:'HH:mm'}}"
+									displayFormat="HH:mm"/>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer title="Transfer Formu" visible="{candidateProcessModel>/CandidateTransferFormDP/Exist}">
+					<f:formElements>
+						<f:FormElement label="{i18n>Plcar}">
+							<f:fields>
+								<TextArea editable="false" value="{candidateProcessModel>/CandidateTransferFormDP/Plcar}" maxLength="360"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Cnard}">
+							<f:fields>
+								<DatePicker editable="false"
+									value="{path: 'candidateProcessModel>/CandidateTransferFormDP/Cnard', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Cnart}">
+							<f:fields>
+								<TimePicker editable="false"
+									value="{path: 'candidateProcessModel>/CandidateTransferFormDP/Cnart', type: 'sap.ui.model.odata.type.Time', formatOptions:{pattern:'HH:mm'}}"
+									displayFormat="HH:mm"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plcdp}">
+							<f:fields>
+								<TextArea editable="false" value="{candidateProcessModel>/CandidateTransferFormDP/Plcdp}" maxLength="360"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plard}">
+							<f:fields>
+								<DatePicker editable="false"
+									value="{path: 'candidateProcessModel>/CandidateTransferFormDP/Plard', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Plart}">
+							<f:fields>
+								<TimePicker editable="false"
+									value="{path: 'candidateProcessModel>/CandidateTransferFormDP/Plart', type: 'sap.ui.model.odata.type.Time', formatOptions:{pattern:'HH:mm'}}"
+									displayFormat="HH:mm"/>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+	</FlexBox>
+</core:FragmentDefinition>

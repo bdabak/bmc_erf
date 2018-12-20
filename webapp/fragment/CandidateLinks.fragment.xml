@@ -1,0 +1,29 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<!--<FlexBox width="100%" height="100%" direction="Row" justifyContent="Center" alignItems="Center">-->
+	<!--	<items>-->
+	<l:Grid hSpacing="0" defaultSpan="XL3 L3 M6 S12">
+		<GenericTile header="{i18n>CANDIDATE_RESUME_TILE}" press="onCandidateResumePrintOut" class="sapUiSmallMargin">
+			<TileContent>
+				<ImageContent src="sap-icon://employee-pane"/>
+			</TileContent>
+		</GenericTile>
+		<GenericTile header="{i18n>CANDIDATE_INTERVIEW_FORM_TILE}" press="onInterviewFormPrintOut" class="sapUiSmallMargin">
+			<TileContent>
+				<ImageContent src="sap-icon://form"/>
+			</TileContent>
+		</GenericTile>
+		<GenericTile header="{i18n>CANDIDATE_REFERENCE_CHECK_FORM_TILE}" press="onReferenceCheckFormPrintOut" class="sapUiSmallMargin">
+			<TileContent>
+				<ImageContent src="sap-icon://eam-work-order"/>
+			</TileContent>
+		</GenericTile>
+		<GenericTile header="{i18n>EMPLOYEE_REQUEST_FORM}" press="onEmployeeRequestFormPrintOut" class="sapUiSmallMargin">
+			<TileContent>
+				<ImageContent src="sap-icon://activity-individual"/>
+			</TileContent>
+		</GenericTile>
+	</l:Grid>
+	<!--	</items>-->
+	<!--</FlexBox>-->
+</core:FragmentDefinition>

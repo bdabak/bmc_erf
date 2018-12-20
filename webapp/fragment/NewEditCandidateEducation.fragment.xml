@@ -1,0 +1,54 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<!--search="onF4ValueHelpSearch"-->
+	<Dialog cd:operation="{candidateModel>/type/operation}" contentWidth="40%" title="{i18n>EDUCATION_INFORMATION}"
+		cd:path="{candidateModel>/type/path}">
+		<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
+			adjustLabelSpan="false" emptySpanXL="2" emptySpanL="2" emptySpanM="2" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+			singleContainerFullSize="false">
+			<f:content>
+				<Label text="{i18n>EDUCATION_SLART}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Slart'} ] }"
+					selectedKey="{candidateModel>/CandidateEducationLine/Slart}">
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Egitim}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Egitim'} ] }"
+					selectedKey="{candidateModel>/CandidateEducationLine/Egitim}">
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Mtarih}"/>
+				<DatePicker
+					value="{path:'candidateModel>/CandidateEducationLine/Mtarih', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true , pattern: 'dd.MM.yyyy'}}"></DatePicker>
+				<Label text="{i18n>Okulisim}"/>
+				<Input value="{candidateModel>/CandidateEducationLine/Okulisim}" type="Text" maxLength="60"/>
+				<Label text="{i18n>Bolum}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Bolum'} ] }"
+					selectedKey="{candidateModel>/CandidateEducationLine/Bolum}">
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Slabs}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Slabs'} ] }"
+					selectedKey="{candidateModel>/CandidateEducationLine/Slabs}">
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Anzkl}"/>
+				<Input value="{candidateModel>/CandidateEducationLine/Anzkl}" type="Text" maxLength="3"/>
+				<Label text="{i18n>Anzeh}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Anzeh'} ] }"
+					selectedKey="{candidateModel>/CandidateEducationLine/Anzeh}">
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Emark}"/>
+				<Input value="{candidateModel>/CandidateEducationLine/Emark}" type="Text" maxLength="4"/>
+				<CheckBox text="{i18n>Sonmezun}" selected="{ path: 'candidateModel>/CandidateEducationLine/Sonmezun' }" enabled="true"/>
+			</f:content>
+		</f:SimpleForm>
+		<beginButton>
+			<Button type="Accept" text="{i18n>Accept}" press="onDialogSave" cd:model="CandidateEducation"/>
+		</beginButton>
+		<endButton>
+			<Button type="Reject" text="{i18n>Reject}" press="onDialogCancel" cd:model="CandidateEducation"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

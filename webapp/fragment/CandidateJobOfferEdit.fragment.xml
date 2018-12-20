@@ -1,0 +1,74 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Panel>
+		<headerToolbar>
+			<Toolbar>
+				<Title text="{i18n>JOB_OFFER_FORM}"/>
+				<ToolbarSpacer/>
+				<Button icon="sap-icon://customer-order-entry" type="Emphasized" press="onSavePreviewJobOffer" text="{i18n>SAVE_AND_PREVIEW}"/>
+			</Toolbar>
+		</headerToolbar>
+		<content>
+			<f:Form editable="true" id="idCandidateJobOfferForm">
+				<f:layout>
+					<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4"
+						emptySpanM="3" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"/>
+				</f:layout>
+				<f:formContainers>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement label="{i18n>JOB_OFFER_CANDIDATE_NAME}">
+								<f:fields>
+									<Input required="true" value="{path:'candidateProcessModel>/CandidateJobOffer/Offnm'}" maxLength="50"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>JOB_OFFER_DATE}">
+								<f:fields>
+									<DatePicker required="true"
+										value="{path:'candidateProcessModel>/CandidateJobOffer/Offdt', type: 'sap.ui.model.type.Date', formatOptions:{ UTC: true, pattern: 'dd.MM.yyyy'}}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>JOB_OFFER_POSITION}">
+								<f:fields>
+									<Input value="{path:'candidateProcessModel>/CandidateJobOffer/Offpx'}" required="true" maxLength="60"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>JOB_OFFER_WORKPLACE}">
+								<f:fields>
+									<Input value="{path:'candidateProcessModel>/CandidateJobOffer/Offwp'}" required="true" maxLength="60"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>JOB_OFFER_WORK_CONDITION}">
+								<f:fields>
+									<Input value="{path:'candidateProcessModel>/CandidateJobOffer/Offwh'}" type="Number" required="true"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>JOB_OFFER_OFFERED_WAGE}">
+								<f:fields>
+									<Input
+										value="{path: 'candidateProcessModel>/CandidateJobOffer/Offwg', type: 'sap.ui.model.odata.type.Decimal', formatOptions:{minFractionDigits:2, maxFractionDigits:2 } }"
+										required="true"/>
+									<Input value="{path:'candidateProcessModel>/CandidateJobOffer/Offwc'}">
+										<layoutData>
+											<l:GridData span="XL2 L2 M2 S3"/>
+										</layoutData>
+									</Input>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>JOB_OFFER_OFFERED_WAGE_TYPE}">
+								<f:fields>
+									<Input value="{path:'candidateProcessModel>/CandidateJobOffer/Offwt'}" required="true"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>JOB_OFFER_BENEFITS}">
+								<f:fields>
+									<TextArea value="{path:'candidateProcessModel>/CandidateJobOffer/Offab'}" required="true" rows="5" valueLiveUpdate="true"/>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+			</f:Form>
+		</content>
+	</Panel>
+</core:FragmentDefinition>

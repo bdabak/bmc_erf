@@ -1,0 +1,41 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Table id="idCommunicationInformation" busy="{candidateModel>/busy}" busyIndicatorDelay="0" inset="false"
+		items="{candidateModel>/candidateData/CandidateCommunicationSet}">
+		<headerToolbar>
+			<Toolbar>
+				<content>
+					<ToolbarSpacer/>
+					<Button icon="sap-icon://sys-add" type="Accept" text="{i18n>newRecord}" press="onNewDialogFragment" cd:ftype="CandidateCommunication"></Button>
+				</content>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column >
+				<Text text="{i18n>COMMUNICATION_SUBTYPE}"/>
+			</Column>
+			<Column >
+				<Text text="{i18n>COMMUNICATION_USRID}"/>
+			</Column>
+			<Column >
+				<Text text="{i18n>COMMUNICATION_USRID_LONG}"/>
+			</Column>
+			<Column hAlign="Center">
+				<Text text="{i18n>Operation}"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="{parts: [{path:'candidateModel>/helpText/Usrty'}, {path:'candidateModel>Usrty'}], formatter: '._getValueHelpText' }"/>
+					<Text text="{candidateModel>Usrid}"/>
+					<Text text="{candidateModel>Usrid_Long}"/>
+					<HBox justifyContent="Center">
+						<Button type="Reject" class="sapUiSmallMarginEnd" icon="sap-icon://delete" press="onDelete" cd:mdl="CandidateCommunicationSet"/>
+						<Button type="Emphasized" icon="sap-icon://edit" press="onEdit" cd:mdl="CandidateCommunicationSet"/>
+					</HBox>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

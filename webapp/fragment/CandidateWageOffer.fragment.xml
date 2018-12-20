@@ -1,0 +1,22 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<VBox>
+		<Panel headerText="{i18n>WAGE_INIT}">
+			<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateWageInfoCurrent" type="XML"/>
+		</Panel>
+		<Panel headerText="{i18n>OFFERED_WAGE}">
+			<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateWageInfoOffer" type="XML"/>
+		</Panel>
+	</VBox>
+	<!--<IconTabBar>-->
+	<!--	<items>-->
+	<!--		<IconTabFilter icon="sap-icon://monitor-payments" iconColor="Critical" text="{i18n>WAGE_INIT}" design="Horizontal"></IconTabFilter>-->
+	<!--		<IconTabFilter icon="sap-icon://customize" iconColor="Positive" text="{i18n>OFFERED_WAGE}" design="Horizontal">-->
+	<!--			<VBox width="100%">-->
+	<!--				<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateWageInfoOffer" type="XML"/>-->
+	<!--				<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateWageInfoBenefits" type="XML"/>-->
+	<!--			</VBox>-->
+	<!--		</IconTabFilter>-->
+	<!--	</items>-->
+	<!--</IconTabBar>-->
+</core:FragmentDefinition>

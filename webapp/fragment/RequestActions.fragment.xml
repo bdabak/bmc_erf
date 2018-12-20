@@ -1,0 +1,6 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<ActionSheet showCancelButton="true" placement="Auto" buttons="{requestListView>/requestActions}">
+		<Button text="{ path: 'requestListView>Text', formatter: '.onGetText' }" icon="{requestListView>Icon}" press="onRequestActionSelected"
+			cd:actionId="{requestListView>Action}" type="{requestListView>Type}"/>
+	</ActionSheet>
+</core:FragmentDefinition>

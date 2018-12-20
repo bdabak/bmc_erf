@@ -1,0 +1,43 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Table id="idCandidateEducation" busy="{candidateModel>/busy}" busyIndicatorDelay="0" inset="false"
+		items="{candidateModel>/candidateData/CandidateEducationSet}">
+		<headerToolbar>
+			<Toolbar>
+				<content>
+					<ToolbarSpacer/>
+					<Button icon="sap-icon://sys-add" type="Accept" text="{i18n>newRecord}" press="onNewDialogFragment" cd:ftype="CandidateEducation"></Button>
+				</content>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column >
+				<Text text="{i18n>EDUCATION_SLART}"/>
+			</Column>
+			<Column >
+				<Text text="{i18n>Egitim}"/>
+			</Column>
+			<Column>
+				<Text text="{i18n>Mtarih}"/>
+			</Column>
+			<Column hAlign="Center">
+				<Text text="{i18n>Operation}"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="{parts: [{path:'candidateModel>/helpText/Slart'}, {path:'candidateModel>Slart'}], formatter: '._getValueHelpText' }"/>
+					<ObjectIdentifier
+						title="{parts: [{path:'candidateModel>/helpText/Egitim'}, {path:'candidateModel>Egitim'}], formatter: '._getValueHelpText' }"
+						text="{parts: [{path:'candidateModel>/helpText/Bolum'}, {path:'candidateModel>Bolum'}], formatter: '._getValueHelpText' }"/>
+					<Text text="{path: 'candidateModel>Mtarih', type: 'sap.ui.model.type.Date',formatOptions: { pattern: 'dd.MM.yyyy'}}"/>
+					<HBox justifyContent="Center">
+						<Button type="Reject" class="sapUiSmallMarginEnd" icon="sap-icon://delete" press="onDelete" cd:mdl="CandidateEducationSet"/>
+						<Button type="Emphasized" icon="sap-icon://edit" press="onEdit" cd:mdl="CandidateEducationSet"/>
+					</HBox>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

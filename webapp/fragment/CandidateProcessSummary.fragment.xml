@@ -1,0 +1,7 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Panel headerText="{i18n>REQUEST_CANDIDATE_INFO}" expandable="true" expanded="true">
+		<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateShortProfile" type="XML"/>
+		<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.EmployeeRequestSummary" type="XML"/>
+	</Panel>
+</core:FragmentDefinition>

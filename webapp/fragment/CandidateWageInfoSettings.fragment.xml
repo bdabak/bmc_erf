@@ -1,0 +1,69 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<f:Form editable="true">
+		<f:layout>
+			<f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanM="0" emptySpanS="0"
+				emptySpanL="4" emptySpanXL="4" columnsXL="4" columnsL="4" columnsM="4" singleContainerFullSize="true"/>
+		</f:layout>
+		<f:formContainers>
+			<f:FormContainer>
+				<f:formElements>
+					<f:FormElement label="{i18n>SECTOR_EXPERIENCE}">
+						<f:fields>
+							<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Scexp' }]}"
+								filterSecondaryValues="true" selectedKey="{candidateProcessModel>/CandidateWage/Scexp}"
+								editable="{candidateProcessModel>/ViewSettings/WageInit}">
+								<core:ListItem key="{Key}" text="{Text}"/>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>ENGLISH_LEVEL}">
+						<f:fields>
+							<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Enlvl' }]}"
+								filterSecondaryValues="true" selectedKey="{candidateProcessModel>/CandidateWage/Enlvl}"
+								editable="{candidateProcessModel>/ViewSettings/WageInit}">
+								<core:ListItem key="{Key}" text="{Text}"/>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>UNIVERSITY_TYPE}">
+						<f:fields>
+							<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Trgun' }]}"
+								filterSecondaryValues="true" selectedKey="{candidateProcessModel>/CandidateWage/Trgun}"
+								editable="{candidateProcessModel>/ViewSettings/WageInit}">
+								<core:ListItem key="{Key}" text="{Text}"/>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>EDUCATION_LEVEL}">
+						<f:fields>
+							<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Slart' }]}"
+								filterSecondaryValues="true" selectedKey="{candidateProcessModel>/CandidateWage/Slart}"
+								editable="{candidateProcessModel>/ViewSettings/WageInit}">
+								<core:ListItem key="{Key}" text="{Text}"/>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>IS_ENGINEER}">
+						<f:fields>
+							<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Iseng' }]}"
+								filterSecondaryValues="true" selectedKey="{candidateProcessModel>/CandidateWage/Iseng}"
+								editable="{candidateProcessModel>/ViewSettings/WageInit}">
+								<core:ListItem key="{Key}" text="{Text}"/>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>POSITION_TYPE}" visible="{= !${candidateProcessModel>/ViewSettings/WageInit} }">
+						<f:fields>
+							<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Poscl' }]}"
+								filterSecondaryValues="true" selectedKey="{candidateProcessModel>/CandidateWage/Poscl}"
+								editable="{candidateProcessModel>/ViewSettings/WageOffer}">
+								<core:ListItem key="{Key}" text="{Text}"/>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+				</f:formElements>
+			</f:FormContainer>
+		</f:formContainers>
+	</f:Form>
+</core:FragmentDefinition>

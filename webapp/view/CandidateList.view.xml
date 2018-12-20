@@ -1,0 +1,30 @@
+<mvc:View controllerName="com.bmc.hcm.erf.controller.CandidateList" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic" xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:core="sap.ui.core" xmlns:f="sap.f"
+	xmlns:fb="sap.ui.comp.filterbar" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<f:DynamicPage id="idCandidatePoolPage" class="cmnCandidateListPage sapUiNoContentPadding" busy="{candidateListModel>/busy}"
+		busyIndicatorDelay="0" showFooter="true">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<FlexBox direction="Row" alignItems="Center">
+						<core:Icon src="sap-icon://nav-back" press="onNavBack" color="#346187" class="erfPageBackButtonLight sapUiSmallMarginEnd"/>
+						<Title text="{i18n>CANDIDATE_LIST_PAGE}"></Title>
+					</FlexBox>
+				</f:heading>
+				<f:actions>
+					<ToolbarSpacer/>
+				</f:actions>
+			</f:DynamicPageTitle>
+		</f:title>
+		<!-- DynamicPage Content -->
+		<f:content>
+			<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateSearchResult" type="XML"/>
+		</f:content>
+		<f:footer>
+			<OverflowToolbar visible="{candidateListModel>/CandidateActionSettings/EditCandidate}">
+				<ToolbarSpacer/>
+				<Button text="{i18n>NEW_CANDIDATE_CREATE_BUTTON}" icon="sap-icon://add-employee" press="onNewCandidateCreate" type="Accept"/>
+			</OverflowToolbar>
+		</f:footer>
+	</f:DynamicPage>
+</mvc:View>

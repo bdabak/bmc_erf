@@ -1,0 +1,31 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Table items="{ path: 'candidateProcessModel>/CandidateWage/GivenBenefitSet', templateShareable: false }" inset="false"
+		alternateRowColors="true">
+		<headerToolbar>
+			<Toolbar>
+				<Text text="{i18n>SELECT_ADDITIONAL_BENEFITS}"/>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column>
+				<Text text="{i18n>ADDITIONAL_BENEFIT_NAME}"/>
+			</Column>
+			<Column>
+				<Text text="{i18n>ADDITIONAL_BENEFIT_ASSIGNMENT}"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem vAlign="Middle" type="Inactive">
+				<cells>
+					<Text text="{candidateProcessModel>Benex}"/>
+					<Switch type="AcceptReject" state="{candidateProcessModel>Benas}" enabled="{candidateProcessModel>/ViewSettings/WageOffer}">
+						<layoutData>
+							<FlexItemData growFactor="1"/>
+						</layoutData>
+					</Switch>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

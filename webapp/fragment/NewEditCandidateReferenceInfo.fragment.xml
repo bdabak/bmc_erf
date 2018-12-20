@@ -1,0 +1,51 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<!--search="onF4ValueHelpSearch"-->
+	<Dialog cd:operation="{candidateModel>/type/operation}" contentWidth="40%" title="{i18n>REFERENCE_INFORMATION}"
+		cd:path="{candidateModel>/type/path}">
+		<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
+			adjustLabelSpan="false" emptySpanXL="2" emptySpanL="2" emptySpanM="2" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+			singleContainerFullSize="false">
+			<f:content>
+				<Label text="{i18n>Refnm}"/>
+				<Input value="{candidateModel>/CandidateReferenceInfoLine/Refnm}" type="Text" maxLength="50"/>
+				<Label text="{i18n>Refsr}"/>
+				<Input value="{candidateModel>/CandidateReferenceInfoLine/Refsr}" type="Text" maxLength="50"/>
+				<Label text="{i18n>Refph}"/>
+				<Input value="{candidateModel>/CandidateReferenceInfoLine/Refph}" type="Text" maxLength="15"/>
+				<Label text="{i18n>Refcm}"/>
+				<TextArea value="{candidateModel>/CandidateReferenceInfoLine/Refcm}" maxLength="100"/>
+				<Label text="{i18n>Resid}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Resid' } ] }"
+					selectedKey="{candidateModel>/CandidateReferenceInfoLine/Resid}">
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Resnm}"/>
+				<TextArea value="{candidateModel>/CandidateReferenceInfoLine/Resnm}" maxLength="100"/>
+				<Label text="{i18n>Refty}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Refty' } ] }"
+					selectedKey="{candidateModel>/CandidateReferenceInfoLine/Refty}">
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<CheckBox text="{i18n>Rfbmc}"
+					selected="{ path: 'candidateModel>/CandidateReferenceInfoLine/Rfbmc' }"
+					enabled="true"/>
+				<Label text="{i18n>Refln}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Refln' } ] }"
+					selectedKey="{candidateModel>/CandidateReferenceInfoLine/Refln}">
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Repos}"/>
+				<TextArea value="{candidateModel>/CandidateReferenceInfoLine/Repos}" maxLength="100"/>
+				<Label text="{i18n>Refml}"/>
+				<TextArea value="{candidateModel>/CandidateReferenceInfoLine/Refml}" maxLength="100"/>
+			</f:content>
+		</f:SimpleForm>
+		<beginButton>
+			<Button type="Accept" text="{i18n>Accept}" press="onDialogSave" cd:model="CandidateReferenceInfo"/>
+		</beginButton>
+		<endButton>
+			<Button type="Reject" text="{i18n>Reject}" press="onDialogCancel" cd:model="CandidateReferenceInfo"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

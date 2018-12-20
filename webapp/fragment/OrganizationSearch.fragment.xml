@@ -1,0 +1,37 @@
+<core:FragmentDefinition xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout"
+	xmlns="sap.m" xmlns:table="sap.ui.table" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Dialog title="{i18n>ORGANIZATION_SELECTION}" showHeader="true" stretch="{device>/system/phone}" id="idOrganizationSearchDialog"
+		resizable="true" draggable="true" afterClose="onDialogClosed">
+		<content>
+			<table:TreeTable rows="{path:'employeeRequestView>/organizationList', parameters: {arrayNames:['children']}}" selectionMode="Single"
+				enableSelectAll="false" rowSelectionChange="onOrganizationRowSelected" visibleRowCount="{= ${device>/system/phone} ? 10 : 15 }">
+				<table:extension>
+					<Toolbar>
+						<Title text="{i18n>ORGANIZATION_HIERARCHY}"/>
+					</Toolbar>
+				</table:extension>
+				<table:columns>
+					<table:Column width="100%">
+						<Label text="{i18n>STAFF_PLAN}"/>
+						<table:template>
+							<FlexBox alignContent="Center" justifyContent="Center" direction="Row">
+								<core:Icon width="30px" size="17px"
+									src="{ parts: [{path: 'employeeRequestView>Otype'},{path: 'employeeRequestView>ObjidR1'},{path: 'employeeRequestView>Ismng'}], formatter: '.formatter.getObjectIcon'}"
+									tooltip="Nesne İkonu" class="sapUiSmallMarginEnd"
+									color="{ parts: [{path: 'employeeRequestView>Otype'},{path: 'employeeRequestView>ObjidR1'},{path: 'employeeRequestView>Ismng'}], formatter: '.formatter.getObjectIconColor'}"></core:Icon>
+								<Text text=" {employeeRequestView>Stext}" wrapping="false" tooltip="{employeeRequestView>Otype} {employeeRequestView>Objid}"/>
+							</FlexBox>
+						</table:template>
+					</table:Column>
+				</table:columns>
+			</table:TreeTable>
+		</content>
+		<beginButton>
+			<Button text="{i18n>ADD_ACTION}" icon="sap-icon://add" type="Accept" press="onOrganizationAdd"
+				enabled="{employeeRequestView>/organizationHelp/enableAdd}"/>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>CANCEL_ACTION}" icon="sap-icon://sys-cancel-2" press="onCancelOrganizationAdd" type="Reject"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>
