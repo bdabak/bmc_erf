@@ -1,0 +1,26 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<Dialog >
+		<f:Form editable="true">
+			<f:layout>
+				<f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0"
+					emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer>
+					<f:formElements>
+						<f:FormElement label="{i18n>CANDIDATE_RESOURCE}">
+							<f:fields>
+								<FlexBox direction="Row" alignItems="Center" justifyContent="Start" width="100%">
+									<CheckBox text="{i18n>EXTERNAL_APPLICANT}" selected="{employeeRequestView>/request/Extja}" tooltip="{i18n>EXTERNAL_APPLICANT_TOOLTIP}"
+										class="erfDisplayOnlyCheckBox" editable="false"/>
+									<CheckBox text="{i18n>INTERNAL_APPLICANT}" selected="{employeeRequestView>/request/Intja}" tooltip="{i18n>INTERNAL_APPLICANT_TOOLTIP}"
+										class="erfDisplayOnlyCheckBox" editable="false"/>
+								</FlexBox>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+	</Dialog>
+</core:FragmentDefinition>
