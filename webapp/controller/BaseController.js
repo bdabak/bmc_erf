@@ -227,7 +227,7 @@ sap.ui.define([
 				}
 			});
 		},
-		_updateRequest: function (oFormData, sNewRequest, sNavBack, sStatusChange, History) {
+		_updateRequest: function (oFormData, sNewRequest, sNavBack, sStatusChange, History, fnCallBack) {
 			var oModel = this.getModel();
 			var oThis = this;
 
@@ -249,6 +249,10 @@ sap.ui.define([
 
 						if (sNavBack) {
 							oThis.goBack(History);
+						} else {
+							if (typeof fnCallBack === "function") {
+								fnCallBack();
+							}
 						}
 					},
 					error: function (oError) {

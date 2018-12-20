@@ -7,8 +7,10 @@ sap.ui.define([
 	"sap/ui/core/routing/History",
 	"com/bmc/hcm/erf/model/formatter",
 	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
-], function (BaseController, SharedData, JSONModel, History, formatter, Filter, FilterOperator) {
+	"sap/ui/model/FilterOperator",
+	"sap/m/MessageBox",
+	"sap/m/MessageToast"
+], function (BaseController, SharedData, JSONModel, History, formatter, Filter, FilterOperator, MessageBox, MessageToast) {
 	"use strict";
 
 	return BaseController.extend("com.bmc.hcm.erf.controller.RecruitmentAdmin", {
@@ -231,6 +233,18 @@ sap.ui.define([
 				this._callMessageToast(this.getText("NO_ACTIONS_DEFINED"), "W");
 			}
 		},
+		_openFormChangeStatus: function (oData) {
+			if (!this._requestChangeStatus) {
+				this._requestChangeStatus = sap.ui.xmlfragment(
+					"com.bmc.hcm.erf.fragment.EmployeeRequestChangeStatus",
+					this
+				);
+				this.getView().addDependent(this._requestChangeStatus);
+			}
+			this._requestChangeStatus.data("formData", oData);
+			this._requestChangeStatus.open();
+		},
+
 		onCheckActionAvailable: function (sErfsf) {
 			var oStatus = _.filter(this.actionCatalog, ["Status", sErfsf]);
 			if (oStatus.length === 1) {
@@ -253,6 +267,12 @@ sap.ui.define([
 			var oViewModel = this.getModel("recruitmentAdminModel");
 
 			switch (sAction) {
+			case "ChangeStatus":
+				var _doCallChangeStatus = function () {
+					oThis._openFormChangeStatus(oFormData);
+				};
+				this._getFormStatusList(oFormData, _doCallChangeStatus.bind(oThis));
+				break;
 			case "Edit":
 				/*Set application settings*/
 				oApplicationSettings.Edit = true;
@@ -347,7 +367,31 @@ sap.ui.define([
 				this._applySearch(aActiveFilter);
 			}
 		},
+		onChangeFormStatusConfirmed: function () {
+			var oViewModel = this.getModel("recruitmentAdminModel");
+			var oChangeStatus = oViewModel.getProperty("/formChangeStatus");
 
+			if (oChangeStatus.TargetStatus === "" || oChangeStatus.TargetStatus === null) {
+				MessageToast.show("Hedef durumu girmelisiniz!");
+				return;
+			}
+
+			if (oChangeStatus.StatusChangeNote === "" || oChangeStatus.StatusChangeNote === null) {
+				MessageToast.show("Durum değişiklik nedeni girmelisiniz!");
+				return;
+			}
+
+			var oFormData = _.cloneDeep(this._requestChangeStatus.data("formData"));
+			var aStatus = oChangeStatus.TargetStatus.split("-");
+			oFormData.Actio = "ADMIN_CHANGE_STATUS";
+			oFormData.ErfstN = aStatus[0];
+			oFormData.ErfssN = aStatus[1] ? aStatus[1] : "";
+			this._updateRequest(oFormData, false, false, true, null);
+		},
+		onChangeFormStatusCancelled: function () {
+			this._requestChangeStatus.data("formData", null);
+			this._requestChangeStatus.close();
+		},
 		/**
 		 * Event handler for refresh event. Keeps filter, sort
 		 * and group settings and refreshes the list binding.
@@ -382,7 +426,13 @@ sap.ui.define([
 				searchResults: {
 					"ERF": 0,
 					"CPR": 0
-				}
+				},
+				formChangeStatus: {
+					CurrentStatus: "",
+					TargetStatus: "",
+					StatusChangeNote: ""
+				},
+				formStatusList: []
 			});
 		},
 		_applySearch: function (aTableSearchState) {
@@ -394,7 +444,35 @@ sap.ui.define([
 				oViewModel.setProperty("/tableNoDataText", this.getText("EMPTY_REQUEST_LIST_SEARCH"));
 			}
 		},
+		_getFormStatusList: function (oRequest, fnCallBack) {
+			var oModel = this.getModel();
+			var oViewModel = this.getModel("recruitmentAdminModel");
 
+			oViewModel.setProperty("/formStatusList", []);
+			oViewModel.setProperty("/busy", true);
+			oViewModel.setProperty("/formChangeStatus", {
+				CurrentStatus: oRequest.Erfsy ? oRequest.Erfsx + "-" + oRequest.Erfsy : oRequest.Erfsx,
+				TargetStatus: "",
+				StatusChangeNote: ""
+			});
+			var aFilters = [
+				new Filter("Selky", FilterOperator.EQ, oRequest.Erfid),
+				new Filter("Erfvh", FilterOperator.EQ, "RequestStatus")
+			];
+			oModel.read("/ValueHelpSet", {
+				filters: aFilters,
+				success: function (oData, oResponse) {
+					oViewModel.setProperty("/busy", false);
+					oViewModel.setProperty("/formStatusList", oData.results);
+					fnCallBack();
+				},
+				error: function (oError) {
+					oViewModel.setProperty("/busy", false);
+					MessageBox.warning("Durum değişiklik listesi okunamadı");
+				}
+			});
+
+		},
 		_updateFilterCounts: function (oModel) {
 			var oViewModel = this.getModel("recruitmentAdminModel");
 			var oThis = this;
