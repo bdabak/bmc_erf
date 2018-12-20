@@ -1,0 +1,189 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core"
+	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<VBox class="sapUiNoContentPadding">
+		<f:Form editable="true" id="idEmployeeRequestForm">
+			<f:layout>
+				<f:ResponsiveGridLayout labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4"
+					emptySpanM="2" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer title="{i18n>REQUEST_DETAILS}">
+					<f:formElements>
+						<f:FormElement label="{i18n>CANDIDATE_RESOURCE}">
+							<f:fields>
+								<FlexBox direction="Row" alignItems="Center" justifyContent="Start" width="100%">
+									<CheckBox text="{i18n>EXTERNAL_APPLICANT}" selected="{employeeRequestView>/request/Extja}" tooltip="{i18n>EXTERNAL_APPLICANT_TOOLTIP}"
+										class="erfDisplayOnlyCheckBox"/>
+									<CheckBox text="{i18n>INTERNAL_APPLICANT}" selected="{employeeRequestView>/request/Intja}" tooltip="{i18n>INTERNAL_APPLICANT_TOOLTIP}"
+										class="erfDisplayOnlyCheckBox"/>
+								</FlexBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>REQUEST_REASON}">
+							<f:fields>
+								<ComboBox selectedKey="{path: 'employeeRequestView>/request/Erfrs'}" required="true"
+									items="{ path:'/ValueHelpSet' , filters:[{path: 'Erfvh' , operator : 'EQ' , value1 : 'Erfrs' } ] }" change="onReasonChanged">
+									<core:Item key="{Fldky}" text="{Fldvl}"/>
+								</ComboBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>LEAVING_EMPLOYEE}" visible="{= ${employeeRequestView>/request/Erfrs} === '2' }">
+							<f:fields>
+								<Input
+									value="{ parts: [{ path: 'employeeRequestView>/request/Leaem' }, { path: 'employeeRequestView>/request/Leaen'}], formatter: '.formatter.convertZeroObjectNumber'}"
+									required="{= ${employeeRequestView>/request/Erfrs} === '2' }" valueHelpOnly="true" valueHelpRequest="onEmployeeValueRequest"
+									showValueHelp="true" cd:sourceField="Leaem" cd:includeInactive="true"/>
+								<Button icon="sap-icon://reset" press="onResetEmployee" type="Reject" tooltip="{i18n>RESET_FIELD}" cd:sourceField="Leaem">
+									<layoutData>
+										<l:GridData span="XL1 L1 M1 S3"/>
+									</layoutData>
+								</Button>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>TRANSFERRED_EMPLOYEE}" visible="{= ${employeeRequestView>/request/Erfrs} === '3' }">
+							<f:fields>
+								<Input
+									value="{ parts: [{ path: 'employeeRequestView>/request/Trnem' }, { path: 'employeeRequestView>/request/Trnen'}], formatter: '.formatter.convertZeroObjectNumber'}"
+									required="{= ${employeeRequestView>/request/Erfrs} === '3' }" valueHelpOnly="true" valueHelpRequest="onEmployeeValueRequest"
+									showValueHelp="true" cd:sourceField="Trnem"/>
+								<Button icon="sap-icon://reset" press="onResetEmployee" type="Reject" tooltip="{i18n>RESET_FIELD}" cd:sourceField="Trnem">
+									<layoutData>
+										<l:GridData span="XL1 L1 M1 S3"/>
+									</layoutData>
+								</Button>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>POSITION}" visible="{= !${employeeRequestView>/request/Nopln} }">
+							<f:fields>
+								<Input
+									value="{ parts: [{ path: 'employeeRequestView>/request/Plans' }, { path: 'employeeRequestView>/request/Plstx'}], formatter: '.formatter.convertZeroObjectNumber'}"
+									required="{= !${employeeRequestView>/request/Nopln} }" enabled="{= !${employeeRequestView>/request/Nopln} }" valueHelpOnly="true"
+									valueHelpRequest="onPositionValueRequest" showValueHelp="true"/>
+								<Button icon="sap-icon://reset" press="onResetPosition" type="Reject" tooltip="{i18n>RESET_FIELD}"
+									enabled="{= !${employeeRequestView>/request/Nopln} }">
+									<layoutData>
+										<l:GridData span="XL1 L1 M1 S3"/>
+									</layoutData>
+								</Button>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>POSITION}" visible="{employeeRequestView>/request/Nopln}">
+							<f:fields>
+								<Input value="{employeeRequestView>/request/Plaft}" placeholder="{i18n>POSITION_FREE_TEXT}" required="{employeeRequestView>/request/Nopln}"
+									showValueHelp="false"/>
+								<Button icon="sap-icon://reset" press="onResetFreePosition" type="Reject" tooltip="{i18n>RESET_FIELD}">
+									<layoutData>
+										<l:GridData span="XL1 L1 M1 S3"/>
+									</layoutData>
+								</Button>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>JOB}">
+							<f:fields>
+								<Input value="{employeeRequestView>/request/Stetx}" editable="{employeeRequestView>/request/Nopln}"
+									required="{employeeRequestView>/request/Nopln}" valueHelpOnly="{employeeRequestView>/request/Nopln}" valueHelpRequest="onJobValueRequest"
+									showValueHelp="{employeeRequestView>/request/Nopln}">
+									<layoutData>
+										<l:GridData span="{= ${employeeRequestView>/request/Nopln}? 'XL4 L4 M5 S9' : 'XL5 L5 M7 S12'}"/>
+									</layoutData>
+								</Input>
+								<Button icon="sap-icon://reset" press="onResetJob" type="Reject" tooltip="{i18n>RESET_FIELD}" visible="{employeeRequestView>/request/Nopln}">
+									<layoutData>
+										<l:GridData span="XL1 L1 M1 S3"/>
+									</layoutData>
+								</Button>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>ORGANIZATION_UNIT}">
+							<f:fields>
+								<Input value="{employeeRequestView>/request/Orgtx}" editable="{employeeRequestView>/request/Nopln}"
+									required="{employeeRequestView>/request/Nopln}" valueHelpOnly="{employeeRequestView>/request/Nopln}"
+									valueHelpRequest="onOrganizationValueRequest" showValueHelp="{employeeRequestView>/request/Nopln}">
+									<layoutData>
+										<l:GridData span="{= ${employeeRequestView>/request/Nopln}? 'XL4 L4 M5 S9' : 'XL5 L5 M7 S12'}"/>
+									</layoutData>
+								</Input>
+								<Button icon="sap-icon://reset" press="onResetOrganization" type="Reject" tooltip="{i18n>RESET_FIELD}"
+									visible="{employeeRequestView>/request/Nopln}">
+									<layoutData>
+										<l:GridData span="XL1 L1 M1 S3"/>
+									</layoutData>
+								</Button>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>WORKPLACE}">
+							<f:fields>
+								<ComboBox selectedKey="{employeeRequestView>/request/Erfwp}" required="true"
+									items="{ path:'/ValueHelpSet', filters : [ { path : 'Erfvh', operator : 'EQ', value1 : 'Erfwp'} ] }">
+									<core:Item key="{Fldky}" text="{Fldvl}"/>
+								</ComboBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>CONTRACT_TYPE}">
+							<f:fields>
+								<ComboBox selectedKey="{employeeRequestView>/request/Cntty}" required="true"
+									items="{ path:'/ValueHelpSet', filters : [ { path : 'Erfvh', operator : 'EQ', value1 : 'Cntty'} ] }">
+									<core:Item key="{Fldky}" text="{Fldvl}"/>
+								</ComboBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>CONTRACT_END_DATE}" visible="{= ${employeeRequestView>/request/Cntty} === '2'}">
+							<f:fields>
+								<DatePicker
+									value="{path:'employeeRequestView>/request/Cnted', type: 'sap.ui.model.type.Date', formatOptions:{ UTC: true, pattern: 'dd.MM.yyyy'}}"
+									placeholder="{i18n>SELECT_CONTRACT_END_DATE}" required="{= ${employeeRequestView>/request/Cntty} === '2'}"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label=" {i18n>STAFF_STATUS}">
+							<f:fields>
+								<ComboBox selectedKey="{employeeRequestView>/request/Stasc}"
+									items="{ path:'/ValueHelpSet', filters : [ { path : 'Erfvh', operator : 'EQ', value1 : 'Stasc'} ] }" editable="false">
+									<core:Item key="{Fldky}" text="{Fldvl}"/>
+								</ComboBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label=" {i18n>MILITARY_STATUS}">
+							<f:fields>
+								<FlexBox direction="Row" alignItems="Center" justifyContent="Start" width="100%">
+									<CheckBox text="{i18n>MILITARY_COMPLETED}" selected="true" editable="false" class="erfDisplayOnlyCheckBox"/>
+									<CheckBox text="{i18n>MILITARY_EXEMPTED}" selected="true" editable="false" class="erfDisplayOnlyCheckBox"/>
+									<CheckBox text="{i18n>MILITARY_POSTPONED}" selected="true" editable="false" class="erfDisplayOnlyCheckBox"/>
+								</FlexBox>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer title="{i18n>JOB_DETAILS}">
+					<f:formElements>
+						<f:FormElement label="{i18n>REQUIRED_QUALIFICATION_TR}">
+							<f:fields>
+								<TextArea value="{employeeRequestView>/request/ErfrqTr}" rows="5" required="true"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>JOB_DESCRIPTION_TR}">
+							<f:fields>
+								<TextArea value="{employeeRequestView>/request/ErfjdTr}" rows="5" required="true"/>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer title="{i18n>JOB_DETAILS_EN}" visible="{ path: 'employeeRequestView>/request/Stell', formatter: '._checkJobHigherLevel'}">
+					<f:formElements>
+						<f:FormElement label="{i18n>REQUIRED_QUALIFICATION_EN}">
+							<f:fields>
+								<TextArea value="{employeeRequestView>/request/ErfrqEn}" rows="5"
+									required="{ path: 'employeeRequestView>/request/Stell', formatter: '._checkJobHigherLevel' }"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>JOB_DESCRIPTION_EN}">
+							<f:fields>
+								<TextArea value="{employeeRequestView>/request/ErfjdEn}" rows="5"
+									required="{path: 'employeeRequestView>/request/Stell', formatter: '._checkJobHigherLevel'}"/>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+	</VBox>
+</core:FragmentDefinition>

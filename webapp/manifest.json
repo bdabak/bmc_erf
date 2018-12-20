@@ -1,0 +1,356 @@
+{
+	"_version": "1.9.0",
+	"sap.app": {
+		"id": "com.bmc.hcm.erf",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"dataSources": {
+			"mainService": {
+				"uri": "/sap/opu/odata/sap/ZHCM_RECRUITMENT_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/metadata.xml"
+				}
+			},
+			"ZHCM_GENERIC_SRV": {
+				"uri": "/sap/opu/odata/sap/ZHCM_GENERIC_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/ZHCM_GENERIC_SRV/metadata.xml"
+				}
+			}
+		},
+		"sourceTemplate": {
+			"id": "servicecatalog.connectivityComponentForManifest",
+			"version": "0.0.0"
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "sap-icon://task",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		}
+	},
+	"sap.ui5": {
+		"config": {
+			"fullWidth": true
+		},
+		"rootView": {
+			"viewName": "com.bmc.hcm.erf.view.App",
+			"type": "XML",
+			"async": true,
+			"id": "app"
+		},
+		"dependencies": {
+			"minUI5Version": "1.42.0",
+			"libs": {
+				"sap.collaboration": {
+					"lazy": true
+				},
+				"sap.f": {},
+				"sap.m": {},
+				"sap.ui.core": {},
+				"sap.ui.layout": {
+					"minVersion": ""
+				},
+				"sap.ui.richtexteditor": {
+					"minVersion": ""
+				},
+				"sap.ui.unified": {
+					"minVersion": ""
+				},
+				"sap.ushell": {},
+				"sap.uxap": {
+					"minVersion": ""
+				}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "com.bmc.hcm.erf.i18n.i18n"
+				}
+			},
+			"": {
+				"dataSource": "mainService",
+				"preload": true
+			},
+			"GenericServices": {
+				"uri": "/sap/opu/odata/sap/ZHCM_GENERIC_SRV/",
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "ZHCM_GENERIC_SRV",
+				"preload": true
+			}
+		},
+		"services": {
+			"ShellUIService": {
+				"factoryName": "sap.ushell.ui5service.ShellUIService",
+				"lazy": false,
+				"settings": {
+					"setTitle": "auto"
+				}
+			}
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "com.bmc.hcm.erf.view",
+				"controlId": "app",
+				"controlAggregation": "pages",
+				"bypassed": {
+					"target": [
+						"notFound"
+					]
+				},
+				"async": true
+			},
+			"routes": [
+				{
+					"pattern": "",
+					"name": "appdispatcher",
+					"target": [
+						"appdispatcher"
+					]
+				},
+				{
+					"pattern": "mngrequestlist",
+					"name": "mngrequestlist",
+					"target": [
+						"requestlist"
+					]
+				},
+				{
+					"pattern": "recrequestlist",
+					"name": "recrequestlist",
+					"target": [
+						"approvedrequestlist"
+					]
+				},
+				{
+					"pattern": "recruitmentadmin",
+					"name": "recruitmentadmin",
+					"target": [
+						"recruitmentadmin"
+					]
+				},
+				{
+					"pattern": "approvallist",
+					"name": "approvallist",
+					"target": [
+						"approvallist"
+					]
+				},
+				{
+					"pattern": "employeerequestnew",
+					"name": "employeerequestnew",
+					"target": [
+						"employeerequestnew"
+					]
+				},
+				{
+					"pattern": "employeerequestedit/{Erfid}",
+					"name": "employeerequestedit",
+					"target": [
+						"employeerequestedit"
+					]
+				},
+				{
+					"pattern": "internaljobposting/{Erfid}",
+					"name": "internaljobposting",
+					"target": [
+						"internaljobposting"
+					]
+				},
+				{
+					"pattern": "externaljobposting/{Erfid}",
+					"name": "externaljobposting",
+					"target": [
+						"externaljobposting"
+					]
+				},
+				{
+					"pattern": "candidateprocess",
+					"name": "candidateprocess",
+					"target": [
+						"candidateprocess"
+					]
+				},
+				{
+					"pattern": "candidateprocessapproval",
+					"name": "candidateprocessapproval",
+					"target": [
+						"candidateprocessapproval"
+					]
+				},
+				{
+					"pattern": "candidatelist",
+					"name": "candidatelist",
+					"target": [
+						"candidatelist"
+					]
+				},
+				{
+					"pattern": "candidatecreate",
+					"name": "candidatecreate",
+					"target": [
+						"candidatecreate"
+					]
+				},
+				{
+					"pattern": "candidateedit/{Pernr}",
+					"name": "candidateedit",
+					"target": [
+						"candidateedit"
+					]
+				}
+			],
+			"targets": {
+				"appdispatcher": {
+					"viewName": "AppDispatcher",
+					"viewId": "appdispatcher",
+					"viewLevel": 1,
+					"title": "{i18n>RECRUITMENT_APPLICATIONS}"
+				},
+				"approvedrequestlist": {
+					"viewName": "ApprovedRequestList",
+					"viewId": "approvedrequestlist",
+					"viewLevel": 2,
+					"title": "{i18n>EMPLOYEE_REQUEST_FORM_LIST}"
+				},
+				"requestlist": {
+					"viewName": "RequestList",
+					"viewId": "requestlist",
+					"viewLevel": 2,
+					"title": "{i18n>EMPLOYEE_REQUEST_FORM_LIST}"
+				},
+				"recruitmentadmin": {
+					"viewName": "RecruitmentAdmin",
+					"viewId": "recruitmentadmin",
+					"viewLevel": 2,
+					"title": "{i18n>RECRUITMENT_ADMIN_PAGE}"
+				},
+				"approvallist": {
+					"viewName": "ApprovalList",
+					"viewId": "approvallist",
+					"viewLevel": 2,
+					"title": "{i18n>REQUESTS_WAITING_APPROVAL}"
+				},
+				"employeerequestnew": {
+					"viewName": "EmployeeRequestNew",
+					"viewId": "employeerequestnew",
+					"viewLevel": 3,
+					"title": "{i18n>EMPLOYEE_REQUEST_FORM_DETAIL}"
+				},
+				"employeerequestedit": {
+					"viewName": "EmployeeRequestEdit",
+					"viewId": "employeerequestedit",
+					"viewLevel": 3,
+					"title": "{i18n>EMPLOYEE_REQUEST_FORM_DETAIL}"
+				},
+				"internaljobposting": {
+					"viewName": "InternalJobPosting",
+					"viewId": "internaljobposting",
+					"viewLevel": 4,
+					"title": "{i18n>INTERNAL_POSTING_EDIT}"
+				},
+				"externaljobposting": {
+					"viewName": "ExternalJobPosting",
+					"viewId": "externaljobposting",
+					"viewLevel": 4,
+					"title": "{i18n>EXTERNAL_POSTING_EDIT}"
+				},
+				"candidateprocess": {
+					"viewName": "CandidateProcess",
+					"viewId": "candidateprocess",
+					"viewLevel": 4,
+					"title": "{i18n>CANDIDATE_PROCESS}"
+				},
+				"candidateprocessapproval": {
+					"viewName": "CandidateProcessApproval",
+					"viewId": "candidateprocessapproval",
+					"viewLevel": 2,
+					"title": "{i18n>CANDIDATE_PROCESS_APPROVALS}"
+				},
+				"candidatelist": {
+					"viewName": "CandidateList",
+					"viewId": "candidatelist",
+					"viewLevel": 2,
+					"title": "{i18n>CandidateListTitle}"
+				},
+				"candidatecreate": {
+					"viewName": "CandidateCreate",
+					"viewId": "candidatecreate",
+					"viewLevel": 3,
+					"title": "{i18n>CandidateCreateTitle}"
+				},
+				"candidateedit": {
+					"viewName": "CandidateEdit",
+					"viewId": "candidateedit",
+					"viewLevel": 3,
+					"title": "{i18n>CandidateEditTitle}"
+				},
+				"objectNotFound": {
+					"viewName": "ObjectNotFound",
+					"viewId": "objectNotFound"
+				},
+				"notFound": {
+					"viewName": "NotFound",
+					"viewId": "notFound"
+				}
+			}
+		},
+		"resources": {
+			"css": [
+				{
+					"uri": "css/customERF.css"
+				}
+			],
+			"js": [
+				{
+					"uri": "utils/lodash.js"
+				},
+				{
+					"uri": "utils/material.js"
+				},
+				{
+					"uri": "utils/FileDownloadJquery.js"
+				},
+				{
+					"uri": "utils/moment.js"
+				}
+			]
+		}
+	},
+	"sap.platform.abap": {
+		"uri": "/sap/bc/ui5_ui5/sap/zhcm_ux_erf/webapp",
+		"_version": "1.1.0"
+	}
+}

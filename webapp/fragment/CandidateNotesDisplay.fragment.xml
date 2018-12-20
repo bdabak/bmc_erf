@@ -1,0 +1,14 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Dialog stretch="{device>/system/phone}" contentWidth="80%">
+		<List id="notificationList" items="{CandidateNotes>/Notes}" class="candidateNotesList">
+			<NotificationListItem
+				title="{path:'CandidateNotes>Cmndt', type: 'sap.ui.model.type.Date', formatOptions:{ UTC: true, pattern: 'dd.MM.yyyy'}} - {path:'CandidateNotes>Cmntm',type: 'sap.ui.model.odata.type.Time', formatOptions:{pattern:'HH:mm'}}"
+				description="{CandidateNotes>Cmntx}" showCloseButton="false" unread="true" priority="Medium" authorName="{CandidateNotes>Cmnon}"
+				authorPicture="/sap/opu/odata/sap/ZHCM_GENERIC_SRV/EmployeeSearchSet('{CandidateNotes>Cmnow}')/$value"></NotificationListItem>
+		</List>
+		<endButton>
+			<Button text="{i18n>OK_ACTION}" press="onCommentDialogClose"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,32 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<!--search="onF4ValueHelpSearch"-->
+	<Dialog cd:operation="{candidateModel>/type/operation}" contentWidth="40%" title="{i18n>COMMUNICATION_INFORMATION}"
+		cd:path="{candidateModel>/type/path}">
+		<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
+			adjustLabelSpan="false" emptySpanXL="2" emptySpanL="2" emptySpanM="2" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+			singleContainerFullSize="false">
+			<f:content>
+				<Label text="{i18n>COMMUNICATION_SUBTYPE}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Usrty'} ] }"
+					selectedKey="{candidateModel>/CandidateCommunicationLine/Usrty}" selectionChange="onChangeUsrty">
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>COMMUNICATION_USRID}"
+					visible="{ path:'candidateModel>/CandidateCommunicationLine/Usrty', formatter: '._getIsCommunicationTypeShort'}"/>
+				<Input value="{candidateModel>/CandidateCommunicationLine/Usrid}"
+					visible="{ path:'candidateModel>/CandidateCommunicationLine/Usrty', formatter: '._getIsCommunicationTypeShort'}" type="Text" maxLength="30"/>
+				<Label text="{i18n>COMMUNICATION_USRID_LONG}"
+					visible="{ path:'candidateModel>/CandidateCommunicationLine/Usrty', formatter: '._getIsCommunicationTypeLong'}"/>
+				<Input visible="{ path:'candidateModel>/CandidateCommunicationLine/Usrty', formatter: '._getIsCommunicationTypeLong'}" type="Text"
+					maxLength="241" value="{candidateModel>/CandidateCommunicationLine/Usrid_Long}"/>
+			</f:content>
+		</f:SimpleForm>
+		<beginButton>
+			<Button type="Accept" text="{i18n>Accept}" press="onDialogSave" cd:model="CandidateCommunication"/>
+		</beginButton>
+		<endButton>
+			<Button type="Reject" text="{i18n>Reject}" press="onDialogCancel" cd:model="CandidateCommunication"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

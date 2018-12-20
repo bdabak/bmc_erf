@@ -1,0 +1,50 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<f:Form editable="true" id="Adressform">
+		<f:layout>
+			<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanM="5" emptySpanS="0"
+				emptySpanL="4" emptySpanXL="4" columnsXL="4" columnsL="4" columnsM="4" singleContainerFullSize="true"/>
+		</f:layout>
+		<f:formContainers>
+			<f:FormContainer>
+				<f:formElements>
+					<f:FormElement label="{i18n>Stras}">
+						<f:fields>
+							<Input value="{candidateModel>/candidateData/CandidateAdress/Stras}" maxLength="30"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Locat}">
+						<f:fields>
+							<Input value="{candidateModel>/candidateData/CandidateAdress/Locat}" maxLength="30"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Land1}">
+						<f:fields>
+							<Input
+								value="{parts: [{path:'candidateModel>/helpText/Land1'}, {path:'candidateModel>/candidateData/CandidateAdress/Land1'}], formatter: '._getValueHelpText' }"
+								valueHelpRequest="onCountryHelp" valueHelpOnly="true" showValueHelp="true" type="Text" maxLength="40" cd:type="Land1"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>State}">
+						<f:fields>
+							<ComboBox id="State_id" items="{path:'/CandidateValueHelpSet'}" filterSecondaryValues="true"
+								selectedKey="{candidateModel>/candidateData/CandidateAdress/State}">
+								<core:ListItem key="{Key}" text="{Text}"/>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Ort01}">
+						<f:fields>
+							<Input value="{candidateModel>/candidateData/CandidateAdress/Ort01}" maxLength="40"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Ort02}">
+						<f:fields>
+							<Input value="{candidateModel>/candidateData/CandidateAdress/Ort02}" maxLength="40"/>
+						</f:fields>
+					</f:FormElement>
+				</f:formElements>
+			</f:FormContainer>
+		</f:formContainers>
+	</f:Form>
+</core:FragmentDefinition>

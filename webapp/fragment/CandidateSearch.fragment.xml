@@ -1,0 +1,10 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog stretch="true" title="{i18n>APPLICANT_SEARCH}">
+		<VBox>
+			<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateSearchResult" type="XML"/>
+		</VBox>
+		<endButton>
+			<Button text="{i18n>CANCEL_ACTION}" press="onCloseCandidateSearch"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

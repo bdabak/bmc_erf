@@ -1,0 +1,19 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Panel headerText="{i18n>WAGE_INIT}">
+		<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateWageInfoCurrent" type="XML"/>
+	</Panel>
+	<!--<IconTabBar>-->
+	<!--	<items>-->
+	<!--		<IconTabFilter icon="sap-icon://monitor-payments" iconColor="Negative" text="{i18n>CURRENT_WAGE}" design="Horizontal">-->
+	<!--			<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateWageInfoCurrent" type="XML"/>-->
+	<!--		</IconTabFilter>-->
+	<!--		<IconTabFilter icon="sap-icon://waiver" iconColor="Default" text="{i18n>EXPECTED_WAGE}" design="Horizontal">-->
+	<!--			<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateWageInfoExpectation" type="XML"/>-->
+	<!--		</IconTabFilter>-->
+	<!--		<IconTabFilter icon="sap-icon://commission-check" iconColor="Critical" text="{i18n>WAGE_DETERMINATION_PARAMETERS}" design="Horizontal">-->
+	<!--			<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateWageInfoSettings" type="XML"/>-->
+	<!--		</IconTabFilter>-->
+	<!--	</items>-->
+	<!--</IconTabBar>-->
+</core:FragmentDefinition>

@@ -1,0 +1,89 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<f:Form editable="true" visible="{= ${candidateProcessModel>/CandidateProcess/Prfso} !== 'M10'}">
+		<f:layout>
+			<f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanM="0"
+				emptySpanS="0" emptySpanL="0" emptySpanXL="0" columnsXL="3" columnsL="3" columnsM="1" singleContainerFullSize="true"/>
+		</f:layout>
+		<f:formContainers>
+			<f:FormContainer title="{i18n>OFFERED_SALARY}">
+				<f:formElements>
+					<f:FormElement label="{i18n>Ofslr}">
+						<f:fields>
+							<Input type="Number" value="{path: 'candidateProcessModel>/CandidateWage/Ofslr', type:'sap.ui.model.odata.type.Decimal'}"
+								editable="{candidateProcessModel>/ViewSettings/WageOffer}"></Input>
+							<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Waers' }]}"
+								filterSecondaryValues="true" selectedKey="{candidateProcessModel>/CandidateWage/OfslrWaers}"
+								editable="{candidateProcessModel>/ViewSettings/WageOffer}">
+								<core:ListItem key="{Key}" text="{Key}"/>
+							</ComboBox>
+							<RadioButtonGroup columns="2" buttons="{path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Payty' }]}">
+								<RadioButton text="{Text}" selected="{= ${Key} === ${candidateProcessModel>/CandidateWage/OfslrPayty} }" select="onPaytySelected"
+									visible="{= ${Key} !== ''}" cd:targetField="/CandidateWage/OfslrPayty" cd:targetValue="{Key}"
+									editable="{candidateProcessModel>/ViewSettings/WageOffer}"></RadioButton>
+							</RadioButtonGroup>
+						</f:fields>
+					</f:FormElement>
+					<!--<f:FormElement label="{i18n>WAGE_TYPE}">-->
+					<!--	<f:fields>-->
+					<!--		<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Payty' }]}"-->
+					<!--			filterSecondaryValues="true" selectedKey="{candidateProcessModel>/CandidateWage/OfslrPayty}"-->
+					<!--			editable="{candidateProcessModel>/ViewSettings/WageOffer}">-->
+					<!--			<core:ListItem key="{Key}" text="{Text}"/>-->
+					<!--		</ComboBox>-->
+					<!--	</f:fields>-->
+					<!--</f:FormElement>-->
+					<!--<f:FormElement label="{i18n>WAGE_PERIOD}">-->
+					<!--	<f:fields>-->
+					<!--		<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Calty' }]}"-->
+					<!--			filterSecondaryValues="true" selectedKey="{candidateProcessModel>/CandidateWage/OfslrCalty}"-->
+					<!--			editable="{candidateProcessModel>/ViewSettings/WageOffer}">-->
+					<!--			<core:ListItem key="{Key}" text="{Text}"/>-->
+					<!--		</ComboBox>-->
+					<!--	</f:fields>-->
+					<!--</f:FormElement>-->
+				</f:formElements>
+				<f:layoutData>
+					<l:GridData span="XL4 L4 M12 S12"/>
+				</f:layoutData>
+			</f:FormContainer>
+			<f:FormContainer title="{i18n>SELECT_ADDITIONAL_BENEFITS}">
+				<f:formElements>
+					<f:FormElement>
+						<Table items="{ path: 'candidateProcessModel>/CandidateWage/GivenBenefitSet', templateShareable: false }" inset="false"
+							alternateRowColors="true">
+							<!--<headerToolbar>-->
+							<!--	<Toolbar>-->
+							<!--		<Text text="{i18n>SELECT_ADDITIONAL_BENEFITS}"/>-->
+							<!--	</Toolbar>-->
+							<!--</headerToolbar>-->
+							<columns>
+								<Column>
+									<Text text="{i18n>ADDITIONAL_BENEFIT_NAME}"/>
+								</Column>
+								<Column>
+									<Text text="{i18n>ADDITIONAL_BENEFIT_ASSIGNMENT}"/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem vAlign="Middle" type="Inactive">
+									<cells>
+										<Text text="{candidateProcessModel>Benex}"/>
+										<Switch type="AcceptReject" state="{candidateProcessModel>Benas}" enabled="{candidateProcessModel>/ViewSettings/WageOffer}">
+											<layoutData>
+												<FlexItemData growFactor="1"/>
+											</layoutData>
+										</Switch>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</f:FormElement>
+				</f:formElements>
+				<f:layoutData>
+					<l:GridData span="XL8 L8 M12 S12"/>
+				</f:layoutData>
+			</f:FormContainer>
+		</f:formContainers>
+	</f:Form>
+</core:FragmentDefinition>

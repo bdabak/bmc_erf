@@ -1,0 +1,97 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<IconTabBar id="idCandidatePoolIconTab" select="onPoolFilterSelect" expandable="false" applyContentPadding="false"
+		class="sapUiNoContentPadding">
+		<items>
+			<IconTabFilter icon="sap-icon://employee" iconColor="Neutral" text="{i18n>CANDIDATE_POOL}" count="{candidateListModel>/SearchResults/C}"
+				key="C" design="Horizontal"/>
+			<IconTabFilter icon="sap-icon://employee-approvals" iconColor="Positive" text="{i18n>POTENTIAL_CANDIDATE}"
+				count="{candidateListModel>/SearchResults/P}" key="P" design="Horizontal"/>
+			<IconTabFilter icon="sap-icon://employee-rejections" iconColor="Negative" text="{i18n>REJECTED_CANDIDATE}"
+				count="{candidateListModel>/SearchResults/R}" key="R" design="Horizontal"/>
+		</items>
+		<content>
+			<VBox visible="{candidateListModel>/FilterBarExpanded}" width="100%">
+				<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateFilter" type="XML"/>
+			</VBox>
+			<Table id="idCandidatePoolTable" width="auto" updateFinished="onCandidateListUpdated" updateStarted="onCandidateListUpdateStarted"
+				items="{ path: '/CandidatePoolSet',filters : [ { path : 'Cplty', operator : 'EQ', value1 : 'C'} ] }" alternateRowColors="true">
+				<headerToolbar>
+					<Toolbar>
+						<Title text="{i18n>CANDIDATE_LIST_PAGE}"/>
+						<ToolbarSpacer></ToolbarSpacer>
+						<Button icon="{= ${candidateListModel>/FilterBarExpanded} ? 'sap-icon://hide' : 'sap-icon://show' }"
+							text="{= ${candidateListModel>/FilterBarExpanded} ? ${i18n>HIDE_FILTER_BAR} : ${i18n>SHOW_FILTER_BAR}}" press="onToggleFilterBar"/>
+						<Button icon="sap-icon://download" press="onDataExport" visible="{candidateListModel>/CandidateActionSettings/EditCandidate}"/></Toolbar>
+				</headerToolbar>
+				<columns>
+					<Column id="idCandidateNameColumn" width="15rem">
+						<Text text="{i18n>CANDIDATE_NAME}"/>
+					</Column>
+					<Column id="idCandidateBirthdateColumn">
+						<Text text="{i18n>CANDIDATE_BIRTHDATE}"/>
+					</Column>
+					<Column id="idCandidateEducationColumn">
+						<Text text="{i18n>CANDIDATE_EDUCATION_LEVEL}"/>
+					</Column>
+					<Column id="idCandidatePhoneNumber" hAlign="Center" demandPopin="true" minScreenWidth="Tablet">
+						<Text text="{i18n>CANDIDATE_PHONE_NUMBER}"/>
+					</Column>
+					<Column id="idCandidateMilitaryColumn" demandPopin="true" minScreenWidth="Tablet">
+						<Text text="{i18n>MILITARY_STATUS}"/>
+					</Column>
+					<Column id="idCandidateCompany" demandPopin="true" minScreenWidth="Desktop">
+						<Text text="{i18n>CANDIDATE_LAST_COMPANY} / {i18n>CANDIDATE_LAST_POSITION}"/>
+					</Column>
+					<Column id="idCandidateReference" hAlign="Center" demandPopin="true" minScreenWidth="Desktop">
+						<Text text="{i18n>CANDIDATE_REFERENCE_INFO}"/>
+					</Column>
+					<Column id="idCandidateComments" hAlign="Center" demandPopin="true" minScreenWidth="Desktop">
+						<Text text="{i18n>CANDIDATE_HAS_COMMENTS}"/>
+					</Column>
+					<Column id="idCandidateERFColumn" hAlign="Center" demandPopin="true" minScreenWidth="Desktop">
+						<Text text="{i18n>IS_HAVE_PTF}"/>
+					</Column>
+					<Column id="idCandidateActionsColumn" hAlign="Center" visible="{candidateListModel>/CandidateActionSettings/ActionsColumnVisible}">
+						<Text text="{i18n>ACTION_LIST}"/>
+					</Column>
+					<Column id="idCandidateSelectColumn" hAlign="Center" visible="{candidateListModel>/CandidateActionSettings/SelectColumnVisible}">
+						<Text text="{i18n>PICK_COLUMN}"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem type="Inactive" press="onPressCandidate">
+						<cells>
+							<HBox>
+								<Image src="/sap/opu/odata/sap/ZHCM_RECRUITMENT_SRV/CandidateSet(Tclas='B',Pernr='{Pernr}')/$value"
+									class="erfProfileImage sapUiTinyMarginEnd" width="50px" height="50px"/>
+								<ObjectIdentifier title="{Ename} ({Pernr})" text="{Cansx}" class="sapUiTinyMarginEnd"/>
+							</HBox>
+							<Text text="{path: 'Gbdat', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"/>
+							<Text text="{Slarx}"/>
+							<Text text="{Phone}"/>
+							<Text text="{Wdarx}"/>
+							<Text text="{= ${Lstcm} !== '' ? ${Lstcm}.concat(' / ').concat(${Lstps}) : '' }"/>
+							<HBox justifyContent="Center">
+								<core:Icon size="20px" src="sap-icon://key" visible="{Hasrf}" class="sapUiTinyMarginEnd" press="onShowReference" cd:referenceName="{Refnm}"></core:Icon>
+								<core:Icon size="20px" src="sap-icon://shield" visible="{Isvic}" press="onShowReference" cd:referenceName="{Refnm}"></core:Icon>
+							</HBox>
+							<HBox justifyContent="Center">
+								<core:Icon src="sap-icon://notification-2" visible="{Hscmn}" press="onShowCandidateComments" cd:candidateNumber="{Pernr}"
+									cd:candidateName="{Ename}" size="20px"/>
+							</HBox>
+							<HBox justifyContent="Center">
+								<core:Icon src="sap-icon://accept" visible="{Erfas}"></core:Icon>
+							</HBox>
+							<Button icon="sap-icon://menu" press="onCandidateActionSheet" type="Accept"
+								visible="{candidateListModel>/CandidateActionSettings/ActionsColumnVisible}"/>
+							<Button icon="sap-icon://complete" press="onCandidateSelected" type="Accept" text="{i18n>PICK_CANDIDATE}"
+								visible="{candidateListModel>/CandidateActionSettings/SelectColumnVisible}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</content>
+	</IconTabBar>
+</core:FragmentDefinition>

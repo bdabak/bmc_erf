@@ -1,0 +1,194 @@
+/**
+ * material-design-lite - Material Design Components in CSS, JS and HTML
+ * @version v1.3.0
+ * @license Apache-2.0
+ * @copyright 2015 Google, Inc.
+ * @link https://github.com/google/material-design-lite
+ */
+
+.display-card-wide.mdl-card {
+    width: 200px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.display-card-wide > .mdl-card__title {
+    color: #000;
+    height: 176px;
+}
+
+.display-card-wide .mdl-card__title .internal_applicant {
+    background: url('../images/internal_posting_small.jpeg') center / cover;
+}
+
+.display-card-wide .mdl-card__title .external_applicant {
+    background: url('../images/external_posting_small.jpeg') center / cover;
+}
+
+.display-card-wide .mdl-card__title .mdl-card__image {
+    opacity: 0.3;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    width: 100%;
+    height: 176px;
+    z-index: -1;
+    transition: opacity 0.5s;
+}
+
+.display-card-wide:hover .mdl-card__title .internal_applicant,
+.display-card-wide:hover .mdl-card__title .external_applicant {
+    opacity: 0.7;
+    transition: opacity 0.5s;
+}
+
+.display-card-wide > .mdl-card__menu {
+    color: #fff;
+}
+
+.mdl-button,
+.mdl-card {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0)
+}
+
+.mdl-shadow--2dp {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12)
+}
+
+.mdl-shadow--3dp {
+    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .14), 0 3px 3px -2px rgba(0, 0, 0, .2), 0 1px 8px 0 rgba(0, 0, 0, .12)
+}
+
+.mdl-card {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    font-size: 16px;
+    font-weight: 400;
+    min-height: 200px;
+    overflow: hidden;
+    width: 190px;
+    z-index: 1;
+    position: relative;
+    background: #fff;
+    border-radius: 2px;
+    box-sizing: border-box
+}
+
+.mdl-card__media {
+    background-color: rgb(255, 64, 129);
+    background-repeat: repeat;
+    background-position: 50% 50%;
+    background-size: cover;
+    background-origin: padding-box;
+    background-attachment: scroll;
+    box-sizing: border-box
+}
+
+.mdl-card__title {
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: #000;
+    display: block;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: stretch;
+    -ms-flex-pack: stretch;
+    justify-content: stretch;
+    line-height: normal;
+    padding: 16px;
+    -webkit-perspective-origin: 165px 56px;
+    perspective-origin: 165px 56px;
+    -webkit-transform-origin: 165px 56px;
+    transform-origin: 165px 56px;
+    box-sizing: border-box
+}
+
+.mdl-card__title.mdl-card--border {
+    border-bottom: 1px solid rgba(0, 0, 0, .1)
+}
+
+.mdl-card__title-text {
+    -webkit-align-self: flex-end;
+    -ms-flex-item-align: end;
+    align-self: flex-end;
+    color: inherit;
+    display: block;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: normal;
+    overflow: hidden;
+    -webkit-transform-origin: 149px 48px;
+    transform-origin: 149px 48px;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+.mdl-card__subtitle-text {
+    font-size: 14px;
+    color: rgba(0, 0, 0, .54);
+    margin: 0
+}
+
+.mdl-card__supporting-text {
+    color: rgba(0, 0, 0, .54);
+    font-size: 13px;
+    overflow: hidden;
+    padding: 11px;
+    width: 85%;
+    height: 2.5rem;
+    max-height: 2.5rem;
+    text-align: center;
+}
+
+.mdl-card__supporting-text.mdl-card--border {
+    border-bottom: 1px solid rgba(0, 0, 0, .1)
+}
+
+.mdl-card__actions {
+    font-size: 16px;
+    line-height: normal;
+    width: 100%;
+    background-color: transparent;
+    padding: 8px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.mdl-card__actions.mdl-card--border {
+    border-top: 1px solid rgba(0, 0, 0, .1)
+}
+
+.mdl-card--expand {
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1
+}
+
+.mdl-card__menu {
+    position: absolute;
+    right: 16px;
+    top: 16px
+}
+
+.mdl-card__posted::after {
+    font-family: "SAP-icons";
+    content: "\e06c";
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: #2b7c2b;
+    font-size: 25px;
+    -webkit-font-smoothing: antialiased;
+}

@@ -1,0 +1,35 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<!--search="onF4ValueHelpSearch"-->
+	<Dialog cd:operation="{candidateModel>/type/operation}" contentWidth="40%" title="{i18n>EXAM_INFORMATION}"
+		cd:path="{candidateModel>/type/path}">
+		<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
+			adjustLabelSpan="false" emptySpanXL="2" emptySpanL="2" emptySpanM="2" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+			singleContainerFullSize="false">
+			<f:content>
+				<Label text="{i18n>Exmid}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Exmid'} ] }"
+					selectedKey="{candidateModel>/CandidateExamLine/Exmid}">
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Exmnm}"/>
+				<TextArea value="{candidateModel>/CandidateExamLine/Exmnm}" maxLength="250"/>
+				<Label text="{i18n>Excor}"/>
+				<TextArea value="{candidateModel>/CandidateExamLine/Excor}" maxLength="250"/>
+				<Label text="{i18n>Exrem}"/>
+				<TextArea value="{candidateModel>/CandidateExamLine/Exrem}" maxLength="1250"/>
+				<Label text="{i18n>Exres}"/>
+				<Input value="{candidateModel>/CandidateExamLine/Exres}" type="Text" maxLength="10"/>
+				<Label text="{i18n>Exdat}"/>
+				<DatePicker
+					value="{path: 'candidateModel>/CandidateExamLine/Exdat', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true , pattern: 'dd.MM.yyyy'}}"></DatePicker>
+			</f:content>
+		</f:SimpleForm>
+		<beginButton>
+			<Button type="Accept" text="{i18n>Accept}" press="onDialogSave" cd:model="CandidateExam"/>
+		</beginButton>
+		<endButton>
+			<Button type="Reject" text="{i18n>Reject}" press="onDialogCancel" cd:model="CandidateExam"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

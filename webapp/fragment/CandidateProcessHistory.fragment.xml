@@ -1,0 +1,44 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:commons="sap.suite.ui.commons" xmlns:f="sap.ui.layout.form">
+	<commons:Timeline enableDoubleSided="true" axisOrientation="{= ${device>/system/phone} ? 'Vertical' : 'Vertical' }" growingThreshold="0"
+		content="{candidateProcessModel>/CandidateProcessHistorySet}" class="erfTimeLine" showHeaderBar="false" enableScroll="false"
+		sortOldestFirst="true" noDataText="{i18n>NO_PROCESS_HISTORY}" sort="false">
+		<commons:content>
+			<commons:TimelineItem
+				dateTime="{ parts:[{path:'candidateProcessModel>Actdt'},{path:'candidateProcessModel>Acttm'}], formatter: '.formatter.getDateTime'}"
+				userNameClickable="false" userPicture="/sap/opu/odata/sap/ZHCM_GENERIC_SRV/EmployeeSearchSet('{candidateProcessModel>Chnpn}')/$value"
+				userName="{candidateProcessModel>Chnen}" icon="{candidateProcessModel>Tmlic}" class="erfTimeLine">
+				<commons:embeddedControl>
+					<f:Form editable="false">
+						<f:layout>
+							<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="1" emptySpanL="1"
+								emptySpanM="1" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="1" singleContainerFullSize="false"/>
+						</f:layout>
+						<f:formContainers>
+							<f:FormContainer>
+								<f:formElements>
+									<f:FormElement label="{i18n>PROCESS_STATUS}">
+										<f:fields>
+											<Text class="erfStatusText"
+												text="{ parts: [ {path: 'candidateProcessModel>CansxNew' }, {path: 'candidateProcessModel>CansyNew' }], formatter: '.formatter.getStatusText' }"/>
+										</f:fields>
+									</f:FormElement>
+									<f:FormElement label="{i18n>ACTION_DATE}">
+										<f:fields>
+											<Text class="erfActionDate"
+												text="{ path: 'candidateProcessModel>Actdt', type: 'sap.ui.model.type.Date', formatOptions: { pattern:'dd.MM.yyyy'} } - { path: 'candidateProcessModel>Acttm', type: 'sap.ui.model.odata.type.Time', formatOptions: { pattern:'HH:mm'} }"/>
+										</f:fields>
+									</f:FormElement>
+									<f:FormElement label="{i18n>STATUS_NOTE}" visible="{= ${candidateProcessModel>Stcnt} !== ''}">
+										<f:fields>
+											<Text text="{candidateProcessModel>Stcnt}" class="erfStatusChangeNote"/>
+										</f:fields>
+									</f:FormElement>
+								</f:formElements>
+							</f:FormContainer>
+						</f:formContainers>
+					</f:Form>
+				</commons:embeddedControl>
+			</commons:TimelineItem>
+		</commons:content>
+	</commons:Timeline>
+</core:FragmentDefinition>

@@ -1,0 +1,51 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Table id="idCandidateRequestExam" inset="true" items="{candidateProcessModel>/CandidateRequestExamSet}"
+		noDataText="{i18n>NO_REQUEST_EXAM_FOUND}">
+		<headerToolbar>
+			<Toolbar>
+				<content>
+					<Title text="{i18n>REQUEST_EXAM_RESULT}" level="H2"/>
+					<ToolbarSpacer/>
+					<Button icon="sap-icon://sys-add" type="Emphasized" text="{i18n>ADD_NEW_EXAM_RESULT}" press="onNewRequestExam"
+						visible="{= ${candidateProcessModel>/CandidateProcess/Cprso} === 'H01' }"></Button>
+					<Button type="Accept" press="onIndependentAction" cd:buttonId="CP_UPD_EXM" icon="sap-icon://save" text="{i18n>SAVE_ACTION}"
+						visible="{= ${candidateProcessModel>/CandidateProcess/Cprso} === 'H01' }"></Button>
+				</content>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column >
+				<Text text="{i18n>EXAM_ID}"/>
+			</Column>
+			<Column minScreenWidth="Tablet" demandPopin="true">
+				<Text text="{i18n>EXAM_NAME}"/>
+			</Column>
+			<Column minScreenWidth="Tablet" demandPopin="true">
+				<Text text="{i18n>EXAM_RESULT_TYPE}"/>
+			</Column>
+			<Column minScreenWidth="Tablet" demandPopin="true">
+				<Text text="{i18n>EXAM_RESULT}"/>
+			</Column>
+			<Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true" popinDisplay="WithoutHeader">
+				<Text text="{i18n>ACTION_LIST}"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text
+						text="{parts: [{path:'candidateProcessModel>/ValueHelpText/Exmid'}, {path:'candidateProcessModel>Exmid'}], formatter: '._getValueHelpText' }"/>
+					<Text text="{candidateProcessModel>Exmnm}"/>
+					<Text
+						text="{parts: [{path:'candidateProcessModel>/ValueHelpText/Exscl'}, {path:'candidateProcessModel>Exscl'}], formatter: '._getValueHelpText' }"/>
+					<Text text="{candidateProcessModel>Exres}"/>
+					<HBox justifyContent="Center">
+						<Button type="Reject" class="sapUiSmallMarginEnd" icon="sap-icon://delete" press="onDeleteRequestExam"/>
+						<Button type="Emphasized" icon="sap-icon://edit" press="onEditRequestExam"/>
+					</HBox>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

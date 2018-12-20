@@ -1,0 +1,59 @@
+<core:FragmentDefinition xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout"
+	xmlns="sap.m" xmlns:table="sap.ui.table" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Dialog title="{i18n>STATUS_CHANGE_CONFIRMATION}" showHeader="true" stretch="{device>/system/phone}" id="idCandidateStatusChangeDialog"
+		resizable="false" draggable="false" type="Message" afterClose="onStatusChangeDialogClosed"
+		state="{candidateProcessModel>/StatusChangeDialogProperties/DialogState}">
+		<content>
+			<f:Form editable="true">
+				<f:layout>
+					<f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="1"
+						emptySpanL="1" emptySpanM="1" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+				</f:layout>
+				<f:formContainers>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement>
+								<f:fields>
+									<Text text="{candidateProcessModel>/StatusChangeDialogProperties/InformationNote}" wrapping="true" class="sapUiTinyMarginBottom"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>CANDIDATE_POOL_SELECTION}" visible="{candidateProcessModel>/StatusChangeDialogProperties/ReasonVisible}">
+								<f:fields>
+									<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Cplty' } ] }"
+										selectedKey="{candidateProcessModel>/StatusChangeDialogProperties/CandidatePool}"
+										required="{candidateProcessModel>/StatusChangeDialogProperties/ReasonVisible}">
+										<core:Item key="{Key}" text="{Text}"></core:Item>
+									</ComboBox>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>REJECTION_REASON}" visible="{candidateProcessModel>/StatusChangeDialogProperties/ReasonVisible}">
+								<f:fields>
+									<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Cpprr' } ] }"
+										selectedKey="{candidateProcessModel>/StatusChangeDialogProperties/CandidateRejectionReason}"
+										required="{candidateProcessModel>/StatusChangeDialogProperties/ReasonVisible}">
+										<core:Item key="{Key}" text="{Text}"></core:Item>
+									</ComboBox>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement>
+								<f:fields>
+									<TextArea value="{candidateProcessModel>/StatusChangeDialogProperties/StatusChangeNote}" valueLiveUpdate="true" width="100%"
+										placeholder="{candidateProcessModel>/StatusChangeDialogProperties/StatusChangePlaceholder}" rows="5"></TextArea>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+			</f:Form>
+		</content>
+		<beginButton>
+			<Button type="{ path: 'candidateProcessModel>/StatusChangeDialogProperties/BeginButtonType', formatter: '.formatter.getFormActionType' }"
+				icon="{candidateProcessModel>/StatusChangeDialogProperties/BeginButtonIcon}"
+				text="{candidateProcessModel>/StatusChangeDialogProperties/BeginButtonText}" press="onStatusChangeConfirmed"
+				enabled="{ parts:[ { path: 'candidateProcessModel>/StatusChangeDialogProperties/StatusChangeNoteRequired' }, { path: 'candidateProcessModel>/StatusChangeDialogProperties/StatusChangeNote'}, { path: 'candidateProcessModel>/StatusChangeDialogProperties/ReasonVisible'}, { path: 'candidateProcessModel>/StatusChangeDialogProperties/CandidatePool'}, { path: 'candidateProcessModel>/StatusChangeDialogProperties/CandidateRejectionReason'} ], formatter: '.formatter.getFormActionEnabled' }"></Button>
+		</beginButton>
+		<endButton>
+			<Button type="Default" text="{i18n>CANCEL_ACTION}" press="onStatusChangeCancelled"></Button>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

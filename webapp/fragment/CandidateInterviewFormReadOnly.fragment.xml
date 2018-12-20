@@ -1,0 +1,141 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<FlexBox direction="Column" width="95%" class="sapUiMediumMarginBeginEnd" id="idCandidateInterviewForm">
+		<items>
+			<f:Form editable="true">
+				<f:layout>
+					<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="2" emptySpanL="2"
+						emptySpanM="1" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="1"/>
+				</f:layout>
+				<f:toolbar>
+					<Toolbar>
+						<Title text="{i18n>CANDIDATE_INTERVIEW_FORM}"/>
+						<ToolbarSpacer/>
+						<Button press="onInterviewFormPrintOut" text="{i18n>INTERVIEW_FORM}" icon="sap-icon://pdf-attachment"></Button>
+					</Toolbar>
+				</f:toolbar>
+				<f:formContainers>
+					<f:FormContainer title="{i18n>CANDIDATE_FIRST_INTERVIEW}" expandable="true" expanded="true">
+						<f:formElements>
+							<f:FormElement label="{i18n>INTERVIEW_RESPONSIBLE}">
+								<f:fields>
+									<Input
+										value="{ parts: [{ path: 'candidateProcessModel>/CandidateInterviewOperation/IntvwHr' }, { path: 'candidateProcessModel>/CandidateInterviewOperation/IntvnHr'}], formatter: '.formatter.convertZeroObjectNumber'}"
+										valueHelpOnly="true" valueHelpRequest="onEmployeeValueRequest" showValueHelp="true" cd:sourceField="IntvwHr" editable="false"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>INTERVIEW_DATE}">
+								<f:fields>
+									<DatePicker placeholder="{i18n>ENTER_HR_INTERVIEW_DATE}"
+										value="{path:'candidateProcessModel>/CandidateInterviewOperation/IntdtHr', type: 'sap.ui.model.type.Date', formatOptions:{ UTC: true, pattern: 'dd.MM.yyyy'}}"
+										editable="false"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>INTERVIEW_TIME}">
+								<f:fields>
+									<TimePicker placeholder="{i18n>ENTER_HR_INTERVIEW_TIME}"
+										value="{path:'candidateProcessModel>/CandidateInterviewOperation/InttmHr', type: 'sap.ui.model.odata.type.Time', formatOptions:{pattern:'HH:mm'}}"
+										displayFormat="HH:mm" editable="false"/>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer title="{i18n>CANDIDATE_SECOND_INTERVIEW}" expandable="true" expanded="true" visible="true">
+						<f:formElements>
+							<f:FormElement label="{i18n>INTERVIEW_RESPONSIBLE}">
+								<f:fields>
+									<Input
+										value="{ parts: [{ path: 'candidateProcessModel>/CandidateInterviewOperation/IntvwDp' }, { path: 'candidateProcessModel>/CandidateInterviewOperation/IntvnDp'}], formatter: '.formatter.convertZeroObjectNumber'}"
+										valueHelpOnly="true" valueHelpRequest="onEmployeeValueRequest" showValueHelp="true" cd:sourceField="IntvwDp" editable="false"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>INTERVIEW_DATE}">
+								<f:fields>
+									<DatePicker placeholder="{i18n>ENTER_HR_INTERVIEW_DATE}"
+										value="{path:'candidateProcessModel>/CandidateInterviewOperation/IntdtDp', type: 'sap.ui.model.type.Date', formatOptions:{ UTC: true, pattern: 'dd.MM.yyyy'}}"
+										editable="false"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>INTERVIEW_TIME}">
+								<f:fields>
+									<TimePicker placeholder="{i18n>ENTER_HR_INTERVIEW_TIME}"
+										value="{path:'candidateProcessModel>/CandidateInterviewOperation/InttmDp', type: 'sap.ui.model.odata.type.Time', formatOptions:{pattern:'HH:mm'}}"
+										displayFormat="HH:mm" editable="false"/>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+			</f:Form>
+			<FlexBox direction="Column" width="97%" items="{candidateProcessModel>/CandidateInterviewOperation/CandidateInterviewFormSet}">
+				<items>
+					<Table items="{ path: 'candidateProcessModel>CandidateInterviewQuestionsSet', templateShareable: false }" inset="false"
+						alternateRowColors="true" class="sapUiSmallMarginTop">
+						<headerToolbar>
+							<Toolbar>
+								<Title text="{candidateProcessModel>Canfx}" level="H2"/>
+							</Toolbar>
+						</headerToolbar>
+						<columns>
+							<Column>
+								<Text text="{i18n>INTERVIEW_QUESTION}" width="50rem"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<Text text="{i18n>INTERVIEW_ANSWER_HR}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true" visible="true">
+								<Text text="{i18n>INTERVIEW_ANSWER_DP}"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem vAlign="Middle" type="Inactive">
+								<cells>
+									<ObjectIdentifier title="{candidateProcessModel>Quest}"/>
+									<Select forceSelection="false" selectedKey="{candidateProcessModel>AnswerHr}"
+										items="{ path: 'candidateProcessModel>CandidateInterviewAnswersSet', templateShareable:false}" enabled="false" width="100%">
+										<core:Item key="{candidateProcessModel>Ansid}" text="{candidateProcessModel>Anstx}"/>
+									</Select>
+									<Select forceSelection="false" selectedKey="{candidateProcessModel>AnswerDp}" width="100%"
+										items="{ path: 'candidateProcessModel>CandidateInterviewAnswersSet', templateShareable:false}" enabled="false">
+										<core:Item key="{candidateProcessModel>Ansid}" text="{candidateProcessModel>Anstx}"/>
+									</Select>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</items>
+			</FlexBox>
+			<f:Form editable="true">
+				<f:layout>
+					<f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0"
+						emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="1"/>
+				</f:layout>
+				<f:title>
+					<core:Title text="{i18n>INTERVIEW_NOTES_SECTION}"/>
+				</f:title>
+				<f:formContainers>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement label="{i18n>INTERVIEW_NOTES}">
+								<f:fields>
+									<TextArea value="{candidateProcessModel>/CandidateInterviewOperation/IntntHr}" maxLength="500" editable="false" rows="5"
+										valueLiveUpdate="true"></TextArea>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer visible="true">
+						<f:formElements>
+							<f:FormElement label="{i18n>INTERVIEW_NOTES}">
+								<f:fields>
+									<TextArea value="{candidateProcessModel>/CandidateInterviewOperation/IntntDp}" maxLength="500" editable="false" rows="5"
+										valueLiveUpdate="true"></TextArea>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+			</f:Form>
+		</items>
+	</FlexBox>
+</core:FragmentDefinition>

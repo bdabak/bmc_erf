@@ -1,0 +1,11 @@
+<mvc:View controllerName="com.bmc.hcm.erf.controller.AppDispatcher" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout"
+	busy="{appDispatcherView>/busy}" busyIndicatorDelay="100">
+	<Page showFooter="false" showHeader="true" title="{i18n>RECRUITMENT_APPLICATIONS}" class="erfMainPage sapUiResponsiveContentPadding"
+		showNavButton="true" navButtonPress="onNavHome" id="idAppDispatcherPage">
+		<!--<FlexBox height="95%" width="100%" alignItems="Start" justifyContent="Start" class="sapUiSmallMargin">-->
+		<!--	<items>-->
+		<!--<l:Grid defaultSpan="XL2 L2 M3 S6" class="sapUiSmallMargin" id="idAppCatalogGrid"></l:Grid>-->
+		<!--	</items>-->
+		<!--</FlexBox>-->
+	</Page>
+</mvc:View>

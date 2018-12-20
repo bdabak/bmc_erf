@@ -1,0 +1,46 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Table id="idCandidateReferenceCheckReadOnly" inset="true" items="{candidateProcessModel>/CandidateReferenceCheck}"
+		noDataText="{i18n>NO_REFERENCE_CHECK_AVAILABLE}">
+		<headerToolbar>
+			<Toolbar>
+				<content>
+					<Title text="{i18n>REFERENCE_CHECK_FORM}" level="H2"/>
+					<ToolbarSpacer/>
+					<Button icon="sap-icon://pdf-attachment" press="onReferenceCheckFormPrintOut" text="{i18n>REFERENCE_CHECK_FORM_BUTTON}"/>
+				</content>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column >
+				<Text text="{i18n>REFERENCE_NAME}"/>
+			</Column>
+			<Column minScreenWidth="Tablet" demandPopin="true">
+				<Text text="{i18n>REFERENCE_COMPANY}"/>
+			</Column>
+			<Column minScreenWidth="Tablet" demandPopin="true">
+				<Text text="{i18n>REFERENCE_POSITION}"/>
+			</Column>
+			<Column minScreenWidth="Tablet" demandPopin="true">
+				<Text text="{i18n>REFERENCE_CHECKER}"/>
+			</Column>
+			<!--<Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true" popinDisplay="WithoutHeader">-->
+			<!--	<Text text="{i18n>ACTION_LIST}"/>-->
+			<!--</Column>-->
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="{candidateProcessModel>Refnm}"/>
+					<Text text="{candidateProcessModel>Refcm}"/>
+					<Text text="{candidateProcessModel>Repos}"/>
+					<Text text="{candidateProcessModel>Rfinx}"/>
+					<!--<HBox justifyContent="Center">-->
+					<!--	<Button type="Reject" class="sapUiSmallMarginEnd" icon="sap-icon://delete" press="onDeleteReferenceCheck"/>-->
+					<!--	<Button type="Emphasized" icon="sap-icon://edit" press="onEditReferenceCheck"/>-->
+					<!--</HBox>-->
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

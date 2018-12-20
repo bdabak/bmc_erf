@@ -1,0 +1,49 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<!--search="onF4ValueHelpSearch"-->
+	<Dialog cd:operation="{candidateModel>/type/operation}" title="{i18n>WORK_EXPERIENCE}" cd:path="{candidateModel>/type/path}"
+		contentWidth="40%">
+		<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
+			adjustLabelSpan="false" emptySpanXL="2" emptySpanL="2" emptySpanM="2" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+			singleContainerFullSize="false">
+			<f:content>
+				<Label text="{i18n>Arbgb}"/>
+				<Input value="{candidateModel>/CandidateWorkExperienceLine/Arbgb}" maxLength="60"/>
+				<Label text="{i18n>Plstx}"/>
+				<Input value="{candidateModel>/CandidateWorkExperienceLine/ZzPlstx}" maxLength="40"/>
+				<Label text="{i18n>BegdaWE}"/>
+				<DatePicker
+					value="{path: 'candidateModel>/CandidateWorkExperienceLine/Begda', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true , pattern: 'dd.MM.yyyy'}}"></DatePicker>
+				<Label text="{i18n>EnddaWE}"/>
+				<DatePicker
+					value="{path: 'candidateModel>/CandidateWorkExperienceLine/Endda', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true , pattern: 'dd.MM.yyyy'}}"></DatePicker>
+				<Label text="{i18n>Branc}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Branc' } ] }"
+					selectedKey="{candidateModel>/CandidateWorkExperienceLine/Branc}">
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Taete}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Taete' } ] }"
+					selectedKey="{candidateModel>/CandidateWorkExperienceLine/Taete}">
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Land1}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Land1' } ] }"
+					selectedKey="{candidateModel>/CandidateWorkExperienceLine/Land1}">
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Ansvx}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Ansvx' } ] }"
+					selectedKey="{candidateModel>/CandidateWorkExperienceLine/Ansvx}">
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+			</f:content>
+		</f:SimpleForm>
+		<beginButton>
+			<Button type="Accept" text="{i18n>Accept}" press="onDialogSave" cd:model="CandidateWorkExperience"/>
+		</beginButton>
+		<endButton>
+			<Button type="Reject" text="{i18n>Reject}" press="onDialogCancel" cd:model="CandidateWorkExperience"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

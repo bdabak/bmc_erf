@@ -1,0 +1,44 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<!--search="onF4ValueHelpSearch"-->
+	<Dialog cd:operation="{candidateModel>/type/operation}" contentWidth="50%" title="{i18n>FOREIGN_LANGUAGE}"
+		cd:path="{candidateModel>/type/path}">
+		<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
+			adjustLabelSpan="false" emptySpanXL="2" emptySpanL="2" emptySpanM="2" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+			singleContainerFullSize="false">
+			<f:content>
+				<Label text="{i18n>Lanid}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Lanid' } ] }"
+					selectedKey="{candidateModel>/CandidateForeignLanguageLine/Lanid}"  >
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Wrlvl}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Wrlvl' } ] }"
+					selectedKey="{candidateModel>/CandidateForeignLanguageLine/Wrlvl}"  >
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Rdlvl}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Rdlvl' } ] }"
+					selectedKey="{candidateModel>/CandidateForeignLanguageLine/Rdlvl}"  >
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Splvl}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Splvl' } ] }"
+					selectedKey="{candidateModel>/CandidateForeignLanguageLine/Splvl}"  >
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Explc}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Explc' } ] }"
+					selectedKey="{candidateModel>/CandidateForeignLanguageLine/Explc}"  >
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+			</f:content>
+		</f:SimpleForm>
+		<beginButton>
+			<Button type="Accept" text="Kaydet" press="onDialogSave" cd:model="CandidateForeignLanguage"/>
+		</beginButton>
+		<endButton>
+			<Button type="Reject" text="İptal" press="onDialogCancel" cd:model="CandidateForeignLanguage"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

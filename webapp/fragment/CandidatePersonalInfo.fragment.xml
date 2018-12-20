@@ -1,0 +1,74 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<f:Form editable="true" id="form">
+		<f:layout>
+			<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="1" emptySpanL="1"
+				emptySpanM="1" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="1" singleContainerFullSize="false"/>
+		</f:layout>
+		<f:formContainers>
+			<f:FormContainer>
+				<f:formElements>
+					<f:FormElement label="{i18n>Vorna}">
+						<f:fields>
+							<Input value="{candidateModel>/candidateData/CandidatePersonalInfo/Vorna}" type="Text" maxLength="40"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Nachn}">
+						<f:fields>
+							<Input value="{candidateModel>/candidateData/CandidatePersonalInfo/Nachn}" type="Text" maxLength="40"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Gesch}">
+						<f:fields>
+							<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Gesch' } ] }"
+								filterSecondaryValues="true" selectedKey="{candidateModel>/candidateData/CandidatePersonalInfo/Gesch}" selectionChange="onChangeGesch">
+								<core:ListItem key="{Key}" text="{Text}"/>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Famst}">
+						<f:fields>
+							<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Famst' } ] }"
+								filterSecondaryValues="true" selectedKey="{candidateModel>/candidateData/CandidatePersonalInfo/Famst}">
+								<core:ListItem key="{Key}" text="{Text}"/>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+				</f:formElements>
+			</f:FormContainer>
+			<f:FormContainer>
+				<f:formElements>
+					<f:FormElement label="{i18n>Gbdat}">
+						<f:fields>
+							<DatePicker
+								value="{path: 'candidateModel>/candidateData/CandidatePersonalInfo/Gbdat', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true , pattern: 'dd.MM.yyyy'}}"></DatePicker>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Natio}">
+						<f:fields>
+							<Input
+								value="{parts: [{path:'candidateModel>/helpText/Natio'}, {path:'candidateModel>/candidateData/CandidatePersonalInfo/Natio'}], formatter: '._getValueHelpText' }"
+								valueHelpRequest="onCountryHelp" valueHelpOnly="true" showValueHelp="true" type="Text" maxLength="40" cd:type="Natio"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Gblnd}">
+						<f:fields>
+							<Input
+								value="{parts: [{path:'candidateModel>/helpText/Gblnd'}, {path:'candidateModel>/candidateData/CandidatePersonalInfo/Gblnd'}], formatter: '._getValueHelpText' }"
+								valueHelpRequest="onCountryHelp" valueHelpOnly="true" showValueHelp="true" type="Text" maxLength="40" cd:type="Gblnd"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Gbdep}">
+						<f:fields>
+							<ComboBox id="Gbdep_id"
+								items="{path:'/CandidateValueHelpSet'}"
+								filterSecondaryValues="true" selectedKey="{candidateModel>/candidateData/CandidatePersonalInfo/Gbdep}">
+								<core:ListItem key="{Key}" text="{Text}"/>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+				</f:formElements>
+			</f:FormContainer>
+		</f:formContainers>
+	</f:Form>
+</core:FragmentDefinition>

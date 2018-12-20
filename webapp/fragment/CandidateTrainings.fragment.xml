@@ -1,0 +1,43 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Table id="idCandidateTrainings" busy="{candidateModel>/busy}" busyIndicatorDelay="0" inset="false"
+		items="{candidateModel>/candidateData/CandidateTrainingsSet}">
+		<headerToolbar>
+			<Toolbar>
+				<content>
+					<ToolbarSpacer/>
+					<Button icon="sap-icon://sys-add" type="Accept" text="{i18n>newRecord}" press="onNewDialogFragment" cd:ftype="CandidateTrainings"></Button>
+				</content>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column >
+				<Text text="{i18n>Trnme}"/>
+			</Column>
+			<Column >
+				<Text text="{i18n>Trcor}"/>
+			</Column>
+			<Column >
+				<Text text="{i18n>Trtpr}"/>
+			</Column>
+			<Column hAlign="Center">
+				<Text text="{i18n>Operation}"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="{candidateModel>Trnme}"/>
+					<Text text="{candidateModel>Trcor}"/>
+					<Text
+						text="{candidateModel>Trtpr}-{parts: [{path:'candidateModel>/helpText/Zeinh'}, {path:'candidateModel>Zeinh'}], formatter: '._getValueHelpText' }"/>
+					<HBox justifyContent="Center">
+						<Button type="Reject" class="sapUiSmallMarginEnd" icon="sap-icon://delete" press="onDelete" cd:mdl="CandidateTrainingsSet"
+							cd:emdl="CandidateWorkExperienceSet"/>
+						<Button type="Emphasized" icon="sap-icon://edit" press="onEdit" cd:mdl="CandidateTrainingsSet"/>
+					</HBox>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

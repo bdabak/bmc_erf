@@ -1,0 +1,45 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Table id="idCertificate" inset="false" busy="{candidateModel>/busy}" busyIndicatorDelay="0"
+		items="{candidateModel>/candidateData/CandidateCertificateSet}">
+		<headerToolbar>
+			<Toolbar>
+				<content>
+					<ToolbarSpacer/>
+					<Button icon="sap-icon://sys-add" type="Accept" text="{i18n>newRecord}" press="onNewDialogFragment" cd:ftype="CandidateCertificate"></Button>
+				</content>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column >
+				<Text text="{i18n>Zbelg}"/>
+			</Column>
+			<Column >
+				<Text text="{i18n>Zbolm}"/>
+			</Column>
+			<Column>
+				<Text text="{i18n>Ztarh}"/>
+			</Column>
+			<Column >
+				<Text text="{i18n>Zgecr}"/>
+			</Column>
+			<Column hAlign="Center">
+				<Text text="{i18n>Operation}"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="{parts: [{path:'candidateModel>/helpText/Zbelg'}, {path:'candidateModel>Zbelg'}], formatter: '._getValueHelpText' }"/>
+					<Text text="{candidateModel>Zkurm}"/>
+					<Text text="{ path: 'candidateModel>Ztarh', type: 'sap.ui.model.type.Date',formatOptions: { pattern: 'dd.MM.yyyy'}}"/>
+					<Text text="{ path: 'candidateModel>Zgecr', type: 'sap.ui.model.type.Date',formatOptions: { pattern: 'dd.MM.yyyy'}}"/>
+					<HBox justifyContent="Center">
+						<Button type="Reject" class="sapUiSmallMarginEnd" icon="sap-icon://delete" press="onDelete" cd:mdl="CandidateCertificateSet"/>
+						<Button type="Emphasized" icon="sap-icon://edit" press="onEdit" cd:mdl="CandidateCertificateSet"/>
+					</HBox>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

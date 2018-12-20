@@ -1,0 +1,83 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Dialog
+		title="{= ${candidateProcessModel>/CandidateReferenceCheckEdit/Refnm} === '' ? ${i18n>REFERENCE_INFORMATION_EDIT} : ${i18n>REFERENCE_INFORMATION_EDIT}.concat(' - ').concat(${candidateProcessModel>/CandidateReferenceCheckEdit/Refnm})}">
+		<content>
+			<FlexBox direction="Column">
+				<f:Form editable="true">
+					<f:layout>
+						<f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0"
+							emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"/>
+					</f:layout>
+					<f:formContainers>
+						<f:FormContainer title="{i18n>REFERENCE_INFORMATION}" expandable="true" expanded="true">
+							<f:formElements>
+								<f:FormElement label="{i18n>REFERENCE_NAME}">
+									<f:fields>
+										<Input value="{candidateProcessModel>/CandidateReferenceCheckEdit/Refnm}" valueLiveUpdate="true"/>
+									</f:fields>
+								</f:FormElement>
+								<f:FormElement label="{i18n>REFERENCE_CHECK_DATE}">
+									<f:fields>
+										<DatePicker
+											value="{path:'candidateProcessModel>/CandidateReferenceCheckEdit/Begda', type: 'sap.ui.model.type.Date', formatOptions:{ UTC: true, pattern: 'dd.MM.yyyy'}}"/>
+									</f:fields>
+								</f:FormElement>
+								<f:FormElement label="{i18n>REFERENCE_COMPANY}">
+									<f:fields>
+										<Input value="{candidateProcessModel>/CandidateReferenceCheckEdit/Refcm}"/>
+									</f:fields>
+								</f:FormElement>
+								<f:FormElement label="{i18n>REFERENCE_POSITION}">
+									<f:fields>
+										<Input value="{candidateProcessModel>/CandidateReferenceCheckEdit/Repos}"/>
+									</f:fields>
+								</f:FormElement>
+								<f:FormElement label="{i18n>REFERENCE_CHECKER}">
+									<f:fields>
+										<Input
+											value="{ parts: [{ path: 'candidateProcessModel>/CandidateReferenceCheckEdit/Rfint' }, { path: 'candidateProcessModel>/CandidateReferenceCheckEdit/Rfinx'}], formatter: '.formatter.convertZeroObjectNumber'}"
+											valueHelpOnly="true" valueHelpRequest="onEmployeeValueRequest" showValueHelp="true" cd:sourceField="Rfint"/>
+									</f:fields>
+								</f:FormElement>
+							</f:formElements>
+						</f:FormContainer>
+						<f:FormContainer title="{i18n>REFERENCE_CHECK_SURVEY}">
+							<f:formElements>
+								<f:FormElement >
+									<f:fields>
+										<Table items="{ path: 'candidateProcessModel>/CandidateReferenceCheckEdit/CandidateReferenceQuestionsSet', templateShareable: false }"
+											inset="false" alternateRowColors="true" class="sapUiSmallMarginTop">
+											<columns>
+												<Column>
+													<Text text="{i18n>REFERENCE_QUESTION}"/>
+												</Column>
+												<Column minScreenWidth="Tablet" demandPopin="true">
+													<Text text="{i18n>REFERENCE_ANSWER}"/>
+												</Column>
+											</columns>
+											<items>
+												<ColumnListItem vAlign="Middle" type="Inactive">
+													<cells>
+														<ObjectIdentifier title="{candidateProcessModel>Quest}"/>
+														<TextArea value="{candidateProcessModel>Answr}" width="100%" rows="4"/>
+													</cells>
+												</ColumnListItem>
+											</items>
+										</Table>
+									</f:fields>
+								</f:FormElement>
+							</f:formElements>
+						</f:FormContainer>
+					</f:formContainers>
+				</f:Form>
+			</FlexBox>
+		</content>
+		<beginButton>
+			<Button type="Accept" text="{i18n>Accept}" press="onSaveReferenceCheck"/>
+		</beginButton>
+		<endButton>
+			<Button type="Reject" text="{i18n>Reject}" press="onCancelEditReferenceCheck"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

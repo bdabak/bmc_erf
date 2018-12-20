@@ -1,0 +1,21 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core"
+	xmlns:smod="com.bmc.hcm.erf.control">
+	<l:Grid defaultSpan="XL2 L3 M4 S12">
+		<smod:DisplayCard headerText="{i18n>INTERNAL_POSTING}" buttonText="{i18n>EDIT_CREATE_ACTION}"
+			contentText="{i18n>INTERNAL_POSTING_DESCRIPTION}" imageClass="internal_applicant" actionSelected="onCreateInternalJobPosting"
+			isPosted="{employeeRequestView>/request/ErfpiInt}">
+			<smod:_content>
+				<Link href="{employeeRequestView>/request/ErfpuInt}" text="{i18n>CLICK_TO_GO_INTERNAL_POSTING}"
+					visible="{employeeRequestView>/request/ErfpiInt}" target="_blank" class="erfPostingLink"/>
+			</smod:_content>
+		</smod:DisplayCard>
+		<smod:DisplayCard headerText="{i18n>EXTERNAL_POSTING}" buttonText="{i18n>EDIT_CREATE_ACTION}"
+			contentText="{i18n>EXTERNAL_POSTING_DESCRIPTION}" imageClass="external_applicant" isPosted="{employeeRequestView>/request/ErfpiExt}"
+			actionSelected="onCreateExternalJobPosting">
+			<smod:_content>
+				<Link href="{employeeRequestView>/request/ErfpuExt}" text="{i18n>CLICK_TO_GO_EXTERNAL_POSTING}"
+					visible="{employeeRequestView>/request/ErfpiExt}" target="_blank" class="erfPostingLink"/>
+			</smod:_content>
+		</smod:DisplayCard>
+	</l:Grid>
+</core:FragmentDefinition>

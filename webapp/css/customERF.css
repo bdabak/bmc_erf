@@ -1,0 +1,672 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto|Material+Icons|&subset=latin-ext');
+.erfRequestPage *:not(.sapUiIcon),
+.erfMainPage *:not(.sapUiIcon),
+.erfListPage *:not(.sapUiIcon) {
+    font-family: "Roboto", sans-serif;
+}
+
+.erfRequestPage .sapFDynamicPageTitleMainRight {
+    width: 30px !important;
+}
+
+.erfRequestPage .sapFDynamicPageTitleMainLeft {
+    width: calc(100% - 30px) !important;
+}
+
+.erfRequestPage .sapFDynamicPageActualFooterControl {
+    width: calc(100% - 30px) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.erfPageBackButton {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+}
+
+.erfPageBackButton:hover {
+    background-color: #ececec;
+}
+
+.erfPageBackButtonLight:before {
+    color: #f1f1f1 !important;
+}
+
+.erfPageBackButtonLight {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+}
+
+.erfPageBackButtonLight:hover {
+    background-color: #ececec !important;
+}
+
+.erfPageBackButtonLight:hover:before {
+    color: #434f5a !important;
+}
+
+.erfTimeLine .sapSuiteUiCommonsTimelineItemShellDateTime {
+    display: none;
+}
+
+.erfMediumText {
+    margin-top: 5px;
+    font-size: 13px;
+}
+
+.erfSmallText {
+    margin-top: 10px;
+    font-size: 11px;
+}
+
+.erfMediumIconTab .sapMITBTab {
+    width: 6rem !important;
+}
+
+.erfMediumIconTab .sapMITBTab {
+    width: 6rem !important;
+}
+
+.erfMediumIconTab .sapMITBFilter .sapMITBText {
+    width: 6rem !important;
+    text-align: center !important;
+    overflow: none !important;
+}
+
+.erfBtnAccept {
+    background-image: none !important;
+    background-color: #435667 !important;
+    color: #abe2ab !important;
+}
+
+.erfProfileHeader .sapMOHRIcon .sapMImg,
+.erfProfileImage {
+    border-radius: 50% !important;
+    border: 1px solid #7b8894;
+    padding: 1px;
+}
+
+.erfProfileHeader .sapMOHRTitleIcon>.sapMOHRTitle {
+    margin-left: 4rem !important;
+    min-height: 3.7rem !important;
+}
+
+.erfDisplayOnlyCheckBox {
+    padding-left: 1.2rem !important;
+    padding-right: 1rem !important;
+}
+
+.erfTable .sapMTB-Info-CTX.sapMTB {
+    background: #697988 !important;
+    color: #ffffff !important;
+    border-left: 5px solid #e9910f;
+}
+
+.erfTable .sapMTB-Info-CTX>.sapMTitle {
+    font-style: normal !important;
+}
+
+.erfBtnReject {
+    background-image: none !important;
+    background-color: #435667 !important;
+    color: #ff8888 !important;
+}
+
+.erfBtnEmphasized {
+    background-image: none !important;
+    background-color: #435667 !important;
+    color: #ffffff !important;
+}
+
+.erfBtnAccept .sapMBtnInner {
+    color: #abe2ab !important;
+    border: 1px solid #abe2ab !important;
+    border-radius: 0.2rem;
+}
+
+.erfBtnReject .sapMBtnInner {
+    color: #ff8888 !important;
+    border: 1px solid #ff8888 !important;
+    border-radius: 0.2rem;
+}
+
+.erfBtnEmphasized .sapMBtnInner {
+    color: #ffffff !important;
+    border: 1px solid #ffffff !important;
+    border-radius: 0.2rem;
+}
+
+.erfBtnAccept .sapUiIcon {
+    color: #abe2ab !important;
+}
+
+.erfBtnReject .sapUiIcon {
+    color: #ff8888 !important;
+}
+
+.erfBtnEmphasized .sapUiIcon {
+    color: #ffffff !important;
+}
+
+:not(.sapMBtnDisabled):not(.sapMSBActive)>span.sapMBtnInner.erfBtnAccept:not(.sapMBtnActive):not(.sapMToggleBtnPressed)>.sapMBtnIcon {
+    color: #2b7c2b !important;
+}
+
+.sapMBtn:hover>.sapMBtnHoverable.erfBtnAccept:not(.sapMBtnActive) {
+    background-color: #ebebeb !important;
+    border-color: #2b7c2b !important;
+}
+
+:not(.sapMBtnDisabled)>span.sapMBtnInner.erfBtnAccept.sapMBtnActive {
+    background-color: #2b7c2b !important;
+    border-color: #2b7c2b !important;
+    text-shadow: none !important;
+}
+
+:not(.sapMBtnDisabled):not(.sapMSBActive)>span.sapMBtnInner.erfBtnReject:not(.sapMBtnActive):not(.sapMToggleBtnPressed)>.sapMBtnIcon {
+    color: #ff8888 !important;
+}
+
+.sapMBtn:hover>.sapMBtnHoverable.erfBtnReject:not(.sapMBtnActive) {
+    background-color: #4f667a !important;
+    border-color: #ff8888 !important;
+}
+
+:not(.sapMBtnDisabled)>span.sapMBtnInner.erfBtnReject.sapMBtnActive {
+    background-color: #4f667a !important;
+    border-color: #ff8888 !important;
+    text-shadow: none !important;
+}
+
+.erfFlexBoxMF {
+    margin-top: 5px;
+}
+
+.erfFlexBoxMF .erfAcceptToken {
+    margin-right: 4px;
+}
+
+.erfAcceptToken .sapMTokenIcon {
+    padding: 0 0.5rem !important;
+}
+
+.erfAcceptToken .sapUiIcon::before {
+    content: "\e05b" !important;
+    font-family: "SAP-icons" !important;
+}
+
+@-webkit-keyframes buzz-out {
+    1% {
+        -webkit-transform: translateX(3px) rotate(2deg);
+        transform: translateX(3px) rotate(2deg);
+    }
+    2% {
+        -webkit-transform: translateX(-3px) rotate(-2deg);
+        transform: translateX(-3px) rotate(-2deg);
+    }
+    3% {
+        -webkit-transform: translateX(3px) rotate(2deg);
+        transform: translateX(3px) rotate(2deg);
+    }
+    4% {
+        -webkit-transform: translateX(-3px) rotate(-2deg);
+        transform: translateX(-3px) rotate(-2deg);
+    }
+    5% {
+        -webkit-transform: translateX(2px) rotate(1deg);
+        transform: translateX(2px) rotate(1deg);
+    }
+    6% {
+        -webkit-transform: translateX(-2px) rotate(-1deg);
+        transform: translateX(-2px) rotate(-1deg);
+    }
+    7% {
+        -webkit-transform: translateX(2px) rotate(1deg);
+        transform: translateX(1px) rotate(0);
+    }
+    8% {
+        -webkit-transform: translateX(2px) rotate(1deg);
+        transform: translateX(0) rotate(0);
+    }
+    100% {
+        -webkit-transform: translateX(-1px) rotate(0);
+        transform: translateX(0) rotate(0);
+    }
+}
+
+@keyframes buzz-out {
+    1% {
+        -webkit-transform: translateX(3px) rotate(2deg);
+        transform: translateX(3px) rotate(2deg);
+    }
+    2% {
+        -webkit-transform: translateX(-3px) rotate(-2deg);
+        transform: translateX(-3px) rotate(-2deg);
+    }
+    3% {
+        -webkit-transform: translateX(3px) rotate(2deg);
+        transform: translateX(3px) rotate(2deg);
+    }
+    4% {
+        -webkit-transform: translateX(-3px) rotate(-2deg);
+        transform: translateX(-3px) rotate(-2deg);
+    }
+    5% {
+        -webkit-transform: translateX(2px) rotate(1deg);
+        transform: translateX(2px) rotate(1deg);
+    }
+    6% {
+        -webkit-transform: translateX(-2px) rotate(-1deg);
+        transform: translateX(-2px) rotate(-1deg);
+    }
+    7% {
+        -webkit-transform: translateX(2px) rotate(1deg);
+        transform: translateX(1px) rotate(0);
+    }
+    8% {
+        -webkit-transform: translateX(2px) rotate(1deg);
+        transform: translateX(0) rotate(0);
+    }
+    100% {
+        -webkit-transform: translateX(-1px) rotate(0);
+        transform: translateX(0) rotate(0);
+    }
+}
+
+.erfActionButton {
+    -moz-animation: buzz-out 5s linear infinite;
+    -webkit-animation: buzz-out 5s linear infinite;
+    animation: buzz-out 5s linear infinite;
+}
+
+.erfMainPage .sapMPageEnableScrolling::after {
+    background: url('../images/recruitment_medium.jpeg') center / cover;
+    background-repeat: no-repeat !important;
+    content: "";
+    opacity: 0.3 !important;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+.erfStatusText {
+    padding-left: 1em;
+    border-left: 5px solid #bb0000 !important;
+    line-height: 2;
+    border-radius: 4px;
+}
+
+.erfActionDate {
+    padding-left: 1em;
+    border-left: 5px solid #2b7c2b !important;
+    line-height: 2;
+    border-radius: 4px;
+}
+
+.erfStatusChangeNote {
+    position: relative;
+    padding-left: 1em;
+    border-left: 5px solid #e98c01 !important;
+    border-radius: 4px;
+    font-size: 13px !important;
+    line-height: 2 !important;
+    font-weight: 100;
+    font-style: italic;
+}
+
+.erfStatusChangeNote:before,
+.erfStatusChangeNote:after {
+    content: "\201C";
+    color: #e98c01;
+}
+
+.erfStatusChangeNote:after {
+    content: "\201D";
+}
+
+.erfWizard .sapMWizardProgressNav {
+    position: fixed !important;
+}
+
+.erfReviewPanel {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12) !important;
+    margin: 10px;
+    width: calc(100% - 20px) !important;
+    background: white !important;
+    border-radius: 4px !important;
+}
+
+.erfExternalJobPostingPage .sapMPanelHdr,
+.erfExternalJobPostingPage .sapMPanelWrappingDiv,
+.erfProcessPage .sapMPanelHdr,
+.erfProcessPage .sapMPanelWrappingDiv {
+    color: #ffffff !important;
+    background-color: #697988 !important;
+}
+
+.erfReviewPanel .sapMPanelHdr {
+    color: #ffffff !important;
+    background-color: #697988 !important;
+    border-left: 5px solid #fabd64;
+}
+
+.erfMainPage .sapMGT:hover .sapMGTWithoutImageHoverOverlay:not(.sapMGTWithoutImagePressActive) {
+    background: rgba(152, 188, 243, 0.26) !important;
+}
+
+.erfProfileHeader .sapMOHR .sapMOHRAttr .sapMObjectAttributeTitle,
+.erfProfileHeader .sapMObjStatus>.sapMObjStatusTitle {
+    color: black !important;
+}
+
+.erfRequestPage .sapFDynamicPageContent,
+.erfRequestPage .sapFDynamicPageContentFitContainer {
+    padding: 0 !important;
+}
+
+.erfHeaderLabel {
+    color: #312c2c !important;
+    border-radius: 3px;
+    padding-left: 2px;
+    padding-right: 20px;
+    font-size: 11px !important;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    font-family: "Roboto Condensed", sans-serif !important;
+}
+
+.erfHeaderLabel::after {
+    position: absolute;
+    right: 1px;
+    content: ":";
+}
+
+.erfHeaderLabelOrange {
+    border-left: 4px solid #e9910f;
+    background-color: rgba(233, 145, 15, 0.53);
+    font-weight: bold;
+}
+
+.erfHeaderLabelRed {
+    border-left: 4px solid #bb0000;
+    font-weight: bold;
+    background-color: rgba(189, 37, 0, 0.38);
+}
+
+.erfHeaderLabelPurple {
+    border-left: 4px solid #7161af;
+    background-color: rgba(113, 101, 175, 0.41);
+    font-weight: bold;
+}
+
+.erfHeaderText {
+    font-size: 11px !important;
+    color: #000000 !important;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    font-family: "Roboto", sans-serif;
+}
+
+.erfCandidateTile .sapMGTHdrContent {
+    height: 2rem !important;
+    margin: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e6e6e6;
+}
+
+.erfCandidateTile .sapMGTHdrContent .sapMGTHdrTxt * {
+    font-size: 11px !important;
+}
+
+.erfCandidateTile .sapMGTContent {
+    height: calc(100% - 2.5rem) !important;
+}
+
+.erfCandidateTile .sapMTileCntContent {
+    height: 70% !important;
+}
+
+.erfCenteredTileContent .sapMTileCntFtrTxt {
+    bottom: 0.5rem !important;
+}
+
+.erfCenteredTileContent {
+    height: 100% !important;
+}
+
+.erfCandidateTile OneByOne sapMGTHdrContent.sapMTileCntFtrTxt {
+    position: relative !important;
+    font-size: 10px;
+}
+
+.erfCenteredTileContent * {
+    display: flex !important;
+    align-items: center !important;
+    align-content: center !important;
+    justify-content: center !important;
+    font-size: 10px !important;
+}
+
+.erfHeaderTitle {
+    text-shadow: 0 0 0.125rem #c3c2c2 !important;
+    color: black !important;
+}
+
+.erfHeaderSubTitle {
+    text-shadow: 0 0 0.125rem #c3c2c2 !important;
+    color: black !important;
+    font-size: 12px;
+}
+
+.erfRequestPage .sapFDynamicPageTitle {
+    background: linear-gradient(141deg, #bdcfe0 0%, #a0beda 51%, #8cadca 75%) !important;
+}
+
+.erfAddCandidateButton {
+    background-color: rgb(225, 231, 236);
+    transition: all 0.3s ease;
+}
+
+.erfAddCandidateButton:hover {
+    background-color: rgb(38, 122, 43);
+}
+
+.erfAddCandidateButton:hover .sapUiIcon::before {
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.erfExternalCandidateTile {
+    border-bottom: 2px solid green;
+}
+
+.erfInternalCandidateTile {
+    border-bottom: 2px solid red;
+}
+
+.erfAddCandidateButton:hover .sapMTextLineClamp {
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.erfAddCandidateButton .sapMGTHdrContent,
+.erfAddCandidateButton .sapMTileCntContent {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+.erfCandidateToolbar {
+    border-bottom: none !important;
+    /* padding-left: 1.4rem; */
+    display: flex;
+    justify-content: center;
+}
+
+#pdfContainer {
+    width: 100%;
+    height: 600px;
+}
+
+.cmnCandidateCreatePage:not(.sapUiIcon),
+.cmnCandidateEditPage:not(.sapUiIcon),
+.cmnCandidateListPage:not(.sapUiIcon) {
+    font-family: "Roboto", sans-serif
+}
+
+.candidateFileUploader div {
+    width: 100%;
+}
+
+.cmnCandidateCreatePage .sapMWizardProgressNavAnchorTitle,
+.cmnCandidateEditPage .sapMITBTextOnly .sapMITBItem .sapMITBText,
+.cmnQues .sapUiBlockCellContent .sapUiBlockCellTitle {
+    font-family: "Roboto Condensed", sans-serif
+}
+
+.cmnMediumText {
+    margin-top: 5px;
+    font-size: 13px
+}
+
+.cmnIconTabBar .sapMITBContent {
+    height: -moz-available;
+    height: -webkit-fill-available;
+    height: fill-available
+}
+
+.cmnIconTabBarInt .sapMITBContent {
+    height: 100%
+}
+
+.cmnAnswer .sapUiBlockCellContent .sapUiBlockCellTitle {
+    font-size: .75rem
+}
+
+.cmnQues .sapUiBlockCellContent .sapUiBlockCellTitle {
+    font-size: 1rem
+}
+
+.erfProcessButton {
+    height: 5rem !important;
+    width: 200px !important;
+}
+
+.erfProcessButton .sapMBtnInner {
+    height: 5rem !important;
+}
+
+.erfProcessButton .sapMBtnIcon {
+    width: 2rem !important;
+}
+
+.erfProcessButton .sapMBtnContent,
+.erfProcessButton .sapMBtnIcon {
+    line-height: 5rem !important;
+}
+
+.erfProcessPage .sapMIBar.sapMHeader-CTX {
+    background-color: #3f5667 !important;
+}
+
+.erfApprovalPage .sapMIBar.sapMHeader-CTX {
+    background-color: #678092 !important;
+}
+
+.erfProcessPage .sapMIBar-CTX .sapMTitle {
+    color: #f1f1f1 !important;
+    text-shadow: none !important;
+}
+
+.erfProcessPage .sapMBtnBack .sapMBtnIcon {
+    color: #f1f1f1 !important;
+}
+
+.cmnCandidateListPage .sapFDynamicPageContentFitContainer,
+.cmnCandidateListPage .sapFDynamicPageContent {
+    padding: 0 0 0 0 !important;
+}
+
+.cmnCandidateListPage .sapFDynamicPageTitle {
+    background: #434f5a !important;
+    padding: 0.5rem 1rem 0.5rem 1rem !important;
+}
+
+.cmnCandidateListPage .sapFDynamicPageTitle .sapMTitle {
+    color: #f1f1f1 !important;
+    text-shadow: none !important;
+}
+
+.candidateNotesList .sapMNLI-Details .sapMNLI-Text {
+    font-weight: bold;
+}
+
+.candidateNotesList .sapMNLB-Bullet,
+.candidateNotesList .sapMNLI-Datetime {
+    display: none !important;
+}
+
+.hapApprovalPanel .sapMPanelWrappingDivExpanded {
+    background-color: #dedede;
+}
+
+.erfCardLabel {
+    padding-left: 2px;
+    font-weight: bold;
+    color: #333333;
+}
+
+.erfCardText {
+    padding-left: 2px;
+    padding-bottom: 2px;
+}
+
+.erfSmallComboBox .sapMInputBaseInner {
+    font-size: 11px !important;
+}
+
+.erfExternalJobPostingPage .sapMLabel {
+    font-size: 0.75rem !important;
+}
+
+.erfExternalJobPostingPage .sapMLabelRequired:before {
+    font-size: 1rem !important;
+}
+
+.erfExternalJobPostingPage .sapUiFormResGridCont {
+    padding-bottom: 0 !important;
+}
+
+.erfPostingLink {
+    white-space: normal !important;
+}
+
+.erfWideIconTab .sapMITBFilter .sapMITBText {
+    padding: 0 !important;
+    padding-left: 0.25rem !important;
+    white-space: normal !important;
+}

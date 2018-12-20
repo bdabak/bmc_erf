@@ -1,0 +1,55 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<f:Form editable="true">
+		<f:layout>
+			<f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanM="6"
+				emptySpanS="0" emptySpanL="6" emptySpanXL="6" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="true"/>
+		</f:layout>
+		<f:formContainers>
+			<f:FormContainer>
+				<f:formElements>
+					<f:FormElement label="{i18n>Exslr}">
+						<f:fields>
+							<Input type="Number" value="{path: 'candidateProcessModel>/CandidateWage/Exslr', type:'sap.ui.model.odata.type.Decimal'}"
+								editable="{candidateProcessModel>/ViewSettings/WageInit}"/>
+							<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Waers' }]}"
+								filterSecondaryValues="true" selectedKey="{candidateProcessModel>/CandidateWage/ExslrWaers}"
+								editable="{candidateProcessModel>/ViewSettings/WageInit}">
+								<core:ListItem key="{Key}" text="{Key}"/>
+							</ComboBox>
+							<RadioButtonGroup columns="2" buttons="{path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Payty' }]}">
+								<RadioButton text="{Text}" selected="{= ${Key} === ${candidateProcessModel>/CandidateWage/ExslrPayty} }" select="onPaytySelected"
+									visible="{= ${Key} !== ''}" cd:targetField="/CandidateWage/ExslrPayty" cd:targetValue="{Key}"
+									editable="{candidateProcessModel>/ViewSettings/WageInit}"></RadioButton>
+							</RadioButtonGroup>
+						</f:fields>
+					</f:FormElement>
+					<!--<f:FormElement label="{i18n>WAGE_TYPE}}">-->
+					<!--	<f:fields>-->
+					<!--		<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Payty' }]}"-->
+					<!--			filterSecondaryValues="true" selectedKey="{candidateProcessModel>/CandidateWage/ExslrPayty}"-->
+					<!--			editable="{candidateProcessModel>/ViewSettings/WageInit}">-->
+					<!--			<core:ListItem key="{Key}" text="{Text}"/>-->
+					<!--		</ComboBox>-->
+					<!--	</f:fields>-->
+					<!--</f:FormElement>-->
+					<!--<f:FormElement label="{i18n>WAGE_PERIOD}}">-->
+					<!--	<f:fields>-->
+					<!--		<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Calty' }]}"-->
+					<!--			filterSecondaryValues="true" selectedKey="{candidateProcessModel>/CandidateWage/ExslrCalty}"-->
+					<!--			editable="{candidateProcessModel>/ViewSettings/WageInit}">-->
+					<!--			<core:ListItem key="{Key}" text="{Text}"/>-->
+					<!--		</ComboBox>-->
+					<!--	</f:fields>-->
+					<!--</f:FormElement>-->
+					<f:FormElement label="{i18n>ExslrAdben}">
+						<f:fields>
+							<TextArea value="{candidateProcessModel>/CandidateWage/ExslrAdben}" maxLength="255"
+								editable="{candidateProcessModel>/ViewSettings/WageInit}" rows="3"/>
+						</f:fields>
+					</f:FormElement>
+				</f:formElements>
+			</f:FormContainer>
+		</f:formContainers>
+	</f:Form>
+</core:FragmentDefinition>

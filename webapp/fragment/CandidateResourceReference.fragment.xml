@@ -1,0 +1,42 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<f:Form editable="true" id="ResourceReferenceForm">
+		<f:layout>
+			<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanM="5" emptySpanS="0"
+				emptySpanL="4" emptySpanXL="4" columnsXL="4" columnsL="4" columnsM="4" singleContainerFullSize="true"/>
+		</f:layout>
+		<f:formContainers>
+			<f:FormContainer>
+				<f:formElements>
+					<f:FormElement label="{i18n>CANDIDATE_HAS_REFERENCE_VIP}">
+						<f:fields>
+							<CheckBox selected="{candidateModel>/candidateData/CandidateResourceReference/Isvic}"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>CANDIDATE_HAS_REFERENCE_BMC}">
+						<f:fields>
+							<CheckBox selected="{candidateModel>/candidateData/CandidateResourceReference/Isbmc}"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>REFERENCE_INTERNAL}" visible="{candidateModel>/candidateData/CandidateResourceReference/Isbmc}">
+						<f:fields>
+							<Input
+								value="{ parts: [{ path: 'candidateModel>/candidateData/CandidateResourceReference/Refpn' }, { path: 'candidateModel>/candidateData/CandidateResourceReference/Refnm'}], formatter: '.formatter.convertZeroObjectNumber'}"
+								valueHelpOnly="true" valueHelpRequest="onEmployeeValueRequest" showValueHelp="true" cd:sourceField="Refpn"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>REFERENCE_EXTERNAL}" visible="{= !${candidateModel>/candidateData/CandidateResourceReference/Isbmc} }">
+						<f:fields>
+							<Input value="{candidateModel>/candidateData/CandidateResourceReference/Refnm}" type="Text" maxLength="50"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>REFERENCE_POSITION}">
+						<f:fields>
+							<Input value="{candidateModel>/candidateData/CandidateResourceReference/Refps}" type="Text" maxLength="50"/>
+						</f:fields>
+					</f:FormElement>
+				</f:formElements>
+			</f:FormContainer>
+		</f:formContainers>
+	</f:Form>
+</core:FragmentDefinition>

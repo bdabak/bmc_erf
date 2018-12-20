@@ -1,0 +1,43 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core"
+	xmlns:rte="sap.ui.richtexteditor">
+	<Wizard id="idInternalJobPostingWizard" complete="onInternalJobPostingPrepared" class="erfWizard">
+		<WizardStep id="idInternalJobPostingStep1" title="{i18n>POSTING_POSITION_INFO}" validated="{internalJobPostingModel>/stepOneValid}"
+			icon="sap-icon://company-view">
+			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+				adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0">
+				<Label text="{i18n>POSTING_COMPANY}" required="true" labelFor="idInternalPostingCompany"/>
+				<Input id="idInternalPostingCompany" liveChange="onValidateInternalJobPostingSteps" value="{internalJobPostingModel>/postingData/Butxt}"
+					maxLength="25"/>
+				<Label text="{i18n>POSTING_ORGUNIT}" required="true" labelFor="idInternalPostingOrgunit"/>
+				<Input id="idInternalPostingOrgunit" liveChange="onValidateInternalJobPostingSteps" value="{internalJobPostingModel>/postingData/Orgtx}"
+					maxLength="40"/>
+				<Label text="{i18n>POSTING_POSITION}" required="true" labelFor="idInternalPostingPosition"/>
+				<Input id="idInternalPostingPosition" liveChange="onValidateInternalJobPostingSteps" value="{internalJobPostingModel>/postingData/Plstx}"
+					maxLength="40"/>
+				<Label text="{i18n>POSTING_BEGIN_DATE}" required="true" labelFor="idInternalPostingBeginDate"/>
+				<DatePicker id="idInternalPostingBeginDate" dateValue="{internalJobPostingModel>/postingData/Begda}" displayFormat="dd.MM.yyyy"
+					placeholder="{i18n>POSTING_BEGIN_DATE_TT}" required="true" change="onValidateInternalJobPostingSteps"/>
+				<Label text="{i18n>POSTING_END_DATE}" required="true" labelFor="idInternalPostingEndDate"/>
+				<DatePicker id="idInternalPostingEndDate" dateValue="{internalJobPostingModel>/postingData/Endda}" displayFormat="dd.MM.yyyy"
+					placeholder="{i18n>POSTING_END_DATE_TT}" required="true" change="onValidateInternalJobPostingSteps"/>
+				<Label text="{i18n>POSTING_STATUS}" labelFor="idPostingStatus"/>
+				<CheckBox id="idPostingStatus" select="onValidateInternalJobPostingSteps" selected="{internalJobPostingModel>/postingData/Jpsta}"/>
+			</f:SimpleForm>
+		</WizardStep>
+		<WizardStep id="idInternalJobPostingStep2" title="{i18n>POSTING_REQUIRED_QUALIFICATIONS}"
+			validated="{internalJobPostingModel>/stepTwoValid}" activate="onValidateInternalJobPostingSteps" icon="sap-icon://customize">
+			<l:VerticalLayout class="sapUiNoContentPadding" width="100%">
+				<rte:RichTextEditor value="{internalJobPostingModel>/postingData/Erfrq}" id="idInternalPostingRequiredQualifications" width="100%"
+					height="300px" editorType="TinyMCE4" showGroupUndo="true" showGroupFont="true" customToolBar="true"
+					change="onValidateInternalJobPostingSteps"></rte:RichTextEditor>
+			</l:VerticalLayout>
+		</WizardStep>
+		<WizardStep id="idInternalJobPostingStep3" title="{i18n>POSTING_JOB_DESCRIPTION}" validated="{internalJobPostingModel>/stepThreeValid}"
+			activate="onValidateInternalJobPostingSteps" icon="sap-icon://legend">
+			<l:VerticalLayout class="sapUiNoContentPadding" width="100%">
+				<rte:RichTextEditor value="{internalJobPostingModel>/postingData/Erfjd}" id="idInternalPostingJobDescription" width="100%" height="300px"
+					editorType="TinyMCE4" showGroupUndo="true" showGroupFont="true" customToolBar="true" change="onValidateInternalJobPostingSteps"></rte:RichTextEditor>
+			</l:VerticalLayout>
+		</WizardStep>
+	</Wizard>
+</core:FragmentDefinition>

@@ -1,0 +1,22 @@
+<mvc:View controllerName="com.bmc.hcm.erf.controller.JobPosting" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core"
+	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
+	<NavContainer id="idInternalJobPostingNavContainer">
+		<pages>
+			<Page id="idInternalJobPostingWizardPage" showHeader="true" showNavButton="true" navButtonPress="onNavBack"
+				title="{i18n>INTERNAL_POSTING_EDIT}">
+				<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.InternalJobPostingWizard" type="XML"/>
+			</Page>
+			<Page id="idInternalJobPostingDisplayPage" showHeader="true" showNavButton="true" navButtonPress="onNavBackReview"
+				title="{i18n>INTERNAL_POSTING_REVIEW}" floatingFooter="true">
+				<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.InternalJobPostingDisplay" type="XML"/>
+				<footer>
+					<OverflowToolbar>
+						<ToolbarSpacer/>
+						<Button type="Emphasized" text="{i18n>EDIT_ACTION}" press="onNavBackReview"/>
+						<Button type="Accept" text="{i18n>SAVE_ACTION}" press="onInternalPostingCreate"/>
+					</OverflowToolbar>
+				</footer>
+			</Page>
+		</pages>
+	</NavContainer>
+</mvc:View>

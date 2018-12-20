@@ -1,0 +1,45 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">
+	<Table id="idCandidateAttachmentList" busy="{candidateModel>/busy}" busyIndicatorDelay="0" inset="true"
+		items="{path:'/CandidateAttachmentSet'}">
+		<headerToolbar>
+			<Toolbar>
+				<content>
+					<ToolbarSpacer/>
+					<MenuButton text="{i18n>DocTy}">
+						<menu>
+							<Menu items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Canat'}]}" itemSelected="onMenuSelect">
+								<MenuItem key="{Key}" text="{Text}" icon="{Icon}"/>
+							</Menu>
+						</menu>
+					</MenuButton>
+				</content>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column >
+				<Text text="{i18n>Aname}"/>
+			</Column>
+			<Column >
+				<Text text="{i18n>DocTy}"/>
+			</Column>
+			<Column hAlign="Center">
+				<Text text="{i18n>Crdat}"/>
+			</Column>
+			<Column hAlign="Center">
+				<Text text="{i18n>Operation}"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Link press="onAttachDownload" text="{Aname}"/>
+					<Text text="{parts: [{path:'candidateModel>/helpText/Canat'}, {path:'Attty'}], formatter: '._getValueHelpText' }"/>
+					<Text text="{ path: 'Crdat', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd.MM.yyyy'}}"/>
+					<HBox justifyContent="Center">
+						<Button type="Reject" class="sapUiSmallMarginEnd" icon="sap-icon://delete" press="onDeleteAttachment"/>
+					</HBox>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

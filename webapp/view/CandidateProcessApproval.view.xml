@@ -1,0 +1,73 @@
+<mvc:View controllerName="com.bmc.hcm.erf.controller.CandidateProcessApproval" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic" xmlns:footerbar="sap.ushell.ui.footerbar" busy="{approvalListView>/busy}" busyIndicatorDelay="100">
+	<Page showFooter="true" showHeader="true" floatingFooter="true" showNavButton="true" navButtonPress="onNavBack"
+		title="{i18n>CANDIDATE_PROCESS_APPROVALS}" class="erfListPage">
+		<Table id="idCandidateApprovalListTable" width="auto" class="erfTable" items="{ path: '/CandidateProcessApprovalSet'}"
+			noDataText="{i18n>NO_PROCESS_APPROVAL_FOUND}" busy="{processApprovalModel>/busy}" busyIndicatorDelay="0" growing="true"
+			growingScrollToLoad="true" updateFinished="onUpdateFinished" updateStarted="onUpdateStarted" inset="false">
+			<!--<headerToolbar>-->
+			<!--	<Toolbar>-->
+			<!--		<ToolbarSpacer/>-->
+			<!--		<SearchField id="searchField" tooltip="{i18n>REQUEST_SEARCH_TOOLTIP}" search="onSearch"-->
+			<!--			width="{= ${device>/system/phone} ? '100%' : '50%' }"></SearchField>-->
+			<!--	</Toolbar>-->
+			<!--</headerToolbar>-->
+			<infoToolbar>
+				<Toolbar>
+					<Title id="idProcessApprovalListTableHeader" text="{i18n>CANDIDATE_PROCESS_APPROVALS}"/>
+				</Toolbar>
+			</infoToolbar>
+			<columns>
+				<Column id="idCandidateNameColumn">
+					<Text text="{i18n>CANDIDATE_FULLNAME}"/>
+				</Column>
+				<Column id="idProcessStatusColumn">
+					<Text text="{i18n>PROCESS_STATUS}"/>
+				</Column>
+				<Column id="idPositionColumn">
+					<Text text="{i18n>POSITION}"/>
+				</Column>
+				<Column id="idRequestOwnerColumn" demandPopin="true">
+					<Text text="{i18n>REQUEST_OWNER}"/>
+				</Column>
+				<Column id="idRequestDateColumn" minScreenWidth="Tablet" demandPopin="true">
+					<Text text="{i18n>REQUEST_DATE}"/>
+				</Column>
+				<Column id="idActionsColumn" minScreenWidth="Tablet" demandPopin="true">
+					<Text text="{i18n>ACTION_LIST}"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem type="Inactive">
+					<cells>
+						<ObjectIdentifier title="{Ename}" text="{= ${Tclas} === 'A' ? ${i18n>INTERNAL_APPLICANT} : ${i18n>EXTERNAL_APPLICANT} }"/>
+						<Link text="{= ${Cansy} ? ${Cansx}.concat(' - ').concat(${Cansy}) : ${Cansx}}" wrapping="true" press="onProcessDetail"/>
+						<Text text="{= ${Nopln} ? ${Plaft} : ${Plstx} }"/>
+						<Text text="{Rqowe}" wrapping="true"/>
+						<Text
+							text="{ path: 'Actdt', type: 'sap.ui.model.type.Date', formatOptions: { pattern:'dd.MM.yyyy'} } - { path: 'Acttm', type: 'sap.ui.model.odata.type.Time', formatOptions: { pattern:'HH:mm'} }"/>
+						<MenuButton text="{i18n>CHOOSE_AN_ACTION}">
+							<menu>
+								<Menu>
+									<items>
+										<MenuItem text="{i18n>PROCESS_ACTIONS}" icon="sap-icon://action-settings">
+											<items>
+												<MenuItem text="{i18n>GO_TO_PROCESS}" icon="sap-icon://detail-view" press="onProcessDetail"/>
+											</items>
+										</MenuItem>
+										<MenuItem text="{i18n>PRINT_OUTS}" icon="sap-icon://pdf-attachment">
+											<items>
+												<MenuItem text="{i18n>RESUME}" icon="sap-icon://employee-pane" press="onCandidateResumePrintOut"/>
+												<MenuItem text="{i18n>EMPLOYEE_REQUEST_FORM}" icon="sap-icon://employee-lookup" press="onEmployeeRequestFormPrintOut"/>
+											</items>
+										</MenuItem>
+									</items>
+								</Menu>
+							</menu>
+						</MenuButton>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+	</Page>
+</mvc:View>

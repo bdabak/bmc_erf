@@ -1,0 +1,33 @@
+<core:FragmentDefinition xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout"
+	xmlns="sap.m" xmlns:u="sap.ui.unified">
+	<Dialog title="{i18n>UPLOAD_PHOTO_DIALOG}" showHeader="true" stretch="{device>/system/phone}" id="idUploadCandidatePhotoDialog"
+		contentWidth="600px">
+		<content>
+			<f:Form id="idUploadPhotoForm" editable="true">
+				<f:layout>
+					<f:ResponsiveGridLayout labelSpanXL="2" labelSpanL="2" labelSpanM="2" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+						emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="true"/>
+				</f:layout>
+				<f:formContainers>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement >
+								<f:fields>
+									<u:FileUploader id="idCandidatePhotoUploader" name="candidatePhotoUploader" uploadUrl="" uploadComplete="onCandidatePhotoUploadComplete"
+										change="onAttachmentFileChange" typeMissmatch="onFileTypeMissmatch" style="Emphasized" fileType="jpg,jpeg" maximumFileSize="5"
+										fileSizeExceed="onFileSizeExceed" placeholder="{i18n>LABEL_UPLOAD_PLACEHOLDER}" sendXHR="true" useMultipart="false"
+										class="candidateFileUploader"></u:FileUploader>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+			</f:Form>
+		</content>
+		<buttons>
+			<Button text="{i18n>LABEL_UPLOAD_IMAGE}" icon="sap-icon://add-photo" type="Emphasized" press="onCandidatePhotoUploadPress"
+				id="idUploadCandidateInterviewForm"/>
+			<Button text="{i18n>LABEL_CANCEL}" icon="sap-icon://sys-cancel-2" type="Reject" press="onCloseCandidatePhotoUploadDialog"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

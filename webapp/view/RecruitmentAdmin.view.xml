@@ -1,0 +1,69 @@
+<mvc:View controllerName="com.bmc.hcm.erf.controller.RecruitmentAdmin" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic" xmlns:footerbar="sap.ushell.ui.footerbar" busy="{recruitmentAdminModel>/busy}" busyIndicatorDelay="100">
+	<Page showFooter="true" showHeader="true" floatingFooter="true" showNavButton="true" navButtonPress="onNavBack"
+		title="{i18n>RECRUITMENT_ADMIN_PAGE}" class="erfListPage">
+		<IconTabBar id="idRecAdmIconTab" class="erfWideIconTab">
+			<items>
+				<IconTabFilter icon="sap-icon://form" iconColor="Positive" count="{recruitmentAdminModel>/searchResults/ERF}"
+					text="{i18n>EMPLOYEE_REQUEST_FORM_LIST}" key="ERF" design="Horizontal">
+					<Table id="idRecAdmEmployeeRequestTable" width="auto"
+						items="{ path: '/EmployeeRequestFormSet',filters : [ { path : 'Erfap', operator : 'EQ', value1 : 'REQUEST_LIST_ADMIN'}, { path : 'Erfsf', operator : 'EQ', value1 : 'ALL'}] }"
+						noDataText="{recruitmentAdminModel>/tableNoDataText}" busyIndicatorDelay="{recruitmentAdminModel>/tableBusyDelay}" growing="true"
+						growingScrollToLoad="true" updateFinished="onUpdateFinished" updateStarted="onUpdateStarted" class="erfTable">
+						<headerToolbar>
+							<Toolbar>
+								<ToolbarSpacer/>
+								<SearchField id="searchField" placeholder="{i18n>REQUEST_SEARCH_TOOLTIP}" search="onSearch"
+									width="{= ${device>/system/phone} ? '100%' : '50%' }"></SearchField>
+							</Toolbar>
+						</headerToolbar>
+						<columns>
+							<Column id="idPositionColumn" minScreenWidth="Tablet" demandPopin="true">
+								<Text text="{i18n>POSITION}"/>
+							</Column>
+							<Column id="idRequestReasonColumn" minScreenWidth="Tablet" demandPopin="true">
+								<Text text="{i18n>REQUEST_REASON}"/>
+							</Column>
+							<Column id="idRequestOwnerColumn" minScreenWidth="Tablet" demandPopin="true">
+								<Text text="{i18n>REQUEST_OWNER}"/>
+							</Column>
+							<Column id="idRequestStatusColumn" minScreenWidth="Desktop" demandPopin="true">
+								<Text text="{i18n>REQUEST_STATUS}"/>
+							</Column>
+							<Column id="idRequestDateColumn" minScreenWidth="Desktop" demandPopin="true">
+								<Text text="{i18n>REQUEST_DATE}"/>
+							</Column>
+							<Column id="idRecruiterColumn" minScreenWidth="Tablet" demandPopin="true">
+								<Text text="{i18n>RECRUITER_NAME}"/>
+							</Column>
+							<Column id="idRequestOnWhoColumn" minScreenWidth="Desktop" demandPopin="true">
+								<Text text="{i18n>REQUEST_ON_WHO}"/>
+							</Column>
+							<Column id="idActionsColumn" minScreenWidth="Tablet" width="5rem" hAlign="Center">
+								<Text text="{i18n>ACTION_LIST}"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem type="Navigation" press="onPress">
+								<cells>
+									<ObjectIdentifier title="{= ${Nopln} ? ${Plaft} : ${Plstx} }" text="{Erfno}"/>
+									<Text text="{Erfrx}"/>
+									<Text text="{Rqowe}"/>
+									<Text text="{ parts: [ {path: 'Erfsx' }, {path: 'Erfsy' }], formatter: '.formatter.getStatusText' }"/>
+									<Text
+										text="{ path: 'Rqdat', type: 'sap.ui.model.type.Date', formatOptions: { pattern:'dd.MM.yyyy'} } - { path: 'Rqtim', type: 'sap.ui.model.odata.type.Time', formatOptions: { pattern:'HH:mm'} }"/>
+									<Text text="{Erfoe}"/>
+									<Text text="{Frone}"/>
+									<Button icon="sap-icon://menu" type="Accept" press="onAvailableRequestActions" tooltip="{i18n>ACTION_LIST}"
+										visible="{ path:'Erfrf', formatter: '.onCheckActionAvailable'}" class="erfActionButton"></Button>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</IconTabFilter>
+				<IconTabFilter icon="sap-icon://employee-lookup" iconColor="Critical" count="{recruitmentAdminModel>/searchResults/CPR}"
+					text="{i18n>CANDIDATE_PROCESSES}" key="CPR" design="Horizontal"/>
+			</items>
+		</IconTabBar>
+	</Page>
+</mvc:View>

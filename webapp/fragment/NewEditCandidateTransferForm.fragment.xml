@@ -1,0 +1,43 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<!--search="onF4ValueHelpSearch"-->
+	<Dialog cd:operation="{candidateModel>/type/operation}" title="{i18n>TRANSFER_INFORMATION}" cd:path="{candidateModel>/type/path}"
+		contentWidth="40%">
+		<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
+			adjustLabelSpan="false" emptySpanXL="2" emptySpanL="2" emptySpanM="2" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+			singleContainerFullSize="false">
+			<f:content>
+				<Label text="{i18n>Intty}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Intty' } ] }"
+					selectedKey="{TransferRequestModel>/CandidateTransferForm/Intty}">
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Intdt}"/>
+				<DatePicker
+					value="{path: 'TransferRequestModel>/CandidateTransferForm/Intdt', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+				<Label text="{i18n>Inttm}"/>
+				<TimePicker value="{path: 'TransferRequestModel>/CandidateTransferForm/Inttm', type: 'sap.ui.model.odata.type.Time'}"/>
+				<Label text="{i18n>Plcar}"/>
+				<TextArea value="{TransferRequestModel>/CandidateTransferForm/Plcar}" maxLength="360"/>
+				<Label text="{i18n>Cnard}"/>
+				<DatePicker
+					value="{path: 'TransferRequestModel>/CandidateTransferForm/Cnard', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+				<Label text="{i18n>Cnart}"/>
+				<TimePicker value="{path: 'TransferRequestModel>/CandidateTransferForm/Cnart', type: 'sap.ui.model.odata.type.Time'}"/>
+				<Label text="{i18n>Plcdp}"/>
+				<TextArea value="{TransferRequestModel>/CandidateTransferForm/Plcdp}" maxLength="360"/>
+				<Label text="{i18n>Plard}"/>
+				<DatePicker
+					value="{path: 'TransferRequestModel>/CandidateTransferForm/Plard', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+				<Label text="{i18n>Plart}"/>
+				<TimePicker value="{path: 'TransferRequestModel>/CandidateTransferForm/Plart', type: 'sap.ui.model.odata.type.Time'}"/>
+			</f:content>
+		</f:SimpleForm>
+		<beginButton>
+			<Button type="Accept" text="{i18n>Accept}" press="onTransferDialogSave"/>
+		</beginButton>
+		<endButton>
+			<Button type="Reject" text="{i18n>Reject}" press="onTransferCancel"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

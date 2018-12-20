@@ -1,0 +1,65 @@
+<mvc:View controllerName="com.bmc.hcm.erf.controller.CandidateDetail" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:we="com/bmc/hcm/erf/control"
+	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Page id="idCandidateProfileCreatePage" showHeader="true" class="cmnCandidateCreatePage" busy="{candidateModel>/busy}"
+		busyIndicatorDelay="0" showNavButton="true" navButtonPress="onNavBack" title="{i18n>CANDIDATE_CREATE_PAGE}">
+		<content>
+			<we:WizardExtend id="CreateCandidateWizard" complete="onCreateCandidateCompleted" enableBranching="true">
+				<WizardStep id="CandidatePersonalInfo" title="{i18n>PERSONAL_INFORMATION}" nextStep="CandidateResourceReference" validated="true">
+					<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidatePersonalInfo" type="XML"/>
+				</WizardStep>
+				<WizardStep id="CandidateResourceReference" title="{i18n>RESOURCE_REFERENCE}" nextStep="CandidateAdress">
+					<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateResourceReference" type="XML"/>
+				</WizardStep>
+				<WizardStep id="CandidateAdress" validated="true" title="{i18n>ADRESS_INFORMATION}" nextStep="CandidateWorkExperience">
+					<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateAdress" type="XML"/>
+				</WizardStep>
+				<WizardStep id="CandidateWorkExperience" validated="true" title="{i18n>WORK_EXPERIENCE}" nextStep="CandidateEducation">
+					<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateWorkExperience" type="XML"/>
+				</WizardStep>
+				<WizardStep id="CandidateEducation" validated="true" title="{i18n>EDUCATION_INFORMATION}" nextStep="CandidateMilitaryStatus">
+					<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateEducation" type="XML"/>
+				</WizardStep>
+				<WizardStep id="CandidateMilitaryStatus" validated="true" title="{i18n>MILITARY_STATUS}" nextStep="CandidateAdditionalInfo">
+					<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateMilitaryStatus" type="XML"/>
+				</WizardStep>
+				<WizardStep id="CandidateAdditionalInfo" validated="true" title="{i18n>ADDITIONAL_INFORMATION}" nextStep="CandidateCertificate">
+					<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateAdditionalInfo" type="XML"/>
+				</WizardStep>
+				<WizardStep id="CandidateCertificate" validated="true" title="{i18n>CERTIFICATE_INFORMATION}" nextStep="CandidateForeignLanguage">
+					<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateCertificate" type="XML"/>
+				</WizardStep>
+				<WizardStep id="CandidateForeignLanguage" validated="true" title="{i18n>FOREIGN_LANGUAGE}" nextStep="CandidateHealth">
+					<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateForeignLanguage" type="XML"/>
+				</WizardStep>
+				<WizardStep id="CandidateHealth" validated="true" title="{i18n>HEALTH_INFORMATION}" nextStep="CandidateExam">
+					<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateHealth" type="XML"/>
+				</WizardStep>
+				<WizardStep id="CandidateExam" validated="true" title="{i18n>EXAM_INFORMATION}" nextStep="CandidateTrainings">
+					<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateExam" type="XML"/>
+				</WizardStep>
+				<WizardStep id="CandidateTrainings" validated="true" title="{i18n>TAKEN_TRAININGS}" nextStep="CandidateReferenceInfo">
+					<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateTrainings" type="XML"/>
+				</WizardStep>
+				<WizardStep id="CandidateReferenceInfo" validated="true" title="{i18n>REFERENCE_INFORMATION}" nextStep="CandidateIntegrationInfo">
+					<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateReferenceInfo" type="XML"/>
+				</WizardStep>
+				<WizardStep id="CandidateIntegrationInfo" validated="true" title="{i18n>INTEGRATION_INFORMATION}" nextStep="CandidateCommunication">
+					<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateIntegrationInfo" type="XML"/>
+				</WizardStep>
+				<WizardStep id="CandidateCommunication" validated="true" title="{i18n>COMMUNICATION_INFORMATION}">
+					<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateCommunication" type="XML"/>
+				</WizardStep>
+			</we:WizardExtend>
+		</content>
+		<footer>
+			<Toolbar>
+				<Button icon="sap-icon://message-popup" text="{candidateModel>/error/number}" type="Emphasized" press="onMessagePress"/>
+				<ToolbarSpacer/>
+				<Button text="{i18n>BACK_ACTION}" press="onNavBack" type="Reject" icon="sap-icon://nav-back"/>
+				<Button text="{i18n>CREATE_CANDIDATE}" press="onPressCreate" type="Emphasized" icon="sap-icon://add-employee"
+					enabled="{ path: 'candidateModel>/candidateData/CandidatePersonalInfo', formatter: '.onDecideCreateButtonEnabled'}"/>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

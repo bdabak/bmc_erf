@@ -1,0 +1,49 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Table id="idCandidateForeignLanguage" busy="{candidateModel>/busy}" busyIndicatorDelay="0" inset="false"
+		items="{candidateModel>/candidateData/CandidateForeignLanguageSet}">
+		<headerToolbar>
+			<Toolbar>
+				<content>
+					<ToolbarSpacer/>
+					<Button icon="sap-icon://sys-add" type="Accept" text="{i18n>newRecord}" press="onNewDialogFragment" cd:ftype="CandidateForeignLanguage"></Button>
+				</content>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column >
+				<Text text="{i18n>Lanid}"/>
+			</Column>
+			<Column >
+				<Text text="{i18n>Wrlvl}"/>
+			</Column>
+			<Column>
+				<Text text="{i18n>Rdlvl}"/>
+			</Column>
+			<Column >
+				<Text text="{i18n>Splvl}"/>
+			</Column>
+			<Column >
+				<Text text="{i18n>Explc}"/>
+			</Column>
+			<Column width="10rem" hAlign="Center">
+				<Text text="{i18n>Operation}"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="{parts: [{path:'candidateModel>/helpText/Lanid'}, {path:'candidateModel>Lanid'}], formatter: '._getValueHelpText' }"/>
+					<Text text="{parts: [{path:'candidateModel>/helpText/Wrlvl'}, {path:'candidateModel>Wrlvl'}], formatter: '._getValueHelpText' }"/>
+					<Text text="{parts: [{path:'candidateModel>/helpText/Rdlvl'}, {path:'candidateModel>Rdlvl'}], formatter: '._getValueHelpText' }"/>
+					<Text text="{parts: [{path:'candidateModel>/helpText/Splvl'}, {path:'candidateModel>Splvl'}], formatter: '._getValueHelpText' }"/>
+					<Text text="{parts: [{path:'candidateModel>/helpText/Explc'}, {path:'candidateModel>Explc'}], formatter: '._getValueHelpText' }"/>
+					<HBox justifyContent="Center">
+						<Button type="Reject" class="sapUiSmallMarginEnd" icon="sap-icon://delete" press="onDelete" cd:mdl="CandidateForeignLanguageSet"/>
+						<Button type="Emphasized" icon="sap-icon://edit" press="onEdit" cd:mdl="CandidateForeignLanguageSet"/>
+					</HBox>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

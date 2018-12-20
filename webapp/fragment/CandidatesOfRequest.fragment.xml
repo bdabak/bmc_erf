@@ -1,0 +1,116 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:layout="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core"
+	xmlns:smod="smod.ui5.controls.src.controls">
+	<VBox width="100%">
+		<Toolbar class="erfCandidateToolbar">
+			<ToolbarSpacer/>
+			<Button type="Reject" icon="sap-icon://synchronize" text="{i18n>ADD_INTERNAL_CANDIDATE}" press="onInternalCandidateAdd"
+				visible="{= ${employeeRequestView>/request/Erfsf} === 'APP' &amp;&amp; ${employeeRequestView>/request/Erfso} === 'H01' }"/>
+			<Button type="Accept" icon="sap-icon://pull-down" text="{i18n>ADD_EXTERNAL_CANDIDATE}" press="onApplicantAdd"
+				visible="{= ${employeeRequestView>/request/Erfsf} === 'APP' &amp;&amp; ${employeeRequestView>/request/Erfso} === 'H01' }"/>
+			<Button type="Emphasized" icon="sap-icon://refresh" text="{i18n>REFRESH_ACTION}" press="onRefreshCandidate"/>
+			<ToolbarSpacer/>
+			<SegmentedButton selectedKey="{employeeRequestView>/candidateListStyle}">
+				<items>
+					<SegmentedButtonItem icon="sap-icon://list" key="display-in-table"/>
+					<SegmentedButtonItem icon="sap-icon://grid" key="display-in-grid"/>
+				</items>
+			</SegmentedButton>
+		</Toolbar>
+		<FlexBox justifyContent="Center" width="100%" visible="{= ${employeeRequestView>/candidateList/0} ? false : true}"
+			class="sapUiMediumMarginTop">
+			<MessageStrip type="Warning" text="{i18n>NO_CANDIDATES_ASSIGNED}" showIcon="true"></MessageStrip>
+		</FlexBox>
+		<Table id="idCandidateListTable" inset="false" items="{employeeRequestView>/candidateList}"
+			visible="{= !!${employeeRequestView>/candidateList/0} &amp;&amp; ${employeeRequestView>/candidateListStyle} === 'display-in-table' }"
+			class="sapUiTinyMarginTopBottom">
+			<columns>
+				<Column>
+					<Text text="{i18n>CANDIDATE_NAME}"/>
+				</Column>
+				<Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="WithoutHeader">
+					<Text text="{i18n>CANDIDATE_TYPE}"/>
+				</Column>
+				<Column minScreenWidth="Tablet" demandPopin="true">
+					<Text text="{i18n>CANDIDATE_PROCESS_OWNER}"/>
+				</Column>
+				<Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true" popinDisplay="WithoutHeader">
+					<Text text="{i18n>CANDIDATE_PROCESS_PROGRESS}"/>
+				</Column>
+				<Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true" popinDisplay="WithoutHeader">
+					<Text text="{i18n>ACTION_LIST}"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem>
+					<cells>
+						<HBox alignItems="Center">
+							<Image
+								src="/sap/opu/odata/sap/ZHCM_RECRUITMENT_SRV/CandidateSet(Tclas='{employeeRequestView>Tclas}',Pernr='{employeeRequestView>Pernr}')/$value"
+								width="50px" height="50px" class="sapUiSmallMarginEnd"/>
+							<ObjectIdentifier title="{employeeRequestView>Ename}" text="{employeeRequestView>Pernr}"/>
+						</HBox>
+						<Text text="{= ${employeeRequestView>Tclas} === 'A' ? ${i18n>INTERNAL_APPLICANT} : ${i18n>EXTERNAL_APPLICANT} }"/>
+						<Text text="{employeeRequestView>Prone}"/>
+						<FlexBox justifyContent="Center" direction="Column" alignContent="Center" alignItems="Center">
+							<Text text="{employeeRequestView>Cansx}"/>
+							<Text visible="{= ${employeeRequestView>Cansy} ? true : false }" text="{employeeRequestView>Cansy}"/>
+							<smod:PieChartJS id="idPieChartTable" datasets="{employeeRequestView>chartData}" titleDisplay="false" legendDisplay="false"
+								tooltipEnabled="false" isDoughnut="true" cutoutPercentage="70" maintainAspectRatio="false" width="60px" height="60px"></smod:PieChartJS>
+							<Label text="{path: 'employeeRequestView>Perct', formatter: '.formatter.convertToDecimalOne'} %" class="smod_chart_percentage"></Label>
+						</FlexBox>
+						<MenuButton text="{i18n>SELECT_AN_ACTION}">
+							<menu>
+								<Menu>
+									<items>
+										<MenuItem text="{i18n>DISPLAY_RESUME}" icon="sap-icon://pdf-attachment" press="onCandidateResume"/>
+										<MenuItem text="{i18n>EDIT_ACTION}" icon="sap-icon://edit" press="onCandidateEdit"
+											visible="{= ${employeeRequestView>/request/Erfso} === 'H01' }"/>
+										<MenuItem text=" {i18n>UNASSIGN_CANDIDATE}" icon="sap-icon://disconnected" press="onCandidateDelete"
+											visible="{= ${employeeRequestView>/request/Erfso} === 'H01' }"/>
+									</items>
+								</Menu>
+							</menu>
+						</MenuButton>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+		<layout:Grid id="idCandidateListGrid" width="100%" class="sapUiResponsiveContentPadding" content="{employeeRequestView>/candidateList}"
+			visible="{= ${employeeRequestView>/candidateList/0} &amp;&amp; ${employeeRequestView>/candidateListStyle} === 'display-in-grid' }"
+			defaultSpan="XL3 L3 M4 S6">
+			<layout:content>
+				<smod:CandidateCard cardHeaderTitle="{employeeRequestView>Ename}"
+					cardFooterTitle="{= ${employeeRequestView>Cansy} ? ${employeeRequestView>Cansx}.concat('&lt;br&gt;').concat(${employeeRequestView>Cansy}) : ${employeeRequestView>Cansx} }"
+					cardStyle="{employeeRequestView>Tclas}">
+					<smod:actions>
+						<Button text="{i18n>DISPLAY_RESUME}" icon="sap-icon://pdf-attachment" width="100%" press="onCandidateResume"/>
+						<Button text="{i18n>EDIT_ACTION}" icon="sap-icon://edit" type="Accept" width="100%" press="onCandidateEdit"
+							visible="{= ${employeeRequestView>/request/Erfso} === 'H01' }"/>
+						<Button text=" {i18n>UNASSIGN_CANDIDATE}" icon="sap-icon://disconnected" type="Reject" width="100%" press="onCandidateDelete"
+							visible="{= ${employeeRequestView>/request/Erfso} === 'H01' }"/>
+					</smod:actions>
+					<smod:bodyContentTop>
+						<FlexBox direction="Row">
+							<Image
+								src="/sap/opu/odata/sap/ZHCM_RECRUITMENT_SRV/CandidateSet(Tclas='{employeeRequestView>Tclas}',Pernr='{employeeRequestView>Pernr}')/$value"
+								width="50px" height="50px" class="sapUiSmallMarginEnd"/>
+							<FlexBox direction="Column">
+								<Label text="{i18n>CANDIDATE_NUMBER}:" class="erfCardLabel"></Label>
+								<Text text="{employeeRequestView>Pernr}" class="erfCardText"/>
+								<Label text="{i18n>CANDIDATE_PROCESS_OWNER}:" class="erfCardLabel"></Label>
+								<Text text="{employeeRequestView>Prone}" class="erfCardText"/>
+							</FlexBox>
+						</FlexBox>
+					</smod:bodyContentTop>
+					<smod:bodyContentBottom>
+						<FlexBox justifyContent="Center" direction="Column" alignContent="Center" alignItems="Center">
+							<smod:PieChartJS id="pie_chart" datasets="{employeeRequestView>chartData}" titleDisplay="false" legendDisplay="false" tooltipEnabled="false"
+								isDoughnut="true" cutoutPercentage="70" maintainAspectRatio="false" width="60px" height="60px"></smod:PieChartJS>
+							<Label text="{path: 'employeeRequestView>Perct', formatter: '.formatter.convertToDecimalOne'} %" class="smod_chart_percentage"></Label>
+						</FlexBox>
+					</smod:bodyContentBottom>
+				</smod:CandidateCard>
+			</layout:content>
+		</layout:Grid>
+	</VBox>
+</core:FragmentDefinition>

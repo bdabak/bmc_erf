@@ -1,0 +1,13 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<ActionSheet title="{i18n>CANDIDATE_ACTIONS}" showCancelButton="false" placement="Bottom">
+		<Button text="{i18n>EDIT_ACTION}" icon="sap-icon://edit" press="onCandidateListEdit"
+			visible="{candidateListModel>/CandidateActionSettings/EditCandidate}"/>
+		<Button text="{i18n>DISCARD_FROM_POOL}" icon="sap-icon://employee" type="Default" press="onChangeCandidatePool" cd:poolType=""
+			visible="{candidateListModel>/CandidateActionSettings/DiscardFromPool}"/>
+		<Button text="{i18n>ASSIGN_TO_POTENTIAL_POOL}" icon="sap-icon://employee-approvals" type="Accept" press="onChangeCandidatePool"
+			cd:poolType="P" visible="{candidateListModel>/CandidateActionSettings/AssignToPotential}"/>
+		<Button text="{i18n>ASSIGN_TO_REJECTED_POOL}" icon="sap-icon://employee-rejections" type="Reject" press="onChangeCandidatePool"
+			cd:poolType="R" visible="{candidateListModel>/CandidateActionSettings/AssignToRejected}"/>
+		<Button text="{i18n>DISPLAY_RESUME}" icon="sap-icon://pdf-attachment" press="onCandidateListResume"/>
+	</ActionSheet>
+</core:FragmentDefinition>
