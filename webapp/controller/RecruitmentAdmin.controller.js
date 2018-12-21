@@ -49,6 +49,11 @@ sap.ui.define([
 				Action: "ChangeStatus",
 				Type: "Accept"
 			}, {
+				Text: "CHANGE_APPROVER_ACTION",
+				Icon: "sap-icon://switch-classes",
+				Action: "ChangeApprover",
+				Type: "Accept"
+			}, {
 				Text: "DISPLAY_ACTION",
 				Icon: "sap-icon://display",
 				Action: "Display",
@@ -67,10 +72,15 @@ sap.ui.define([
 		}, {
 			Status: "APP",
 			AvailableActions: [{
-				Text: "CHANGE_STATUS",
+				Text: "CHANGE_STATUS_ACTION",
 				Icon: "sap-icon://shortcut",
 				Action: "ChangeStatus",
-				Type: "Emphasized"
+				Type: "Accept"
+			}, {
+				Text: "ASSIGN_TO_ACTION",
+				Icon: "sap-icon://activity-assigned-to-goal",
+				Action: "Assign",
+				Type: "Accept"
 			}, {
 				Text: "DISPLAY_ACTION",
 				Icon: "sap-icon://display",
@@ -80,11 +90,6 @@ sap.ui.define([
 				Text: "PRINT_OUT_ACTION",
 				Icon: "sap-icon://pdf-attachment",
 				Action: "PrintOut",
-				Type: "Default"
-			}, {
-				Text: "ASSIGN_TO_ACTION",
-				Icon: "sap-icon://activity-assigned-to-goal",
-				Action: "Assign",
 				Type: "Default"
 			}]
 		}, {
@@ -244,6 +249,17 @@ sap.ui.define([
 			this._requestChangeStatus.data("formData", oData);
 			this._requestChangeStatus.open();
 		},
+		_openFormChangeApprover: function (oData) {
+			if (!this._requestChangeApprover) {
+				this._requestChangeApprover = sap.ui.xmlfragment(
+					"com.bmc.hcm.erf.fragment.EmployeeRequestChangeApprover",
+					this
+				);
+				this.getView().addDependent(this._requestChangeApprover);
+			}
+			this._requestChangeApprover.data("formData", oData);
+			this._requestChangeApprover.open();
+		},
 
 		onCheckActionAvailable: function (sErfsf) {
 			var oStatus = _.filter(this.actionCatalog, ["Status", sErfsf]);
@@ -272,6 +288,11 @@ sap.ui.define([
 					oThis._openFormChangeStatus(oFormData);
 				};
 				this._getFormStatusList(oFormData, _doCallChangeStatus.bind(oThis));
+				break;
+			case "ChangeApprover":
+
+				oThis._openFormChangeStatus(oFormData);
+
 				break;
 			case "Edit":
 				/*Set application settings*/
@@ -370,6 +391,7 @@ sap.ui.define([
 		onChangeFormStatusConfirmed: function () {
 			var oViewModel = this.getModel("recruitmentAdminModel");
 			var oChangeStatus = oViewModel.getProperty("/formChangeStatus");
+			var oThis = this;
 
 			if (oChangeStatus.TargetStatus === "" || oChangeStatus.TargetStatus === null) {
 				MessageToast.show("Hedef durumu girmelisiniz!");
@@ -383,10 +405,17 @@ sap.ui.define([
 
 			var oFormData = _.cloneDeep(this._requestChangeStatus.data("formData"));
 			var aStatus = oChangeStatus.TargetStatus.split("-");
-			oFormData.Actio = "ADMIN_CHANGE_STATUS";
+			oFormData.Actio = "ADMIN_CHSTA";
 			oFormData.ErfstN = aStatus[0];
 			oFormData.ErfssN = aStatus[1] ? aStatus[1] : "";
-			this._updateRequest(oFormData, false, false, true, null);
+			oFormData.Stcnt = oChangeStatus.StatusChangeNote;
+			var _doStatusChanged = function () {
+				oThis.onRefresh();
+			};
+
+			this._requestChangeStatus.data("formData", null);
+			this._requestChangeStatus.close();
+			this._updateRequest(oFormData, false, false, true, null, _doStatusChanged);
 		},
 		onChangeFormStatusCancelled: function () {
 			this._requestChangeStatus.data("formData", null);
@@ -431,6 +460,12 @@ sap.ui.define([
 					CurrentStatus: "",
 					TargetStatus: "",
 					StatusChangeNote: ""
+				},
+				changeApproverAction: {
+					CurrentApprover: "",
+					CurrentApproverName: "",
+					TargetApprover: "",
+					TargetApproverName: ""
 				},
 				formStatusList: []
 			});
