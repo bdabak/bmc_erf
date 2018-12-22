@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:commons="sap.suite.ui.commons" xmlns:f="sap.ui.layout.form">
-	<commons:Timeline enableDoubleSided="false" axisOrientation="Horizontal" growingThreshold="0" content="{employeeRequestView>/formHistory}"
-		class="erfTimeLine" showHeaderBar="false" enableScroll="true" sortOldestFirst="false" noDataText="{i18n>NO_REQUEST_HISTORY}" sort="false">
+	<commons:Timeline enableDoubleSided="true" axisOrientation="Vertical" growingThreshold="0" content="{employeeRequestView>/formHistory}"
+		class="erfTimeLine" showHeaderBar="false" enableScroll="false" sortOldestFirst="false" noDataText="{i18n>NO_REQUEST_HISTORY}" sort="false">
 		<commons:content>
 			<commons:TimelineItem
 				dateTime="{ parts:[{path:'employeeRequestView>Actdt'},{path:'employeeRequestView>Acttm'}], formatter: '.formatter.getDateTime'}"

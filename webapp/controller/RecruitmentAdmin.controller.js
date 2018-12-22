@@ -77,9 +77,9 @@ sap.ui.define([
 				Action: "ChangeStatus",
 				Type: "Accept"
 			}, {
-				Text: "ASSIGN_TO_ACTION",
+				Text: "ASSIGN_TO_RECRUITER",
 				Icon: "sap-icon://activity-assigned-to-goal",
-				Action: "Assign",
+				Action: "AssignTo",
 				Type: "Accept"
 			}, {
 				Text: "DISPLAY_ACTION",
@@ -167,15 +167,6 @@ sap.ui.define([
 			this._initiateModels();
 			this.goBack(History);
 		},
-		/**
-		 * Triggered by the table's 'updateFinished' event: after new table
-		 * data is available, this handler method updates the table counter.
-		 * This should only happen if the update was successful, which is
-		 * why this handler is attached to 'updateFinished' and not to the
-		 * table's list binding's 'dataReceived' method.
-		 * @param {sap.ui.base.Event} oEvent the update finished event
-		 * @public
-		 */
 		onUpdateFinished: function (oEvent) {
 			// update the requestList's object counter after the table update
 			var oViewModel = this.getModel("recruitmentAdminModel"),
@@ -188,15 +179,6 @@ sap.ui.define([
 			this._updateFilterCounts(oModel);
 
 		},
-		/**
-		 * Triggered by the table's 'updateStarted' event: after new table
-		 * data is available, this handler method updates the table counter.
-		 * This should only happen if the update was successful, which is
-		 * why this handler is attached to 'updateFinished' and not to the
-		 * table's list binding's 'dataReceived' method.
-		 * @param {sap.ui.base.Event} oEvent the update finished event
-		 * @public
-		 */
 		onUpdateStarted: function (oEvent) {
 			// update the requestList's object counter after the table update
 			var oViewModel = this.getModel("recruitmentAdminModel");
@@ -222,43 +204,6 @@ sap.ui.define([
 		},
 		onGetText: function (sTextCode) {
 			return this.getText(sTextCode);
-		},
-		_openRequestActions: function (oData, oSource) {
-			if (this._adjustRequestActions(oData)) {
-				if (!this._requestActions) {
-					this._requestActions = sap.ui.xmlfragment(
-						"com.bmc.hcm.erf.fragment.RequestAdminActions",
-						this
-					);
-					this.getView().addDependent(this._requestActions);
-				}
-				this._requestActions.data("formData", oData);
-				this._requestActions.openBy(oSource);
-			} else {
-				this._callMessageToast(this.getText("NO_ACTIONS_DEFINED"), "W");
-			}
-		},
-		_openFormChangeStatus: function (oData) {
-			if (!this._requestChangeStatus) {
-				this._requestChangeStatus = sap.ui.xmlfragment(
-					"com.bmc.hcm.erf.fragment.EmployeeRequestChangeStatus",
-					this
-				);
-				this.getView().addDependent(this._requestChangeStatus);
-			}
-			this._requestChangeStatus.data("formData", oData);
-			this._requestChangeStatus.open();
-		},
-		_openFormChangeApprover: function (oData) {
-			if (!this._requestChangeApprover) {
-				this._requestChangeApprover = sap.ui.xmlfragment(
-					"com.bmc.hcm.erf.fragment.EmployeeRequestChangeApprover",
-					this
-				);
-				this.getView().addDependent(this._requestChangeApprover);
-			}
-			this._requestChangeApprover.data("formData", oData);
-			this._requestChangeApprover.open();
 		},
 
 		onCheckActionAvailable: function (sErfsf) {
@@ -290,8 +235,13 @@ sap.ui.define([
 				this._getFormStatusList(oFormData, _doCallChangeStatus.bind(oThis));
 				break;
 			case "ChangeApprover":
-
-				oThis._openFormChangeStatus(oFormData);
+				oViewModel.setProperty("/changeApproverAction", {
+					CurrentApprover: oFormData.Fronp,
+					CurrentApproverName: oFormData.Frone,
+					TargetApprover: "",
+					TargetApproverName: ""
+				});
+				oThis._openFormChangeApprover(oFormData);
 
 				break;
 			case "Edit":
@@ -320,6 +270,12 @@ sap.ui.define([
 				this.getRouter().navTo("employeerequestedit", {
 					Erfid: oFormData.Erfid
 				});
+				break;
+			case "AssignTo":
+				var _doCallChangeRecruiter = function () {
+					oThis._openFormChangeRecruiter(oFormData);
+				};
+				this._getRecruiterList(oFormData, _doCallChangeRecruiter.bind(oThis));
 				break;
 			case "Assign":
 				/*Set application settings*/
@@ -388,6 +344,52 @@ sap.ui.define([
 				this._applySearch(aActiveFilter);
 			}
 		},
+		onChangeFormApproverConfirmed: function () {
+			var oViewModel = this.getModel("recruitmentAdminModel");
+			var oChangeApprover = oViewModel.getProperty("/changeApproverAction");
+			var oFormData = this._requestChangeApprover.data("formData");
+			var oModel = this.getModel();
+			var oThis = this;
+
+			if (oChangeApprover.TargetApprover === "" || oChangeApprover.TargetApprover === null) {
+				MessageToast.show("Sürecin yönlendirileceği kişiyi seçmelisiniz!");
+				return;
+			}
+
+			var oUrlParameters = {
+				"Erfid": oFormData.Erfid,
+				"Pernr": oChangeApprover.TargetApprover
+			};
+
+			oViewModel.setProperty("/busy", true);
+
+			oModel.callFunction("/SetEmpReqApprover", {
+				method: "POST",
+				urlParameters: oUrlParameters,
+				success: function (oData, oResponse) {
+					oViewModel.setProperty("/busy", false);
+					if (oData.Type !== "E") {
+						MessageBox.success(oThis.getText("PROCESS_REDIRECTED"));
+					} else {
+						MessageBox.error(oThis.getText("ERROR_OCCURED", [oData.Message]));
+					}
+					oThis.onRefresh();
+					oThis._requestChangeApprover.data("formData", null);
+					oThis._requestChangeApprover.close();
+
+				},
+				error: function (oError) {
+					oViewModel.setProperty("/busy", false);
+					oThis._requestChangeApprover.data("formData", null);
+					oThis._requestChangeApprover.close();
+				}
+			});
+
+		},
+		onChangeFormApproverCancelled: function () {
+			this._requestChangeApprover.data("formData", null);
+			this._requestChangeApprover.close();
+		},
 		onChangeFormStatusConfirmed: function () {
 			var oViewModel = this.getModel("recruitmentAdminModel");
 			var oChangeStatus = oViewModel.getProperty("/formChangeStatus");
@@ -421,29 +423,163 @@ sap.ui.define([
 			this._requestChangeStatus.data("formData", null);
 			this._requestChangeStatus.close();
 		},
-		/**
-		 * Event handler for refresh event. Keeps filter, sort
-		 * and group settings and refreshes the list binding.
-		 * @public
-		 */
+		onChangeFormRecruiterConfirmed: function () {
+			var oViewModel = this.getModel("recruitmentAdminModel");
+			var oChangeRecruiter = oViewModel.getProperty("/changeRecruiterAction");
+			var oThis = this;
+
+			if (oChangeRecruiter.TargetRecruiter === "" || oChangeRecruiter.TargetRecruiter === null) {
+				MessageToast.show("Yeni İşe Alım Uzmanını seçmelisiniz!");
+				return;
+			}
+
+			var oFormData = _.cloneDeep(this._requestChangeRecruiter.data("formData"));
+
+			oThis._assignRequest(oFormData.Erfid, oChangeRecruiter.TargetRecruiter, function () {
+				oThis._requestChangeRecruiter.data("formData", null);
+				oThis._requestChangeRecruiter.close();
+				oThis.onRefresh();
+			});
+		},
+		onChangeFormRecruiterCancelled: function () {
+			this._requestChangeRecruiter.data("formData", null);
+			this._requestChangeRecruiter.close();
+		},
+
 		onRefresh: function () {
 			var oTable = this.byId("idRecAdmEmployeeRequestTable");
 			oTable.getBinding("items").refresh();
 		},
+		onEmployeeValueRequest: function (oEvent) {
+			var sSourceField = oEvent.getSource().data("sourceField");
+			var sInactive = oEvent.getSource().data("includeInactive");
 
+			if (!sInactive || sInactive === "false") {
+				sInactive = false;
+			} else {
+				sInactive = true;
+			}
+
+			if (!this._employeeValueHelpDialog) {
+				this._employeeValueHelpDialog = sap.ui.xmlfragment(
+					"com.bmc.hcm.erf.fragment.EmployeeSearch",
+					this
+				);
+				this.getView().addDependent(this._employeeValueHelpDialog);
+			}
+			this._employeeValueHelpDialog.setRememberSelections(false);
+			this._employeeValueHelpDialog.data("sourceField", sSourceField);
+			this._employeeValueHelpDialog.data("includeInactive", sInactive);
+			this._employeeValueHelpDialog.open();
+		},
+		onEmployeeSearch: function (oEvent) {
+			var sValue = oEvent.getParameter("value");
+			var aFilters = [];
+			var sInactive = this._employeeValueHelpDialog.data("includeInactive");
+
+			aFilters.push(new Filter("Ename", FilterOperator.EQ, sValue));
+
+			if (sInactive) {
+				aFilters.push(new Filter("Incin", FilterOperator.EQ, true));
+			}
+
+			oEvent.getSource().getBinding("items").filter(aFilters);
+		},
+		onEmployeeSelect: function (oEvent) {
+			var oSelectedObject = oEvent.getParameter("selectedContexts")[0].getObject();
+			var oViewModel = this.getModel("recruitmentAdminModel");
+			var sSourceField = this._employeeValueHelpDialog.data("sourceField");
+			var sTextField = "";
+
+			if (oSelectedObject) {
+				switch (sSourceField) {
+				case "TargetApprover":
+					sTextField = "TargetApproverName";
+					break;
+				default:
+					jQuery.sap.log.error("Source field not supplied!");
+					return;
+				}
+				oViewModel.setProperty("/changeApproverAction/" + sSourceField, oSelectedObject.Pernr);
+				oViewModel.setProperty("/changeApproverAction/" + sTextField, oSelectedObject.Ename);
+			}
+			oEvent.getSource().getBinding("items").filter([]);
+			oEvent.getSource().getBinding("items").refresh();
+			this._employeeValueHelpDialog.setRememberSelections(false);
+			this._employeeValueHelpDialog.data("sourceField", null);
+			this._employeeValueHelpDialog.data("includeInactive", false);
+		},
+		onResetEmployee: function (oEvent) {
+			var oViewModel = this.getModel("recruitmentAdminModel");
+			var sSourceField = oEvent.getSource().data("sourceField");
+			var sTextField = "";
+
+			switch (sSourceField) {
+			case "TargetApprover":
+				sTextField = "TargetApproverName";
+				break;
+			default:
+				jQuery.sap.log.error("Source field not supplied!");
+				return;
+			}
+
+			oViewModel.setProperty("/changeApproverAction/" + sSourceField, "00000000");
+			oViewModel.setProperty("/changeApproverAction/" + sTextField, "");
+		},
 		/* =========================================================== */
 		/* internal methods                                            */
 		/* =========================================================== */
-
 		_onRecruitmentAdminMatched: function (oEvent) {
 			this.onRefresh();
 		},
-
-		/**
-		 * Internal helper method to apply both filter and search state together on the list binding
-		 * @param {sap.ui.model.Filter[]} aTableSearchState An array of filters for the search
-		 * @private
-		 */
+		_openRequestActions: function (oData, oSource) {
+			if (this._adjustRequestActions(oData)) {
+				if (!this._requestActions) {
+					this._requestActions = sap.ui.xmlfragment(
+						"com.bmc.hcm.erf.fragment.RequestAdminActions",
+						this
+					);
+					this.getView().addDependent(this._requestActions);
+				}
+				this._requestActions.data("formData", oData);
+				this._requestActions.openBy(oSource);
+			} else {
+				this._callMessageToast(this.getText("NO_ACTIONS_DEFINED"), "W");
+			}
+		},
+		_openFormChangeStatus: function (oData) {
+			if (!this._requestChangeStatus) {
+				this._requestChangeStatus = sap.ui.xmlfragment(
+					"com.bmc.hcm.erf.fragment.EmployeeRequestChangeStatus",
+					this
+				);
+				this.getView().addDependent(this._requestChangeStatus);
+			}
+			this._requestChangeStatus.data("formData", oData);
+			this._requestChangeStatus.open();
+		},
+		_openFormChangeRecruiter: function (oData) {
+			if (!this._requestChangeRecruiter) {
+				this._requestChangeRecruiter = sap.ui.xmlfragment(
+					"com.bmc.hcm.erf.fragment.EmployeeRequestAssignRecruiter",
+					this
+				);
+				this.getView().addDependent(this._requestChangeRecruiter);
+			}
+			this._requestChangeRecruiter.data("formData", oData);
+			this._requestChangeRecruiter.open();
+		},
+		_openFormChangeApprover: function (oData) {
+			if (!this._requestChangeApprover) {
+				this._requestChangeApprover = sap.ui.xmlfragment(
+					"com.bmc.hcm.erf.fragment.EmployeeRequestChangeApprover",
+					this
+				);
+				this.getView().addDependent(this._requestChangeApprover);
+			}
+			this._requestChangeApprover.data("formData", oData);
+			this._requestChangeApprover.open();
+		},
 		_initiateModels: function () {
 			var oViewModel = this.getModel("recruitmentAdminModel");
 
@@ -467,7 +603,14 @@ sap.ui.define([
 					TargetApprover: "",
 					TargetApproverName: ""
 				},
-				formStatusList: []
+				changeRecruiterAction: {
+					CurrentRecruiter: "",
+					CurrentRecruiterName: "",
+					TargetRecruiter: "",
+					TargetRecruiterName: ""
+				},
+				formStatusList: [],
+				recruiterList: []
 			});
 		},
 		_applySearch: function (aTableSearchState) {
@@ -504,6 +647,36 @@ sap.ui.define([
 				error: function (oError) {
 					oViewModel.setProperty("/busy", false);
 					MessageBox.warning("Durum değişiklik listesi okunamadı");
+				}
+			});
+
+		},
+		_getRecruiterList: function (oRequest, fnCallBack) {
+			var oModel = this.getModel();
+			var oViewModel = this.getModel("recruitmentAdminModel");
+
+			oViewModel.setProperty("/recruiterList", []);
+			oViewModel.setProperty("/busy", true);
+			oViewModel.setProperty("/changeRecruiterAction", {
+				CurrentRecruiter: oRequest.Erfow,
+				CurrentRecruiterName: oRequest.Erfoe,
+				TargetRecruiter: "",
+				TargetRecruiterName: ""
+			});
+			var aFilters = [
+				new Filter("Selky", FilterOperator.EQ, oRequest.Erfow),
+				new Filter("Erfvh", FilterOperator.EQ, "Recruiters")
+			];
+			oModel.read("/ValueHelpSet", {
+				filters: aFilters,
+				success: function (oData, oResponse) {
+					oViewModel.setProperty("/busy", false);
+					oViewModel.setProperty("/recruiterList", oData.results);
+					fnCallBack();
+				},
+				error: function (oError) {
+					oViewModel.setProperty("/busy", false);
+					MessageBox.warning("İşe alım uzmanları okunamadı");
 				}
 			});
 
