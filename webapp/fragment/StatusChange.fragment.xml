@@ -3,7 +3,7 @@
 	<Dialog title="{i18n>STATUS_CHANGE_CONFIRMATION}" showHeader="true" stretch="{device>/system/phone}" id="idStatusChangeDialog"
 		resizable="false" draggable="false" type="Message" afterClose="onStatusChangeDialogClosed" state="Warning">
 		<content>
-			<Label text="{employeeRequestView>/statusChangeDialog/informationNote}"></Label>
+			<Text text="{employeeRequestView>/statusChangeDialog/informationNote}" wrapping="true" renderWhitespace="true"></Text>
 			<TextArea value="{employeeRequestView>/statusChangeDialog/statusChangeNote}" valueLiveUpdate="true" width="100%"
 				placeholder="{employeeRequestView>/statusChangeDialog/statusChangePlaceholder}" rows="5"></TextArea>
 		</content>

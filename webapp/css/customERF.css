@@ -670,3 +670,7 @@
     padding-left: 0.25rem !important;
     white-space: normal !important;
 }
+
+.smod-list-label-small {
+    font-size: 0.575rem !important;
+}

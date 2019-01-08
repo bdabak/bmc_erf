@@ -47,10 +47,12 @@ sap.ui.define([
 			// detail page is busy indication immediately so there is no break in
 			// between the busy indication for loading the view's meta data
 			var oCandidateProcessModel = new JSONModel();
+			var oCandidateModel = new JSONModel();
 
 			this.initOperations();
 			this.getRouter().getRoute("candidateprocess").attachPatternMatched(this._onCandidateProcessMatched, this);
 			this.setModel(oCandidateProcessModel, "candidateProcessModel");
+			this.setModel(oCandidateModel, "candidateModel");
 
 			this._initiateModels();
 
@@ -1224,7 +1226,8 @@ sap.ui.define([
 			window.open(oUrlPath);
 		},
 		onMenuSelect: function (oEvent) {
-			this._openUploadAttachmentDialog(oEvent.getParameter("item").getProperty("key"));
+			var sCaller = oEvent.getSource().data("callerTable");
+			this._openUploadAttachmentDialog(oEvent.getParameter("item").getProperty("key"), sCaller);
 		},
 		onFileTypeMissmatch: function (oEvent) {
 			var aFileTypes = oEvent.getSource().getFileType();
@@ -1265,9 +1268,28 @@ sap.ui.define([
 			}));
 
 			/*Set upload path*/
-			var sPath = oModel.sServiceUrl + "/CandidateProcessAttachmentSet(Tclas='" + oProcess.Tclas + "',Pernr='" + oProcess.Pernr +
-				"',Erfid='" + oProcess.Erfid + "',Attty='" + this._oUploadAttachmentDialog.data("AttachmentType") +
-				"')/CandidateAttachmentSet";
+			var sPath = "";
+			var sAttty = this._oUploadAttachmentDialog.data("AttachmentType");
+			var sCaller = this._oUploadAttachmentDialog.data("Caller");
+
+			switch (sCaller) {
+			case "CPA":
+
+				sPath = oModel.sServiceUrl + "/CandidateProcessAttachmentSet(Tclas='" + oProcess.Tclas + "',Pernr='" + oProcess.Pernr +
+					"',Erfid='" + oProcess.Erfid + "',Attty='" + sAttty +
+					"')/CandidateAttachmentSet";
+				break;
+
+			case "CA":
+				sPath = oModel.sServiceUrl + "/CandidateAttachmentOperationSet(Tclas='" + oProcess.Tclas + "',Pernr='" + oProcess.Pernr +
+					"',Attty='" + sAttty +
+					"')/CandidateAttachmentSet";
+				break;
+
+			default:
+				return;
+
+			}
 
 			oFileUploader.setUploadUrl(sPath);
 
@@ -1395,7 +1417,7 @@ sap.ui.define([
 		 * @param {sap.ui.base.Ev.oEvent pattern match event in route 'object'
 		 * @private
 		 */
-		_openUploadAttachmentDialog: function (sAttty) {
+		_openUploadAttachmentDialog: function (sAttty, sCaller) {
 
 			// create dialog lazily
 			if (!this._oUploadAttachmentDialog) {
@@ -1414,6 +1436,7 @@ sap.ui.define([
 				jQuery.sap.log.error("File uploader not loaded yet...");
 			}
 			this._oUploadAttachmentDialog.data("AttachmentType", sAttty);
+			this._oUploadAttachmentDialog.data("Caller", sCaller);
 			this._oUploadAttachmentDialog.open();
 		},
 		_setExamData: function (oExamData) {
@@ -1726,19 +1749,36 @@ sap.ui.define([
 			oViewModel.setProperty("/CandidateInterviewPlan", oInterviewPlan);
 			oViewModel.setProperty("/InterviewPlanned", true);
 		},
-		_initialValueHelp: function (oModel) {
+		_initialValueHelp: function () {
 			var oViewModel = this.getModel("candidateProcessModel");
-			var aHelpText = oViewModel.getProperty("/ValueHelpText");
-			var aFilters = [];
+			var aValueHelpText = oViewModel.getProperty("/ValueHelpText");
+			var aCandidateValueHelpText = oViewModel.getProperty("/CandidateValueHelpText");
+			var aFilters1 = [];
+			var aFilters2 = [];
 			var oModel = this.getModel();
 
-			Object.keys(aHelpText).map(function (item) {
-				aFilters.push(
-					new Filter("Erfvh", FilterOperator.EQ, aHelpText[item])
+			Object.keys(aValueHelpText).map(function (item) {
+				aFilters1.push(
+					new Filter("Erfvh", FilterOperator.EQ, aValueHelpText[item])
 				);
 			});
 			oModel.read("/ValueHelpSet", {
-				filters: aFilters,
+				filters: aFilters1,
+				success: function (oData, oResponse) {
+					oViewModel.refresh(true);
+				},
+				error: function (oError) {
+
+				}
+			});
+
+			Object.keys(aCandidateValueHelpText).map(function (item) {
+				aFilters2.push(
+					new Filter("Help", FilterOperator.EQ, aCandidateValueHelpText[item])
+				);
+			});
+			oModel.read("/CandidateValueHelpSet", {
+				filters: aFilters2,
 				success: function (oData, oResponse) {
 					oViewModel.refresh(true);
 				},
@@ -1748,11 +1788,23 @@ sap.ui.define([
 			});
 		},
 		_getValueHelpText: function (sHelp, sValue) {
+			var sPath = "";
+			var oParam = null;
+			var oModel = this.getModel();
 			try {
-				var oModel = this.getModel();
-				var sPath = "/ValueHelpSet(Erfvh='" + sHelp + "',Fldky='" + sValue + "')";
-				var oPData = oModel.getProperty(sPath);
-				return oPData.Fldvl;
+				sPath = "/CandidateValueHelpSet(Help='" + sHelp + "',Key='" + sValue + "')";
+				oParam = oModel.getProperty(sPath);
+				if (oParam && oParam.hasOwnProperty("Text")) {
+					return oParam.Text;
+				} else {
+					sPath = "/ValueHelpSet(Erfvh='" + sHelp + "',Fldky='" + sValue + "')";
+					oParam = oModel.getProperty(sPath);
+					if (oParam && oParam.hasOwnProperty("Fldvl")) {
+						return oParam.Fldvl;
+					} else {
+						return null;
+					}
+				}
 
 			} catch (oErr) {
 				return null;
@@ -1767,6 +1819,13 @@ sap.ui.define([
 				aFilterAttachment.push(new Filter("Erfid", FilterOperator.EQ, oProcess.Erfid));
 				oAttachmentTable.getBinding("items").filter(aFilterAttachment, "Application");
 			}
+
+			aFilterAttachment = [];
+			oAttachmentTable = this.byId("idCandidateAttachmentList"); //Attachment
+			aFilterAttachment.push(new Filter("Tclas", FilterOperator.EQ, oProcess.Tclas));
+			aFilterAttachment.push(new Filter("Pernr", FilterOperator.EQ, oProcess.Pernr));
+			oAttachmentTable.getBinding("items").filter(aFilterAttachment, "Application");
+
 		},
 		_checkJobHigherLevel: function (sStell) {
 			var aUpperLevelJobs = SharedData.getUpperLevelJobs();
@@ -2023,7 +2082,7 @@ sap.ui.define([
 			var oViewModel = this.getModel("candidateProcessModel");
 
 			oViewModel.setProperty("/processKey", oProcess);
-			oViewModel.setProperty("/ViewSettings/EditCandidate", SharedData.getApplicationAuth().ErfrcApp);
+			oViewModel.setProperty("/ViewSettings/EditCandidate", SharedData.getApplicationAuth().ErfrcApp || SharedData.getApplicationAuth().ErfraApp);
 
 			var sQuery = "/CandidateProcessOperationsSet(Erfid='" + oProcess.Erfid +
 				"',Tclas='" + oProcess.Tclas + "',Pernr='" + oProcess.Pernr + "')";
@@ -2151,8 +2210,9 @@ sap.ui.define([
 				Name: this.getText("PROCESS_HISTORY"),
 				Icon: "sap-icon://customer-history"
 			}];
-
-			if (oProcess.Cprso === "H01" || oProcess.Cprso === "H02" || oProcess.Cprso === "H08" || oProcess.Cprso === "H90") {
+			var oAppSettings = SharedData.getApplicationSettings();
+			console.log(oAppSettings);
+			if (oProcess.Cprso === "H01" || oProcess.Cprso === "H02" || oProcess.Cprso === "H08" || oProcess.Cprso === "H90" || oAppSettings.Edit) {
 				oSidebarData.navigationData.push({
 					RowIid: 2,
 					Name: this.getText("CANDIDATE_PROCESS_SUMMARY"),

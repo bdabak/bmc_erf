@@ -110,14 +110,7 @@ sap.ui.define([
 
 		onExit: function () {
 			this._initiateModels();
-			for (var sPropertyName in this._formFragments) {
-				if (!this._formFragments.hasOwnProperty(sPropertyName)) {
-					return;
-				}
 
-				this._formFragments[sPropertyName].destroy();
-				this._formFragments[sPropertyName] = null;
-			}
 		},
 
 		/* =========================================================== */
@@ -890,6 +883,15 @@ sap.ui.define([
 
 			SharedData.setCurrentRequest(null);
 
+			for (var sPropertyName in this._formFragments) {
+				if (!this._formFragments.hasOwnProperty(sPropertyName)) {
+					return;
+				}
+
+				this._formFragments[sPropertyName].destroy();
+				this._formFragments[sPropertyName] = null;
+			}
+
 		},
 		_checkPositionReasonConsistency: function (oPosition) {
 			var oViewModel = this.getModel("employeeRequestView");
@@ -938,6 +940,7 @@ sap.ui.define([
 			oRequestModel.attachChange(function (oEvent) {
 				oThis._clearValidationTraces();
 			}, this);
+			oViewModel.setProperty("/request", null);
 		},
 		/**
 		 * Gets the default request
@@ -961,6 +964,7 @@ sap.ui.define([
 		_getRequest: function (sErfid) {
 			var oModel = this.getModel();
 			var oViewModel = this.getModel("employeeRequestView");
+			var oThis = this;
 			var oChangeFragment = this._getFragment("EmployeeRequestChange");
 			var oDisplayFragment = this._getFragment("EmployeeRequestDisplay");
 			var sPath = oModel.createKey("/EmployeeRequestFormSet", {
@@ -983,13 +987,13 @@ sap.ui.define([
 				jQuery.sap.log.error("Fragment error:", ex);
 			}
 
-			this._getManagerData();
 			if (sForceRefresh) {
 				oRequest = null;
 				SharedData.setForceRefresh(false);
 			}
 			if (oRequest) {
 				oViewModel.setProperty("/request", oRequest);
+				this._getManagerData();
 			} else {
 				oViewModel.setProperty("/busy", true);
 				oModel.read(sPath, {
@@ -997,7 +1001,8 @@ sap.ui.define([
 					success: function (oData, oResponse) {
 						oViewModel.setProperty("/busy", false);
 						oViewModel.setProperty("/request", oData);
-						SharedData.setCurrentRequest(oData);
+						SharedData.setCurrentRequest(_.cloneDeep(oData));
+						oThis._getManagerData();
 						oViewModel.refresh(true);
 					},
 					error: function (oError) {
@@ -1015,37 +1020,37 @@ sap.ui.define([
 			var oButton = this.byId("idFormActionsButton");
 
 			if (oRequestDefaults) {
-				oViewModel.setProperty("/request", oRequestDefaults);
+				oViewModel.setProperty("/request", _.cloneDeep(oRequestDefaults));
 			} else {
 				oViewModel.setProperty("/busy", true);
 				oModel.callFunction("/GetNewEmpReqDefaults", {
 					method: "GET",
 					success: function (oData, oResponse) {
 						oViewModel.setProperty("/busy", false);
-						oViewModel.setProperty("/request", oData);
-						oViewModel.setProperty("/requestDefaults", oData);
+						oViewModel.setProperty("/request", _.cloneDeep(oData));
+						oViewModel.setProperty("/requestDefaults", _.cloneDeep(oData));
 					},
 					error: function (oError) {
 						oViewModel.setProperty("/busy", false);
 					}
 				});
-				oButton.setBusy(true);
-				oButton.setVisible(false);
-				oViewModel.setProperty("/formActions", []);
-				oModel.callFunction("/GetNewEmpReqDefaultActions", {
-					method: "GET",
-					success: function (oData, oResponse) {
-						oButton.setBusy(false);
-						if (oData.results.length > 0) {
-							oButton.setVisible(true);
-						}
-						oViewModel.setProperty("/formActions", oData.results);
-					},
-					error: function (oError) {
-						oButton.setBusy(false);
-					}
-				});
 			}
+			oButton.setBusy(true);
+			oButton.setVisible(false);
+			oViewModel.setProperty("/formActions", []);
+			oModel.callFunction("/GetNewEmpReqDefaultActions", {
+				method: "GET",
+				success: function (oData, oResponse) {
+					oButton.setBusy(false);
+					if (oData.results.length > 0) {
+						oButton.setVisible(true);
+					}
+					oViewModel.setProperty("/formActions", oData.results);
+				},
+				error: function (oError) {
+					oButton.setBusy(false);
+				}
+			});
 		},
 
 		_getManagerData: function () {
@@ -1197,7 +1202,7 @@ sap.ui.define([
 		},
 		_clearValidationTraces: function () {
 			var oValidator = new FormValidator(this);
-			var oFormToValidate = sap.ui.getCore().byId("idEmployeeRequestForm");
+			var oFormToValidate = sap.ui.getCore().byId("idEmployeeRequestForm") || this.byId("idEmployeeRequestForm");
 			if (oFormToValidate) {
 				oValidator.clearTraces(oFormToValidate);
 			}
@@ -1291,8 +1296,14 @@ sap.ui.define([
 						$.each(aCandidates, function (sKey, oCandidate) {
 							oCandidate.chartData = [{
 								data: [oCandidate.Perct, 100 - oCandidate.Perct],
-								backgroundColor: [
+								backgroundColor: oCandidate.Perct < 33 ? [
 									"#ff6384",
+									"#e0e0e0"
+								] : oCandidate.Perct < 66 ? [
+									"#e78c07",
+									"#e0e0e0"
+								] : [
+									"#2b7d2b",
 									"#e0e0e0"
 								]
 							}];

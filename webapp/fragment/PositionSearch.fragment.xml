@@ -11,7 +11,7 @@
 					</Toolbar>
 				</table:extension>
 				<table:columns>
-					<table:Column width="20rem">
+					<table:Column width="25rem">
 						<Label text="{i18n>STAFF_PLAN}"/>
 						<table:template>
 							<FlexBox alignContent="Center" justifyContent="Center" direction="Row">

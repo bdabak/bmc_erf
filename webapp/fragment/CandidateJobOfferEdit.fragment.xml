@@ -17,38 +17,38 @@
 				<f:formContainers>
 					<f:FormContainer>
 						<f:formElements>
-							<f:FormElement label="{i18n>JOB_OFFER_CANDIDATE_NAME}">
-								<f:fields>
-									<Input required="true" value="{path:'candidateProcessModel>/CandidateJobOffer/Offnm'}" maxLength="50"/>
-								</f:fields>
-							</f:FormElement>
 							<f:FormElement label="{i18n>JOB_OFFER_DATE}">
 								<f:fields>
 									<DatePicker required="true"
 										value="{path:'candidateProcessModel>/CandidateJobOffer/Offdt', type: 'sap.ui.model.type.Date', formatOptions:{ UTC: true, pattern: 'dd.MM.yyyy'}}"/>
 								</f:fields>
 							</f:FormElement>
+							<f:FormElement label="{i18n>JOB_OFFER_CANDIDATE_NAME}">
+								<f:fields>
+									<Input editable="false" required="true" value="{path:'candidateProcessModel>/CandidateJobOffer/Offnm'}" maxLength="50"/>
+								</f:fields>
+							</f:FormElement>
 							<f:FormElement label="{i18n>JOB_OFFER_POSITION}">
 								<f:fields>
-									<Input value="{path:'candidateProcessModel>/CandidateJobOffer/Offpx'}" required="true" maxLength="60"/>
+									<Input editable="false" value="{path:'candidateProcessModel>/CandidateJobOffer/Offpx'}" required="true" maxLength="60"/>
 								</f:fields>
 							</f:FormElement>
 							<f:FormElement label="{i18n>JOB_OFFER_WORKPLACE}">
 								<f:fields>
-									<Input value="{path:'candidateProcessModel>/CandidateJobOffer/Offwp'}" required="true" maxLength="60"/>
+									<Input editable="false" value="{path:'candidateProcessModel>/CandidateJobOffer/Offwp'}" required="true" maxLength="60"/>
 								</f:fields>
 							</f:FormElement>
 							<f:FormElement label="{i18n>JOB_OFFER_WORK_CONDITION}">
 								<f:fields>
-									<Input value="{path:'candidateProcessModel>/CandidateJobOffer/Offwh'}" type="Number" required="true"/>
+									<Input editable="false" value="{path:'candidateProcessModel>/CandidateJobOffer/Offwh'}" type="Number" required="true"/>
 								</f:fields>
 							</f:FormElement>
 							<f:FormElement label="{i18n>JOB_OFFER_OFFERED_WAGE}">
 								<f:fields>
-									<Input
+									<Input editable="false"
 										value="{path: 'candidateProcessModel>/CandidateJobOffer/Offwg', type: 'sap.ui.model.odata.type.Decimal', formatOptions:{minFractionDigits:2, maxFractionDigits:2 } }"
 										required="true"/>
-									<Input value="{path:'candidateProcessModel>/CandidateJobOffer/Offwc'}">
+									<Input value="{path:'candidateProcessModel>/CandidateJobOffer/Offwc'}" editable="false">
 										<layoutData>
 											<l:GridData span="XL2 L2 M2 S3"/>
 										</layoutData>
@@ -57,12 +57,12 @@
 							</f:FormElement>
 							<f:FormElement label="{i18n>JOB_OFFER_OFFERED_WAGE_TYPE}">
 								<f:fields>
-									<Input value="{path:'candidateProcessModel>/CandidateJobOffer/Offwt'}" required="true"/>
+									<Input editable="false" value="{path:'candidateProcessModel>/CandidateJobOffer/Offwt'}" required="true"/>
 								</f:fields>
 							</f:FormElement>
 							<f:FormElement label="{i18n>JOB_OFFER_BENEFITS}">
 								<f:fields>
-									<TextArea value="{path:'candidateProcessModel>/CandidateJobOffer/Offab'}" required="true" rows="5" valueLiveUpdate="true"/>
+									<TextArea editable="false" value="{path:'candidateProcessModel>/CandidateJobOffer/Offab'}" required="true" rows="5" valueLiveUpdate="true"/>
 								</f:fields>
 							</f:FormElement>
 						</f:formElements>

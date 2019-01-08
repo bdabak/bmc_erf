@@ -20,7 +20,52 @@ sap.ui.define([
 			new Filter("Erfap", FilterOperator.EQ, "REQUEST_LIST_ADMIN"),
 			new Filter("Erfsf", FilterOperator.EQ, "ALL")
 		],
-		actionCatalog: [{
+		processActionCatalog: [
+			// BEG	Süreç Başlangıcı
+			// INH	İK Mülakatı
+			// IND	Bölüm Mülakatı
+			// RFC	Referans Kontrolü
+			// CAP	Aday Onayı
+			// PAY	Ücret Çalışması
+			// OFF	Teklif Aşaması
+			// DOC	Evrak Kontrolü
+			// CMP	Onaylandı
+			// REJ	Reddedildi
+			{
+				Status: ["BEG"],
+				AvailableActions: [{
+					Text: "DISPLAY_RESUME",
+					Icon: "sap-icon://pdf-attachment",
+					Action: "PrintResume",
+					Type: "Default"
+				}, {
+					Text: "EDIT_ACTION",
+					Icon: "sap-icon://edit",
+					Action: "EditProcess",
+					Type: "Default"
+				}, {
+					Text: "UNASSIGN_CANDIDATE",
+					Icon: "sap-icon://disconnected",
+					Action: "DeleteProcess",
+					Type: "Reject"
+				}]
+			}, {
+				Status: ["INH", "IND", "RFC", "CAP", "PAY", "OFF", "DOC", "CMP", "REJ"],
+				AvailableActions: [{
+					Text: "DISPLAY_RESUME",
+					Icon: "sap-icon://pdf-attachment",
+					Action: "PrintResume",
+					Type: "Default"
+				}, {
+					Text: "EDIT_ACTION",
+					Icon: "sap-icon://edit",
+					Action: "EditProcess",
+					Type: "Default"
+				}]
+			}
+
+		],
+		requestActionCatalog: [{
 			Status: "DRF",
 			AvailableActions: [{
 				Text: "PRINT_OUT_ACTION",
@@ -120,34 +165,9 @@ sap.ui.define([
 		 * @public
 		 */
 		onInit: function () {
-			var oViewModel,
-				iOriginalBusyDelay,
-				oTable = this.byId("idRecAdmEmployeeRequestTable");
-
-			// Put down requestList table's original value for busy indicator delay,
-			// so it can be restored later on. Busy handling on the table is
-			// taken care of by the table itself.
-			iOriginalBusyDelay = oTable.getBusyIndicatorDelay();
-
-			// keeps the search state
-			this._aTableSearchState = [];
-
-			// Model used to manipulate control states
-			oViewModel = new JSONModel({});
+			var oViewModel = new JSONModel({});
 
 			this.setModel(oViewModel, "recruitmentAdminModel");
-
-			// Make sure, busy indication is showing immediately so there is no
-			// break after the busy indication for loading the view's meta data is
-			// ended (see promise 'oWhenMetadataIsLoaded' in AppController)
-			oTable.attachEventOnce("updateFinished", function () {
-				// Restore original busy indicator delay for requestList's table
-				oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
-			});
-
-			var oModel = this.getOwnerComponent().getModel();
-
-			oModel.metadataLoaded().then(function () {});
 
 			this.getRouter().getRoute("recruitmentadmin").attachPatternMatched(this._onRecruitmentAdminMatched, this);
 
@@ -167,31 +187,40 @@ sap.ui.define([
 			this._initiateModels();
 			this.goBack(History);
 		},
-		onUpdateFinished: function (oEvent) {
+		onRequestUpdateFinished: function (oEvent) {
 			// update the requestList's object counter after the table update
 			var oViewModel = this.getModel("recruitmentAdminModel"),
 				oModel = this.getModel();
 
-			oViewModel.setProperty("/busy", false);
+			oViewModel.setProperty("/busyRequest", false);
 			// only update the counter if the length is final and
 			// the table is not empty
 			//Refresh filter statistics async
-			this._updateFilterCounts(oModel);
-
+			this._updateRequestFilterCounts(oModel);
 		},
-		onUpdateStarted: function (oEvent) {
+		onRequestUpdateStarted: function (oEvent) {
 			// update the requestList's object counter after the table update
 			var oViewModel = this.getModel("recruitmentAdminModel");
 
-			oViewModel.setProperty("/busy", true);
+			oViewModel.setProperty("/busyRequest", true);
 		},
 
-		onPress: function (oEvent) {
+		onRequestPress: function (oEvent) {
 			// The source is the list item that got pressed
 			var oSource = oEvent.getSource();
 			var oData = this.getModel().getProperty(oSource.getBindingContextPath());
 			if (oData) {
 				this._openRequestActions(oData, oSource);
+			}
+		},
+
+		onProcessPress: function (oEvent) {
+			// The source is the list item that got pressed
+			var oSource = oEvent.getSource();
+			var oViewModel = this.getModel("recruitmentAdminModel");
+			var oData = oViewModel.getProperty(oSource.getBindingContextPath());
+			if (oData) {
+				this._openProcessActions(oData, oSource);
 			}
 		},
 
@@ -207,7 +236,7 @@ sap.ui.define([
 		},
 
 		onCheckActionAvailable: function (sErfsf) {
-			var oStatus = _.filter(this.actionCatalog, ["Status", sErfsf]);
+			var oStatus = _.filter(this.requestActionCatalog, ["Status", sErfsf]);
 			if (oStatus.length === 1) {
 				if (oStatus[0].hasOwnProperty("AvailableActions")) {
 					return true;
@@ -218,6 +247,7 @@ sap.ui.define([
 				return false;
 			}
 		},
+
 		onRequestActionSelected: function (oEvent) {
 			var oSource = oEvent.getSource();
 			var sAction = oSource.data("actionId");
@@ -282,7 +312,7 @@ sap.ui.define([
 
 				var _assignConfirmed = function () {
 					oThis._assignRequest(oFormData.Erfid, "ME", function () {
-						oThis.onRefresh();
+						oThis.onRequestRefresh();
 					});
 				};
 
@@ -324,8 +354,39 @@ sap.ui.define([
 				break;
 			}
 		},
+		onProcessActionSelected: function (oEvent) {
+			var oSource = oEvent.getSource();
+			var sAction = oSource.data("actionId");
+			var oFormData = oSource.getParent().data("formData");
+			var oApplicationSettings = {};
 
-		onSearch: function (oEvent) {
+			switch (sAction) {
+			case "PrintResume":
+
+				break;
+			case "EditProcess":
+
+				oApplicationSettings.Edit = true;
+				oApplicationSettings.CallerRole = this.callerRole;
+				SharedData.setApplicationSettings(oApplicationSettings);
+
+				SharedData.setCandidateProcess({
+					"Erfid": oFormData.Erfid,
+					"Tclas": oFormData.Tclas,
+					"Pernr": oFormData.Pernr
+				});
+
+				this.getRouter().navTo("candidateprocess");
+
+				break;
+			case "DeleteProcess":
+
+				break;
+
+			}
+		},
+
+		onRequestSearch: function (oEvent) {
 			var oIconTabBar = this.byId("idRecAdmIconTab");
 			var aActiveFilter = [];
 
@@ -334,7 +395,7 @@ sap.ui.define([
 				// This is visible if you select any master list item.
 				// In this case no new search is triggered, we only
 				// refresh the list binding.
-				this.onRefresh();
+				this.onRequestRefresh();
 			} else {
 				var sQuery = oEvent.getParameter("query");
 				aActiveFilter = this._getActiveFilters(oIconTabBar.getSelectedKey());
@@ -373,7 +434,7 @@ sap.ui.define([
 					} else {
 						MessageBox.error(oThis.getText("ERROR_OCCURED", [oData.Message]));
 					}
-					oThis.onRefresh();
+					oThis.onRequestRefresh();
 					oThis._requestChangeApprover.data("formData", null);
 					oThis._requestChangeApprover.close();
 
@@ -412,7 +473,7 @@ sap.ui.define([
 			oFormData.ErfssN = aStatus[1] ? aStatus[1] : "";
 			oFormData.Stcnt = oChangeStatus.StatusChangeNote;
 			var _doStatusChanged = function () {
-				oThis.onRefresh();
+				oThis.onRequestRefresh();
 			};
 
 			this._requestChangeStatus.data("formData", null);
@@ -438,7 +499,7 @@ sap.ui.define([
 			oThis._assignRequest(oFormData.Erfid, oChangeRecruiter.TargetRecruiter, function () {
 				oThis._requestChangeRecruiter.data("formData", null);
 				oThis._requestChangeRecruiter.close();
-				oThis.onRefresh();
+				oThis.onRequestRefresh();
 			});
 		},
 		onChangeFormRecruiterCancelled: function () {
@@ -446,9 +507,60 @@ sap.ui.define([
 			this._requestChangeRecruiter.close();
 		},
 
-		onRefresh: function () {
+		onRequestRefresh: function () {
 			var oTable = this.byId("idRecAdmEmployeeRequestTable");
 			oTable.getBinding("items").refresh();
+		},
+
+		onProcessRefresh: function () {
+			var oViewModel = this.getModel("recruitmentAdminModel");
+			var oModel = this.getModel();
+			var oThis = this;
+
+			oViewModel.setProperty("/processList", []);
+
+			var sQuery = "/CandidateProcessOperationsSet";
+
+			var sExpand = "EmployeeRequestForm,CandidateProcess";
+
+			//aFilters.push(new Filter("Actio", FilterOperator.EQ, "GET"));
+			oViewModel.setProperty("/busyProcess", true);
+			oModel.read(sQuery, {
+				urlParameters: {
+					"$expand": sExpand
+				},
+				success: function (oData, oResponse) {
+					var aProcess = [];
+					oViewModel.setProperty("/busyProcess", false);
+					$.each(oData.results, function (sIndex, oLine) {
+						var oProcess = {};
+						oProcess.Erfno = _.clone(oLine.EmployeeRequestForm.Erfno);
+						oProcess.Rqowe = _.clone(oLine.EmployeeRequestForm.Rqowe);
+						oProcess.Plstx = _.clone(oLine.EmployeeRequestForm.Plstx || oLine.EmployeeRequestForm.Plaft);
+						oProcess = _.assignIn(oProcess, _.cloneDeep(oLine.CandidateProcess));
+
+						oProcess.ChartData = [{
+							data: [oProcess.Perct, 100 - oProcess.Perct],
+							backgroundColor: oProcess.Perct < 33 ? [
+								"#ff6384",
+								"#e0e0e0"
+							] : oProcess.Perct < 66 ? [
+								"#e78c07",
+								"#e0e0e0"
+							] : [
+								"#2b7d2b",
+								"#e0e0e0"
+							]
+						}];
+						oProcess.ActionList = oThis._adjustProcessActions(oProcess);
+						aProcess.push(oProcess);
+					});
+					oViewModel.setProperty("/processList", aProcess);
+				},
+				error: function (oError) {
+					oViewModel.setProperty("/busyProcess", false);
+				}
+			});
 		},
 		onEmployeeValueRequest: function (oEvent) {
 			var sSourceField = oEvent.getSource().data("sourceField");
@@ -530,7 +642,9 @@ sap.ui.define([
 		/* internal methods                                            */
 		/* =========================================================== */
 		_onRecruitmentAdminMatched: function (oEvent) {
-			this.onRefresh();
+			this.callerRole = "RECRUITMENT_ADMIN";
+			this.onRequestRefresh();
+			this.onProcessRefresh();
 		},
 		_openRequestActions: function (oData, oSource) {
 			if (this._adjustRequestActions(oData)) {
@@ -543,6 +657,21 @@ sap.ui.define([
 				}
 				this._requestActions.data("formData", oData);
 				this._requestActions.openBy(oSource);
+			} else {
+				this._callMessageToast(this.getText("NO_ACTIONS_DEFINED"), "W");
+			}
+		},
+		_openProcessActions: function (oData, oSource) {
+			if (this._adjustProcessActions(oData)) {
+				if (!this._processActions) {
+					this._processActions = sap.ui.xmlfragment(
+						"com.bmc.hcm.erf.fragment.ProcessAdminActions",
+						this
+					);
+					this.getView().addDependent(this._processActions);
+				}
+				this._processActions.data("formData", oData);
+				this._processActions.openBy(oSource);
 			} else {
 				this._callMessageToast(this.getText("NO_ACTIONS_DEFINED"), "W");
 			}
@@ -588,6 +717,8 @@ sap.ui.define([
 				tableNoDataText: this.getText("EMPTY_REQUEST_LIST"),
 				tableBusyDelay: 0,
 				busy: false,
+				busyRequest: false,
+				busyProcess: false,
 				searchResults: {
 					"ERF": 0,
 					"CPR": 0
@@ -610,7 +741,10 @@ sap.ui.define([
 					TargetRecruiterName: ""
 				},
 				formStatusList: [],
-				recruiterList: []
+				recruiterList: [],
+				processList: [],
+				requestActions: [],
+				processActions: []
 			});
 		},
 		_applySearch: function (aTableSearchState) {
@@ -681,7 +815,7 @@ sap.ui.define([
 			});
 
 		},
-		_updateFilterCounts: function (oModel) {
+		_updateRequestFilterCounts: function (oModel) {
 			var oViewModel = this.getModel("recruitmentAdminModel");
 			var oThis = this;
 			oViewModel.setProperty("/searchResults/ERF", 0);
@@ -696,11 +830,28 @@ sap.ui.define([
 			});
 
 		},
+		_adjustProcessActions: function (oData) {
+			var oThis = this;
+			var aActions = [];
+			var oViewModel = this.getModel("recruitmentAdminModel");
+
+			$.each(oThis.processActionCatalog, function (sIndex, oAction) {
+				if (_.includes(oAction.Status, oData.Cansf)) {
+					aActions = _.clone(oAction.AvailableActions);
+					return false;
+				}
+			});
+
+			oViewModel.setProperty("/processActions", aActions);
+
+			return aActions.length > 0;
+
+		},
 		_adjustRequestActions: function (oData) {
 			var oViewModel = this.getModel("recruitmentAdminModel");
 			oViewModel.setProperty("/requestActions", []);
 
-			var oStatus = _.filter(this.actionCatalog, ["Status", oData["Erfsf"]]);
+			var oStatus = _.filter(this.requestActionCatalog, ["Status", oData["Erfsf"]]);
 
 			if (oStatus.length === 1) {
 				if (oStatus[0].hasOwnProperty("AvailableActions")) {

@@ -368,7 +368,7 @@ sap.ui.define([
 				}
 				SharedData.setApplicationSettings(oApplicationSettings);
 				/*Set request data*/
-				SharedData.setCurrentRequest(oFormData);
+				SharedData.setCurrentRequest(_.cloneDeep(oFormData));
 				oViewModel.setProperty("/busy", true);
 				this.getRouter().navTo("employeerequestedit", {
 					Erfid: oFormData.Erfid
@@ -380,7 +380,7 @@ sap.ui.define([
 				oApplicationSettings.CallerRole = this.callerRole;
 				SharedData.setApplicationSettings(oApplicationSettings);
 				/*Set request data*/
-				SharedData.setCurrentRequest(oFormData);
+				SharedData.setCurrentRequest(_.cloneDeep(oFormData));
 				oViewModel.setProperty("/busy", true);
 				this.getRouter().navTo("employeerequestedit", {
 					Erfid: oFormData.Erfid

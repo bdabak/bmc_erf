@@ -65,7 +65,7 @@
 										<MenuItem text="{i18n>DISPLAY_RESUME}" icon="sap-icon://pdf-attachment" press="onCandidateResume"/>
 										<MenuItem text="{i18n>EDIT_ACTION}" icon="sap-icon://edit" press="onCandidateEdit"
 											visible="{= ${employeeRequestView>/request/Erfso} === 'H01' }"/>
-										<MenuItem text=" {i18n>UNASSIGN_CANDIDATE}" icon="sap-icon://disconnected" press="onCandidateDelete"
+										<MenuItem text="{i18n>UNASSIGN_CANDIDATE}" icon="sap-icon://disconnected" press="onCandidateDelete"
 											visible="{= ${employeeRequestView>/request/Erfso} === 'H01' }"/>
 									</items>
 								</Menu>
