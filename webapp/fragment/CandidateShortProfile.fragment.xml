@@ -33,7 +33,7 @@
 					<f:FormElement label="{i18n>EDUCATION_SLART}">
 						<f:fields>
 							<Text
-								text="{candidateProcessModel>/CandidateInfo/Slarx} - {candidateProcessModel>/CandidateInfo/Bolux} - {candidateProcessModel>/CandidateInfo/Gyear}"/>
+								text="{ parts: [{path: 'candidateProcessModel>/CandidateInfo/Slarx'},{path:'candidateProcessModel>/CandidateInfo/Bolux'},{path:'candidateProcessModel>/CandidateInfo/Gyear'}], formatter: '.formatter.concatenateWithDash' }"/>
 						</f:fields>
 					</f:FormElement>
 					<f:FormElement label="{i18n>MILITARY_STATUS}" visible="{= ${candidateProcessModel>/CandidateInfo/Gesch} === '1' }">
@@ -43,7 +43,8 @@
 					</f:FormElement>
 					<f:FormElement label="{i18n>CANDIDATE_LAST_COMPANY_POSITION}">
 						<f:fields>
-							<Text text="{candidateProcessModel>/CandidateInfo/Lstcm} / {candidateProcessModel>/CandidateInfo/Lstps}"/>
+							<Text
+								text="{ parts: [{path: 'candidateProcessModel>/CandidateInfo/Lstcm'},{path:'candidateProcessModel>/CandidateInfo/Lstps'}], formatter: '.formatter.concatenateWithDash' }"/>
 						</f:fields>
 					</f:FormElement>
 					<f:FormElement label="{i18n>TOTAL_WORK_EXPERIENCE}">

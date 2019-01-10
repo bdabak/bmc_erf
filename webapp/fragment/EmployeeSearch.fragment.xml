@@ -3,7 +3,8 @@
 		search="onEmployeeSearch" confirm="onEmployeeSelect" contentWidth="{= ${device>/system/phone} ? '100%' : '75%'}">
 		<ColumnListItem>
 			<cells>
-				<Image src="/sap/opu/odata/sap/ZHCM_GENERIC_SRV/EmployeeSearchSet('{Pernr}')/$value" tooltip="{i18n>EMPLOYEE_PICTURE}" width="50px"
+				<Image src="/sap/opu/odata/sap/ZHCM_GENERIC_SRV/EmployeeSearchSet('{GenericServices>Pernr}')/$value" tooltip="{i18n>EMPLOYEE_PICTURE}"
+					width="50px"
 					class="sapUxAPObjectPageHeaderContentImageContainer sapUxAPObjectPageHeaderObjectImage-Circle sapMImg sapMImgFocusable sapUxAPObjectPageHeaderObjectImage"></Image>
 				<HBox alignItems="Center">
 					<ObjectStatus icon="{= ${GenericServices>Stat2} === '3' ? 'sap-icon://status-positive' : 'sap-icon://status-inactive' }"

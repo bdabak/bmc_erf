@@ -665,10 +665,8 @@
     white-space: normal !important;
 }
 
-.erfWideIconTab .sapMITBFilter .sapMITBText {
-    padding: 0 !important;
-    padding-left: 0.25rem !important;
-    white-space: normal !important;
+.erfWideIconTab .sapMITBCount {
+    display: none !important;
 }
 
 .smod-list-label-small {

@@ -57,6 +57,8 @@ sap.ui.define([
 					requestDefaults: null,
 					positionList: null,
 					organizationList: null,
+					positionListProxy: null,
+					organizationListProxy: null,
 					positionHelp: {
 						enableAdd: false
 					},
@@ -267,7 +269,24 @@ sap.ui.define([
 
 			this._refreshPositionUsed(_doCallDialog);
 		},
+		onPositionTreeToggled: function (oEvent) {
+			var oViewModel = this.getModel("employeeRequestView");
+			oViewModel.setProperty("/positionHelp/enableAdd", false);
+			this._positionSelected = null;
+			var oTreeOriginal = this.byId("idPositionTreeOriginal") || sap.ui.getCore().byId("idPositionTreeOriginal");
+			var oTreeProxy = this.byId("idPositionTreeProxy") || sap.ui.getCore().byId("idPositionTreeProxy");
+			try {
+				if (oTreeOriginal) oTreeOriginal.clearSelection();
+			} catch (oEx) {
+				jQuery.sap.log.error("Tree clear failed");
+			}
+			try {
+				if (oTreeProxy) oTreeProxy.clearSelection();
+			} catch (oEx) {
+				jQuery.sap.log.error("Tree clear failed");
+			}
 
+		},
 		onPositionRowSelected: function (oEvent) {
 			var oContext = oEvent.getParameters("rowContext");
 			var oViewModel = this.getModel("employeeRequestView");
@@ -518,8 +537,12 @@ sap.ui.define([
 					oStatusChange.beginButtonText = aButtonProp[0].Erfbx;
 					oStatusChange.beginButtonType = aButtonProp[0].Erfbs;
 					oStatusChange.beginButtonIcon = aButtonProp[0].Erfbi;
-					oStatusChange.informationNote = this.getText("STATUS_CHANGE_NOTE", aButtonProp[0].ErfsyN === "" ? aButtonProp[0].ErfsxN :
-						aButtonProp[0].ErfsxN + "-" + aButtonProp[0].ErfsyN);
+					if (this._sNewRequest) {
+						oStatusChange.informationNote = this.getText("NEW_EMPLOYEE_REQUEST_INFORMATION_NOTE");
+					} else {
+						oStatusChange.informationNote = this.getText("STATUS_CHANGE_NOTE", aButtonProp[0].ErfsyN === "" ? aButtonProp[0].ErfsxN :
+							aButtonProp[0].ErfsxN + "-" + aButtonProp[0].ErfsyN);
+					}
 
 					oViewModel.setProperty("/statusChangeDialog", oStatusChange);
 
@@ -879,6 +902,8 @@ sap.ui.define([
 			oViewModel.setProperty("/requestOwner", null);
 			oViewModel.setProperty("/positionList", null);
 			oViewModel.setProperty("/organizationList", null);
+			oViewModel.setProperty("/positionListProxy", null);
+			oViewModel.setProperty("/organizationListProxy", null);
 			oViewModel.setProperty("/usedPositionList", null);
 
 			SharedData.setCurrentRequest(null);
@@ -1078,12 +1103,20 @@ sap.ui.define([
 			var oViewModel = this.getModel("employeeRequestView");
 			var oPositionList = oViewModel.getProperty("/positionList");
 			var oOrganizationList = oViewModel.getProperty("/organizationList");
+			var oPositionListProxy = oViewModel.getProperty("/positionListProxy");
+			var oOrganizationListProxy = oViewModel.getProperty("/organizationListProxy");
 
 			if (!oPositionList) {
 				this._refreshHierarchy("ZMNGOOSC", "/positionList");
 			}
 			if (!oOrganizationList) {
 				this._refreshHierarchy("ZMNGOO", "/organizationList");
+			}
+			if (!oPositionListProxy) {
+				this._refreshHierarchy("ZMNVOOSC", "/positionListProxy");
+			}
+			if (!oOrganizationListProxy) {
+				this._refreshHierarchy("ZMNVOO", "/organizationListProxy");
 			}
 		},
 		_refreshPositionUsed: function (oCallBack) {

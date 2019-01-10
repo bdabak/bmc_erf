@@ -131,6 +131,32 @@ sap.ui.define([], function () {
 				sTomorrow = sDate;
 			}
 			return sTomorrow;
+		},
+		concatenateWithDash: function (sPara1, sPara2, sPara3, sPara4, sPara5) {
+			var sVal = "";
+
+			var _conDash = function (sTarget, sSource) {
+				if (sSource) {
+					sTarget = sTarget ? sTarget + " - " + sSource : sSource;
+				}
+				return sTarget;
+			};
+
+			sVal = _conDash(sVal, sPara1);
+			sVal = _conDash(sVal, sPara2);
+			sVal = _conDash(sVal, sPara3);
+			sVal = _conDash(sVal, sPara4);
+			sVal = _conDash(sVal, sPara5);
+
+			return sVal;
+
+		},
+		isArrayHasData: function (aAny) {
+			try {
+				return aAny.children.length > 0;
+			} catch (oEx) {
+				return false;
+			}
 		}
 
 	};

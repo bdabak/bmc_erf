@@ -47,12 +47,10 @@ sap.ui.define([
 			// detail page is busy indication immediately so there is no break in
 			// between the busy indication for loading the view's meta data
 			var oCandidateProcessModel = new JSONModel();
-			var oCandidateModel = new JSONModel();
 
 			this.initOperations();
 			this.getRouter().getRoute("candidateprocess").attachPatternMatched(this._onCandidateProcessMatched, this);
 			this.setModel(oCandidateProcessModel, "candidateProcessModel");
-			this.setModel(oCandidateModel, "candidateModel");
 
 			this._initiateModels();
 
@@ -1131,7 +1129,8 @@ sap.ui.define([
 					WageOffer: false,
 					WageReview: false,
 					EditCandidate: false,
-					JobOfferEdit: false
+					JobOfferEdit: false,
+					RecruitmentAdmin: false
 				},
 				CandidateReferenceCheckEdit: {
 					CandidateReferenceQuestionsSet: []
@@ -2083,6 +2082,7 @@ sap.ui.define([
 
 			oViewModel.setProperty("/processKey", oProcess);
 			oViewModel.setProperty("/ViewSettings/EditCandidate", SharedData.getApplicationAuth().ErfrcApp || SharedData.getApplicationAuth().ErfraApp);
+			oViewModel.setProperty("/ViewSettings/RecruitmentAdmin", SharedData.getApplicationAuth().ErfraApp);
 
 			var sQuery = "/CandidateProcessOperationsSet(Erfid='" + oProcess.Erfid +
 				"',Tclas='" + oProcess.Tclas + "',Pernr='" + oProcess.Pernr + "')";
@@ -2211,7 +2211,13 @@ sap.ui.define([
 				Icon: "sap-icon://customer-history"
 			}];
 			var oAppSettings = SharedData.getApplicationSettings();
-			console.log(oAppSettings);
+
+			if (!oAppSettings) {
+				oAppSettings = {
+					Edit: false
+				};
+			}
+
 			if (oProcess.Cprso === "H01" || oProcess.Cprso === "H02" || oProcess.Cprso === "H08" || oProcess.Cprso === "H90" || oAppSettings.Edit) {
 				oSidebarData.navigationData.push({
 					RowIid: 2,

@@ -46,7 +46,7 @@
 						<HBox alignItems="Center">
 							<Image
 								src="/sap/opu/odata/sap/ZHCM_RECRUITMENT_SRV/CandidateSet(Tclas='{employeeRequestView>Tclas}',Pernr='{employeeRequestView>Pernr}')/$value"
-								width="50px" height="50px" class="sapUiSmallMarginEnd"/>
+								width="50px" height="50px" class="sapUiSmallMarginEnd erfProfileImage"/>
 							<ObjectIdentifier title="{employeeRequestView>Ename}" text="{employeeRequestView>Pernr}"/>
 						</HBox>
 						<Text text="{= ${employeeRequestView>Tclas} === 'A' ? ${i18n>INTERNAL_APPLICANT} : ${i18n>EXTERNAL_APPLICANT} }"/>
