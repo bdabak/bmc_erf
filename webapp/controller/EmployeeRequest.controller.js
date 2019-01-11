@@ -394,7 +394,24 @@ sap.ui.define([
 				this._positionSelected = null;
 			}
 		},
+		onOrganizationTreeToggled: function (oEvent) {
+			var oViewModel = this.getModel("employeeRequestView");
+			oViewModel.setProperty("/organizationHelp/enableAdd", false);
+			this._organizationSelected = null;
+			var oTreeOriginal = this.byId("idOrganizationTreeOriginal") || sap.ui.getCore().byId("idOrganizationTreeOriginal");
+			var oTreeProxy = this.byId("idOrganizationTreeProxy") || sap.ui.getCore().byId("idOrganizationTreeProxy");
+			try {
+				if (oTreeOriginal) oTreeOriginal.clearSelection();
+			} catch (oEx) {
+				jQuery.sap.log.error("Tree clear failed");
+			}
+			try {
+				if (oTreeProxy) oTreeProxy.clearSelection();
+			} catch (oEx) {
+				jQuery.sap.log.error("Tree clear failed");
+			}
 
+		},
 		onOrganizationValueRequest: function (oEvent) {
 			if (!this._organizationValueHelpDialog) {
 				this._organizationValueHelpDialog = sap.ui.xmlfragment(

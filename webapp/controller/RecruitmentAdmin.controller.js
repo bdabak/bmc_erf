@@ -76,7 +76,7 @@ sap.ui.define([
 		}, {
 			Status: "CMP",
 			AvailableActions: [{
-				Text: "CHANGE_STATUS",
+				Text: "CHANGE_STATUS_ACTION",
 				Icon: "sap-icon://shortcut",
 				Action: "ChangeStatus",
 				Type: "Emphasized"
@@ -140,7 +140,7 @@ sap.ui.define([
 		}, {
 			Status: "REJ",
 			AvailableActions: [{
-				Text: "CHANGE_STATUS",
+				Text: "CHANGE_STATUS_ACTION",
 				Icon: "sap-icon://shortcut",
 				Action: "ChangeStatus",
 				Type: "Emphasized"
