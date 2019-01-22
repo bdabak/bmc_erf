@@ -9,14 +9,16 @@
 					<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.EmployeeRequestSummary" type="XML"/>
 				</VBox>
 			</IconTabFilter>
-			<IconTabFilter icon="sap-icon://survey" text="{i18n>INTERVIEW_FORM}" tooltip="{i18n>INTERVIEW_FORM}" design="Horizontal">
+			<IconTabFilter icon="sap-icon://survey" text="{i18n>INTERVIEW_FORM}" tooltip="{i18n>INTERVIEW_FORM}" design="Horizontal"
+				visible="{candidateProcessModel>/CandidateProcess/IntvwExist}">
 				<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateInterviewFormReadOnly" type="XML"/>
 			</IconTabFilter>
 			<IconTabFilter icon="sap-icon://travel-itinerary" text="{i18n>TRANSFER_INFORMATION}" tooltip="{i18n>TRANSFER_INFORMATION}"
-				design="Horizontal">
+				design="Horizontal" visible="{candidateProcessModel>/CandidateProcess/TrxfrExist}">
 				<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateProcessTravelTransferForms" type="XML"/>
 			</IconTabFilter>
-			<IconTabFilter icon="sap-icon://work-history" text="{i18n>REFERENCE_CHECK_FORM}" tooltip="{i18n>REFERENCE_CHECK_FORM}" design="Horizontal">
+			<IconTabFilter icon="sap-icon://work-history" text="{i18n>REFERENCE_CHECK_FORM}" tooltip="{i18n>REFERENCE_CHECK_FORM}"
+				visible="{candidateProcessModel>/CandidateProcess/RefchExist}" design="Horizontal">
 				<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateReferenceCheckReadOnly" type="XML"/>
 			</IconTabFilter>
 			<IconTabFilter icon="sap-icon://request" text="{i18n>REQUEST_EXAM_RESULT}" tooltip="{i18n>REQUEST_EXAM_RESULT}" design="Horizontal">
@@ -27,15 +29,20 @@
 				<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateProcessAttachment" type="XML"/>
 			</IconTabFilter>
 			<IconTabFilter icon="sap-icon://customer-order-entry" text="{i18n>JOB_OFFER_FORM}" tooltip="{i18n>JOB_OFFER_FORM}" design="Horizontal"
-				visible="{candidateProcessModel>/ViewSettings/RecruitmentAdmin}">
+				visible="{= ${candidateProcessModel>/ViewSettings/RecruitmentAdmin} &amp;&amp; ${candidateProcessModel>/CandidateProcess/OfffrExist} }">
 				<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateJobOfferReadOnly" type="XML"/>
 			</IconTabFilter>
 			<IconTabFilter icon="sap-icon://customer-financial-fact-sheet" text="{i18n>WAGE_WORK}" tooltip="{i18n>WAGE_WORK}" design="Horizontal"
-				visible="{candidateProcessModel>/ViewSettings/RecruitmentAdmin}">
+				visible="{= ${candidateProcessModel>/ViewSettings/RecruitmentAdmin} &amp;&amp; ${candidateProcessModel>/CandidateProcess/WagfrExist} }">
 				<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateWageReview" type="XML"/>
 			</IconTabFilter>
-			<IconTabFilter icon="sap-icon://responsive" text="{i18n>USER_FORM_PRINT}" tooltip="{i18n>USER_FORM_PRINT}" design="Horizontal">
+			<IconTabFilter icon="sap-icon://responsive" text="{i18n>USER_FORM_PRINT}" tooltip="{i18n>USER_FORM_PRINT}" design="Horizontal"
+				visible="{candidateProcessModel>/CandidateProcess/ItfrmExist}">
 				<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateUserFormReadOnly" type="XML"/>
+			</IconTabFilter>
+			<IconTabFilter icon="sap-icon://date-time" text="{i18n>PLANNED_BEGIN_DATE}" tooltip="{i18n>PLANNED_BEGIN_DATE}" design="Horizontal"
+				visible="{= ${candidateProcessModel>/CandidatePlannedStartDate} !== null &amp;&amp; ${candidateProcessModel>/CandidatePlannedStartDate} !== undefined }">
+				<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateRevizeBeginDate" type="XML"/>
 			</IconTabFilter>
 		</items>
 	</IconTabBar>

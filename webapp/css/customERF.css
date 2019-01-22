@@ -595,7 +595,11 @@ html.sap-phone .erfDisplayOnlyCheckBox {
 }
 
 .erfProcessPage .sapMIBar.sapMHeader-CTX {
-    background-color: #3f5667 !important;
+    background-color: #f1f1f1 !important;
+    color: #2b2a2a;
+    height: 30px;
+    border-top: 2px solid #c94739;
+    border-bottom: 1px solid #a1abb2;
 }
 
 .erfApprovalPage .sapMIBar.sapMHeader-CTX {
@@ -603,8 +607,30 @@ html.sap-phone .erfDisplayOnlyCheckBox {
 }
 
 .erfProcessPage .sapMIBar-CTX .sapMTitle {
-    color: #f1f1f1 !important;
+    color: #2b2a2a !important;
     text-shadow: none !important;
+    font-size: 12px;
+    font-family: "Roboto Condensed";
+}
+
+.erfProcessPage.sapMPageWithHeader>section {
+    top: 30px !important;
+}
+
+.erfProcessPage .sapMITH {
+    box-shadow: inset 0 -0.25rem 0 -0.125rem #a1abb2 !important;
+    /* background-color: #f1f1f1 !important; */
+    border-bottom: 0.125rem solid #eff4f9 !important;
+    background-image: linear-gradient(180deg, #f1f1f1 30%, #ebebeb 50%, #cdd0d2 100%);
+}
+
+.erfProcessPage .sapMBar {
+    box-shadow: none !important;
+}
+
+.erfProcessPage .sapMBarContainer.sapMBarPH {
+    height: 30px !important;
+    padding: 0 !important;
 }
 
 .erfProcessPage .sapMBtnBack .sapMBtnIcon {

@@ -933,6 +933,23 @@ sap.ui.define([
 				jQuery.sap.log.error("Navigation failed:" + oTargetPage + ", Hata:" + oEx);
 			}
 		},
+		onReviseBeginDate: function () {
+
+			if (!this._validateStartDate()) {
+				this._callMessageToast("Planlanan başlangıç tarihini girmelisiniz", "W");
+				return;
+			}
+			if (!this._validatePrefferedName()) {
+				this._callMessageToast("Kurumda tercih edilen adı girmelisiniz", "W");
+				return;
+			}
+
+			var oViewModel = this.getModel("candidateProcessModel");
+			var oProcess = oViewModel.getProperty("/CandidateProcess");
+
+			this.onProcessOperation(oProcess, "CP_PBD_SAV", true, null);
+
+		},
 		onSetPlannedBeginDate: function () {
 			var oViewModel = this.getModel("candidateProcessModel");
 			var oProcess = oViewModel.getProperty("/CandidateProcess");
@@ -2202,12 +2219,12 @@ sap.ui.define([
 
 			/*Navigation Data*/
 			oSidebarData.navigationData = [{
-				RowIid: 0,
-				Name: this.getText("RECRUITMENT_PROCESS"),
+				PageIndex: 0,
+				Text: this.getText("RECRUITMENT_PROCESS"),
 				Icon: "sap-icon://process"
 			}, {
-				RowIid: 1,
-				Name: this.getText("PROCESS_HISTORY"),
+				PageIndex: 1,
+				Text: this.getText("PROCESS_HISTORY"),
 				Icon: "sap-icon://customer-history"
 			}];
 			var oAppSettings = SharedData.getApplicationSettings();
@@ -2220,8 +2237,8 @@ sap.ui.define([
 
 			if (oProcess.Cprso === "H01" || oProcess.Cprso === "H02" || oProcess.Cprso === "H08" || oProcess.Cprso === "H90" || oAppSettings.Edit) {
 				oSidebarData.navigationData.push({
-					RowIid: 2,
-					Name: this.getText("CANDIDATE_PROCESS_SUMMARY"),
+					PageIndex: 2,
+					Text: this.getText("CANDIDATE_PROCESS_SUMMARY"),
 					Icon: "sap-icon://goalseek"
 				});
 			}
