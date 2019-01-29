@@ -8,12 +8,14 @@
 				<ImageContent src="sap-icon://employee-pane"/>
 			</TileContent>
 		</GenericTile>
-		<GenericTile header="{i18n>CANDIDATE_INTERVIEW_FORM_TILE}" press="onInterviewFormPrintOut" class="sapUiSmallMargin">
+		<GenericTile header="{i18n>CANDIDATE_INTERVIEW_FORM_TILE}" press="onInterviewFormPrintOut" class="sapUiSmallMargin"
+			visible="{candidateProcessModel>/CandidateProcess/IntvwExist}">
 			<TileContent>
 				<ImageContent src="sap-icon://form"/>
 			</TileContent>
 		</GenericTile>
-		<GenericTile header="{i18n>CANDIDATE_REFERENCE_CHECK_FORM_TILE}" press="onReferenceCheckFormPrintOut" class="sapUiSmallMargin">
+		<GenericTile header="{i18n>CANDIDATE_REFERENCE_CHECK_FORM_TILE}" press="onReferenceCheckFormPrintOut" class="sapUiSmallMargin"
+			visible="{= ${candidateProcessModel>/CandidateProcess/Tclas} === 'B' &amp;&amp; ${candidateProcessModel>/CandidateProcess/RefchExist} }">
 			<TileContent>
 				<ImageContent src="sap-icon://eam-work-order"/>
 			</TileContent>

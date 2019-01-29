@@ -4,21 +4,8 @@
 		<Panel headerText="{i18n>WAGE_INIT}">
 			<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateWageInfoCurrent" type="XML"/>
 		</Panel>
-		<Panel headerText="{i18n>OFFERED_WAGE}">
+		<Panel headerText="{i18n>OFFERED_WAGE}" visible="{candidateProcessModel>/ViewSettings/RecruitmentAdmin}">
 			<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateWageInfoOffer" type="XML"/>
 		</Panel>
 	</VBox>
-	<!--<IconTabBar>-->
-	<!--	<items>-->
-	<!--		<IconTabFilter icon="sap-icon://monitor-payments" iconColor="Negative" text="{i18n>WAGE_INIT}" design="Horizontal">-->
-	<!--			<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateWageInfoCurrent" type="XML"/>-->
-	<!--		</IconTabFilter>-->
-	<!--		<IconTabFilter icon="sap-icon://customize" iconColor="Positive" text="{i18n>OFFERED_WAGE}" design="Horizontal">-->
-	<!--			<VBox width="100%">-->
-	<!--				<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateWageInfoOffer" type="XML"/>-->
-	<!--				<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateWageInfoBenefits" type="XML"/>-->
-	<!--			</VBox>-->
-	<!--		</IconTabFilter>-->
-	<!--	</items>-->
-	<!--</IconTabBar>-->
 </core:FragmentDefinition>

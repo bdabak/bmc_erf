@@ -1,0 +1,11 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<ViewSettingsDialog confirm="onRequestFilterConfirmed">
+		<filterItems>
+			<ViewSettingsFilterItem text="Durum" key="Erfst" multiSelect="true" items="{path:'requestListView>/statusFilters', templateShareable:false}">
+				<items>
+					<ViewSettingsItem text="{requestListView>Erfsx}" key="{requestListView>Erfsf}" selected="{requestListView>Selected}"/>
+				</items>
+			</ViewSettingsFilterItem>
+		</filterItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

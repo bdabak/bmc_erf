@@ -97,6 +97,7 @@ sap.ui.define([
 				Statuses: [{
 					Status: "APM",
 					Label: "APPROVED_REQUESTS_ME_HEADER",
+					DefaultStatus: ["APP"],
 					AvailableActions: [{
 						Text: "EDIT_ACTION",
 						Icon: "sap-icon://edit",
@@ -111,6 +112,7 @@ sap.ui.define([
 				}, {
 					Status: "APF",
 					Label: "APPROVED_REQUESTS_FR_HEADER",
+					DefaultStatus: ["APP"],
 					AvailableActions: [{
 						Text: "DISPLAY_ACTION",
 						Icon: "sap-icon://display",
@@ -131,6 +133,7 @@ sap.ui.define([
 				}, {
 					Status: "APO",
 					Label: "APPROVED_REQUESTS_OT_HEADER",
+					DefaultStatus: ["APP"],
 					AvailableActions: [{
 						Text: "DISPLAY_ACTION",
 						Icon: "sap-icon://display",
@@ -145,6 +148,7 @@ sap.ui.define([
 				}, {
 					Status: "ALL",
 					Label: "ALL_REQUESTS_HEADER",
+					DefaultStatus: ["DRF", "PND", "APP", "REJ", "CMP"],
 					AvailableActions: [{
 						Text: "DISPLAY_ACTION",
 						Icon: "sap-icon://display",
@@ -201,7 +205,30 @@ sap.ui.define([
 					"APM": 0,
 					"APF": 0,
 					"APO": 0
-				}
+				},
+				filterText: "",
+				statusFilters: [{
+					"Erfsf": "DRF",
+					"Erfsx": "Taslak",
+					Selected: false
+				}, {
+					"Erfsf": "PND",
+					"Erfsx": "Onay Devam Ediyor",
+					Selected: false
+				}, {
+					"Erfsf": "APP",
+					"Erfsx": "Onaylandı",
+					Selected: false
+				}, {
+					"Erfsf": "REJ",
+					"Erfsx": "Reddedildi",
+					Selected: false
+				}, {
+					"Erfsf": "CMP",
+					"Erfsx": "Kapatıldı",
+					Selected: false
+				}]
+
 			});
 
 			this.setModel(oViewModel, "requestListView");
@@ -302,6 +329,49 @@ sap.ui.define([
 		 * @param {sap.ui.base.Event} oEvent the table selectionChange event
 		 * @public
 		 */
+		onRequestFilterPressed: function (oEvent) {
+			if (!this._oRequestFilterDialog) {
+				this._oRequestFilterDialog = sap.ui.xmlfragment(
+					"com.bmc.hcm.erf.fragment.EmployeeRequestFilterDialog",
+					this
+				);
+				this.getView().addDependent(this._oRequestFilterDialog);
+			}
+			this._oRequestFilterDialog.open();
+		},
+		onRequestFilterConfirmed: function (oEvent) {
+			var aParams = oEvent.getParameters();
+			var oIconTabBar = this.byId("idIconTabBar");
+			var aActiveFilter = this._getActiveFilters(oIconTabBar.getSelectedKey());
+			var oViewModel = this.getModel("requestListView");
+
+			oViewModel.setProperty("/filterText", aParams.filterString);
+
+			this._applySearch(aActiveFilter);
+			oViewModel.refresh(true);
+		},
+		onRequestFilterReset: function (oEvent) {
+			var oViewModel = this.getModel("requestListView");
+			var aStatusFilters = oViewModel.getProperty("/statusFilters");
+
+			$.each(aStatusFilters, function (sIndex, oFilter) {
+				oFilter.Selected = false;
+			});
+			oViewModel.setProperty("/statusFilters", aStatusFilters);
+			oViewModel.setProperty("/filterText", "");
+
+			var oIconTabBar = this.byId("idIconTabBar");
+			var aActiveFilter = this._getActiveFilters(oIconTabBar.getSelectedKey());
+			this._applySearch(aActiveFilter);
+			oViewModel.refresh(true);
+
+		},
+		onCheckFilterActive: function (aFilters) {
+			console.log(aFilters);
+			var aActive = _.filter(aFilters, ["Selected", true]);
+
+			return aActive.length > 0;
+		},
 		onNewEmployeeRequest: function (oEvent) {
 			SharedData.setCurrentRequest(null);
 			this.getRouter().navTo("employeerequestnew");
@@ -455,6 +525,8 @@ sap.ui.define([
 		},
 		_getActiveFilters: function (sKey) {
 			var aFilters = [];
+			var oThis = this;
+			var oViewModel = this.getModel("requestListView");
 			if (this.callerRole === "MANAGER") {
 				aFilters = [
 					new Filter("Erfap", FilterOperator.EQ, "MY_REQUESTS"),
@@ -463,9 +535,22 @@ sap.ui.define([
 			} else if (this.callerRole === "RECRUITER") {
 				aFilters = [
 					new Filter("Erfap", FilterOperator.EQ, "REQUESTS_APPROVED"),
-					new Filter("Erfsf", FilterOperator.EQ, "APP"),
+					//new Filter("Erfsf", FilterOperator.EQ, "APP"),
 					new Filter("Erfrf", FilterOperator.EQ, sKey)
 				];
+				var aStatusFilters = _.filter(oViewModel.getProperty("/statusFilters"), ["Selected", true]);
+
+				if (aStatusFilters.length > 0) {
+					$.each(aStatusFilters, function (sFilterIndex, oStatusFilter) {
+						aFilters.push(new Filter("Erfsf", FilterOperator.EQ, oStatusFilter.Erfsf));
+					});
+				} else {
+					var oDefaultFilters = _.find(oThis.statusFilters, ["Status", sKey]);
+					$.each(oDefaultFilters.DefaultStatus, function (sStatusIndex, sDefaultStatus) {
+						aFilters.push(new Filter("Erfsf", FilterOperator.EQ, sDefaultStatus));
+					});
+				}
+
 			}
 			return aFilters;
 		},
@@ -550,9 +635,21 @@ sap.ui.define([
 				} else if (oThis.callerRole === "RECRUITER") {
 					aFilters = [
 						new Filter("Erfap", FilterOperator.EQ, "REQUESTS_APPROVED"),
-						new Filter("Erfsf", FilterOperator.EQ, "APP"),
+						//new Filter("Erfsf", FilterOperator.EQ, "APP"),
 						new Filter("Erfrf", FilterOperator.EQ, oFilter.Status)
 					];
+					var aStatusFilters = _.filter(oViewModel.getProperty("/statusFilters"), ["Selected", true]);
+
+					if (aStatusFilters.length > 0) {
+						$.each(aStatusFilters, function (sFilterIndex, oStatusFilter) {
+							aFilters.push(new Filter("Erfsf", FilterOperator.EQ, oStatusFilter.Erfsf));
+						});
+					} else {
+						var oDefaultFilters = _.find(oThis.statusFilters, ["Status", oFilter.Status]);
+						$.each(oDefaultFilters.DefaultStatus, function (sStatusIndex, sDefaultStatus) {
+							aFilters.push(new Filter("Erfsf", FilterOperator.EQ, sDefaultStatus));
+						});
+					}
 				}
 
 				oModel.read("/EmployeeRequestFormSet/$count", {

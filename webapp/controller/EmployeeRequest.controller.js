@@ -385,7 +385,10 @@ sap.ui.define([
 			oViewModel.setProperty("/request/Orgtx", "");
 
 			this._positionValueHelpDialog.close();
-			this._positionHelpTree.clearSelection();
+			if (this._positionHelpTree) {
+				this._positionHelpTree.clearSelection();
+				this._positionSelected = null;
+			}
 		},
 		onCancelPositionAdd: function (oEvent) {
 			this._positionValueHelpDialog.close();

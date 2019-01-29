@@ -6,9 +6,9 @@
 			<IconTabBar applyContentPadding="false" expandable="false" select="onOrganizationTreeToggled">
 				<items>
 					<IconTabFilter text="Asıl">
-						<table:TreeTable rows="{path:'employeeRequestView>/organizationList', parameters: {arrayNames:['children']}}" selectionMode="Single"
-							enableSelectAll="false" rowSelectionChange="onOrganizationRowSelected" visibleRowCount="{= ${device>/system/phone} ? 10 : 15 }"
-							id="idOrganizationTreeOriginal">
+						<table:TreeTable rows="{path:'employeeRequestView>/organizationList', parameters: {arrayNames:['children'],numberOfExpandedLevels:1}}"
+							selectionMode="Single" enableSelectAll="false" rowSelectionChange="onOrganizationRowSelected"
+							visibleRowCount="{= ${device>/system/phone} ? 10 : 15 }" id="idOrganizationTreeOriginal">
 							<table:extension>
 								<Toolbar>
 									<Title text="{i18n>ORGANIZATION_HIERARCHY}"/>
@@ -31,9 +31,9 @@
 						</table:TreeTable>
 					</IconTabFilter>
 					<IconTabFilter text="Vekil" visible="{path: 'employeeRequestView>/organizationListProxy/', formatter: '.formatter.isArrayHasData'}">
-						<table:TreeTable rows="{path:'employeeRequestView>/organizationListProxy', parameters: {arrayNames:['children']}}" selectionMode="Single"
-							enableSelectAll="false" rowSelectionChange="onOrganizationRowSelected" visibleRowCount="{= ${device>/system/phone} ? 10 : 15 }"
-							id="idOrganizationTreeProxy">
+						<table:TreeTable rows="{path:'employeeRequestView>/organizationListProxy', parameters: {arrayNames:['children'],numberOfExpandedLevels:1}}"
+							selectionMode="Single" enableSelectAll="false" rowSelectionChange="onOrganizationRowSelected"
+							visibleRowCount="{= ${device>/system/phone} ? 10 : 15 }" id="idOrganizationTreeProxy">
 							<table:extension>
 								<Toolbar>
 									<Title text="{i18n>ORGANIZATION_HIERARCHY}"/>

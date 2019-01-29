@@ -22,6 +22,10 @@
 					<headerToolbar>
 						<Toolbar>
 							<ToolbarSpacer/>
+							<Button tooltip="Filtreyi Temizle" visible="{ path: 'requestListView>/statusFilters/', formatter: '.onCheckFilterActive' }" type="Reject"
+								icon="sap-icon://clear-filter" press="onRequestFilterReset"/>
+							<Button tooltip="Filtrele" type="{= ${path: 'requestListView>/statusFilters/', formatter: '.onCheckFilterActive'} ? 'Accept' : 'Default' }"
+								icon="sap-icon://filter" press="onRequestFilterPressed"/>
 							<SearchField id="searchField" placeholder="{i18n>REQUEST_SEARCH_TOOLTIP}" search="onSearch"
 								width="{= ${device>/system/phone} ? '100%' : '50%' }"></SearchField>
 						</Toolbar>
@@ -29,6 +33,8 @@
 					<infoToolbar>
 						<Toolbar>
 							<Title id="tableHeader" text="{requestListView>/requestListTableTitle}"/>
+							<Text id="filterText" visible="{ path: 'requestListView>/statusFilters/', formatter: '.onCheckFilterActive' }"
+								text="{requestListView>/filterText}"/>
 						</Toolbar>
 					</infoToolbar>
 					<columns>

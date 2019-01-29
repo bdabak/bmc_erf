@@ -41,13 +41,13 @@
 							<Text text="{path:'candidateProcessModel>/CandidateInfo/Wdarx'}"/>
 						</f:fields>
 					</f:FormElement>
-					<f:FormElement label="{i18n>CANDIDATE_LAST_COMPANY_POSITION}">
+					<f:FormElement label="{i18n>CANDIDATE_LAST_COMPANY_POSITION}" visible="{= ${candidateProcessModel>/CandidateProcess/Tclas} === 'B' }">
 						<f:fields>
 							<Text
 								text="{ parts: [{path: 'candidateProcessModel>/CandidateInfo/Lstcm'},{path:'candidateProcessModel>/CandidateInfo/Lstps'}], formatter: '.formatter.concatenateWithDash' }"/>
 						</f:fields>
 					</f:FormElement>
-					<f:FormElement label="{i18n>TOTAL_WORK_EXPERIENCE}">
+					<f:FormElement label="{i18n>TOTAL_WORK_EXPERIENCE}" visible="{= ${candidateProcessModel>/CandidateProcess/Tclas} === 'B' }">
 						<f:fields>
 							<Text text="{candidateProcessModel>/CandidateInfo/Wrext} {i18n>YEAR} "/>
 						</f:fields>

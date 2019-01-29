@@ -50,24 +50,6 @@
 							</RadioButtonGroup>
 						</f:fields>
 					</f:FormElement>
-					<!--<f:FormElement label="{i18n>WAGE_TYPE}">-->
-					<!--	<f:fields>-->
-					<!--		<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Payty' }]}"-->
-					<!--			filterSecondaryValues="true" selectedKey="{candidateProcessModel>/CandidateWage/ExslrPayty}"-->
-					<!--			editable="{candidateProcessModel>/ViewSettings/WageInit}">-->
-					<!--			<core:ListItem key="{Key}" text="{Text}"/>-->
-					<!--		</ComboBox>-->
-					<!--	</f:fields>-->
-					<!--</f:FormElement>-->
-					<!--<f:FormElement label="{i18n>WAGE_PERIOD}">-->
-					<!--	<f:fields>-->
-					<!--		<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Calty' }]}"-->
-					<!--			filterSecondaryValues="true" selectedKey="{candidateProcessModel>/CandidateWage/ExslrCalty}"-->
-					<!--			editable="{candidateProcessModel>/ViewSettings/WageInit}">-->
-					<!--			<core:ListItem key="{Key}" text="{Text}"/>-->
-					<!--		</ComboBox>-->
-					<!--	</f:fields>-->
-					<!--</f:FormElement>-->
 					<f:FormElement label="{i18n>ExslrAdben}">
 						<f:fields>
 							<TextArea value="{candidateProcessModel>/CandidateWage/ExslrAdben}" maxLength="255"

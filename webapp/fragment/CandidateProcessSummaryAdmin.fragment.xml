@@ -33,7 +33,7 @@
 				<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateJobOfferReadOnly" type="XML"/>
 			</IconTabFilter>
 			<IconTabFilter icon="sap-icon://customer-financial-fact-sheet" text="{i18n>WAGE_WORK}" tooltip="{i18n>WAGE_WORK}" design="Horizontal"
-				visible="{= ${candidateProcessModel>/ViewSettings/RecruitmentAdmin} &amp;&amp; ${candidateProcessModel>/CandidateProcess/WagfrExist} }">
+				visible="{candidateProcessModel>/CandidateProcess/WagfrExist}">
 				<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateWageReview" type="XML"/>
 			</IconTabFilter>
 			<IconTabFilter icon="sap-icon://responsive" text="{i18n>USER_FORM_PRINT}" tooltip="{i18n>USER_FORM_PRINT}" design="Horizontal"

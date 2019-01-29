@@ -6,9 +6,9 @@
 			<IconTabBar applyContentPadding="false" expandable="false" select="onPositionTreeToggled">
 				<items>
 					<IconTabFilter text="Asıl">
-						<table:TreeTable rows="{path:'employeeRequestView>/positionList', parameters: {arrayNames:['children']}}" selectionMode="MultiToggle"
-							enableSelectAll="false" rowSelectionChange="onPositionRowSelected" visibleRowCount="{= ${device>/system/phone} ? 10 : 15 }"
-							id="idPositionTreeOriginal">
+						<table:TreeTable rows="{path:'employeeRequestView>/positionList', parameters: {arrayNames:['children'],numberOfExpandedLevels:1}}"
+							selectionMode="MultiToggle" enableSelectAll="false" rowSelectionChange="onPositionRowSelected"
+							visibleRowCount="{= ${device>/system/phone} ? 10 : 15 }" id="idPositionTreeOriginal">
 							<table:extension>
 								<Toolbar>
 									<Title text="{i18n>ORGANIZATION_HIERARCHY}"/>
@@ -25,6 +25,12 @@
 												color="{ parts: [{path: 'employeeRequestView>Otype'},{path: 'employeeRequestView>ObjidR1'},{path: 'employeeRequestView>Ismng'}], formatter: '.formatter.getObjectIconColor'}"></core:Icon>
 											<Text text=" {employeeRequestView>Stext}" wrapping="false" tooltip="{employeeRequestView>Otype} {employeeRequestView>Objid}"/>
 										</FlexBox>
+									</table:template>
+								</table:Column>
+								<table:Column width="15rem">
+									<Label text="{i18n>OBJECT_CODE}"/>
+									<table:template>
+										<Text text="{employeeRequestView>Otype} {employeeRequestView>Objid}"/>
 									</table:template>
 								</table:Column>
 								<table:Column width="15rem" visible="{= ${employeeRequestView>/request/Erfrs} !== '4' }">
@@ -43,9 +49,9 @@
 						</table:TreeTable>
 					</IconTabFilter>
 					<IconTabFilter text="Vekil" visible="{path: 'employeeRequestView>/positionListProxy/', formatter: '.formatter.isArrayHasData'}">
-						<table:TreeTable rows="{path:'employeeRequestView>/positionListProxy', parameters: {arrayNames:['children']}}" selectionMode="MultiToggle"
-							enableSelectAll="false" rowSelectionChange="onPositionRowSelected" visibleRowCount="{= ${device>/system/phone} ? 10 : 15 }"
-							id="idPositionTreeProxy">
+						<table:TreeTable rows="{path:'employeeRequestView>/positionListProxy', parameters: {arrayNames:['children'], numberOfExpandedLevels:1}}"
+							selectionMode="MultiToggle" enableSelectAll="false" rowSelectionChange="onPositionRowSelected"
+							visibleRowCount="{= ${device>/system/phone} ? 10 : 15 }" id="idPositionTreeProxy">
 							<table:extension>
 								<Toolbar>
 									<Title text="{i18n>ORGANIZATION_HIERARCHY}"/>
@@ -62,6 +68,12 @@
 												color="{ parts: [{path: 'employeeRequestView>Otype'},{path: 'employeeRequestView>ObjidR1'},{path: 'employeeRequestView>Ismng'}], formatter: '.formatter.getObjectIconColor'}"></core:Icon>
 											<Text text=" {employeeRequestView>Stext}" wrapping="false" tooltip="{employeeRequestView>Otype} {employeeRequestView>Objid}"/>
 										</FlexBox>
+									</table:template>
+								</table:Column>
+								<table:Column width="15rem">
+									<Label text="{i18n>OBJECT_CODE}"/>
+									<table:template>
+										<Text text="{employeeRequestView>Otype} {employeeRequestView>Objid}"/>
 									</table:template>
 								</table:Column>
 								<table:Column width="15rem" visible="{= ${employeeRequestView>/request/Erfrs} !== '4' }">
