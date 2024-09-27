@@ -1,0 +1,74 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<fb:FilterBar id="idCandidateFilterBar" reset="onResetFilter" search="onApplyFilter" useToolbar="false" showGoOnFB="false">
+		<fb:filterGroupItems>
+			<fb:FilterGroupItem name="A" label="{i18n>CANDIDATE_NAME}" groupName="G1" groupTitle="Gelişmiş Arama" visibleInFilterBar="true">
+				<fb:control>
+					<Input type="Text" value="{candidateListModel>/Filters/Ename}" enableSuggestionsHighlighting="false"/>
+				</fb:control>
+			</fb:FilterGroupItem>
+			<fb:FilterGroupItem name="B" label="{i18n>CANDIDATE_GENDER}" groupName="G1" groupTitle="Gelişmiş Arama" visibleInFilterBar="true">
+				<fb:control>
+					<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Gesch' } ] }"
+						filterSecondaryValues="true" selectedKey="{candidateListModel>/Filters/Gesch}">
+						<core:ListItem key="{Key}" text="{Text}"/>
+					</ComboBox>
+				</fb:control>
+			</fb:FilterGroupItem>
+			<fb:FilterGroupItem name="C" label="{i18n>CANDIDATE_EDUCATION_LEVEL}" groupName="G1" groupTitle="Gelişmiş Arama" visibleInFilterBar="true">
+				<fb:control>
+					<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Slart' } ] }"
+						filterSecondaryValues="true" selectedKey="{candidateListModel>/Filters/Slart}">
+						<core:ListItem key="{Key}" text="{Text}"/>
+					</ComboBox>
+				</fb:control>
+			</fb:FilterGroupItem>
+			<fb:FilterGroupItem name="D" label="{i18n>MILITARY_STATUS}" groupName="G1" groupTitle="Gelişmiş Arama" visibleInFilterBar="true">
+				<fb:control>
+					<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Wdart' } ] }"
+						filterSecondaryValues="true" selectedKey="{candidateListModel>/Filters/Wdart}">
+						<core:ListItem key="{Key}" text="{Text}"/>
+					</ComboBox>
+				</fb:control>
+			</fb:FilterGroupItem>
+			<fb:FilterGroupItem name="E" label="{i18n>CANDIDATE_LAST_COMPANY}" groupName="G1" groupTitle="Gelişmiş Arama" visibleInFilterBar="true">
+				<fb:control>
+					<Input type="Text" value="{candidateListModel>/Filters/Lstcm}"/>
+				</fb:control>
+			</fb:FilterGroupItem>
+			<fb:FilterGroupItem name="F" label="{i18n>CANDIDATE_LAST_POSITION}" groupName="G1" groupTitle="Gelişmiş Arama" visibleInFilterBar="true">
+				<fb:control>
+					<Input type="Text" value="{candidateListModel>/Filters/Lstps}"/>
+				</fb:control>
+			</fb:FilterGroupItem>
+			<fb:FilterGroupItem name="G" label="{i18n>CANDIDATE_HAS_COMMENTS}" groupName="G1" groupTitle="Gelişmiş Arama" visibleInFilterBar="true">
+				<fb:control>
+					<CheckBox selected="{candidateListModel>/Filters/Hscmn}"/>
+				</fb:control>
+			</fb:FilterGroupItem>
+			<fb:FilterGroupItem name="H" label="{i18n>CANDIDATE_HAS_REFERENCE}" groupName="G1" groupTitle="Gelişmiş Arama" visibleInFilterBar="true">
+				<fb:control>
+					<CheckBox selected="{candidateListModel>/Filters/Hasrf}"/>
+				</fb:control>
+			</fb:FilterGroupItem>
+			<fb:FilterGroupItem name="I" label="{i18n>CANDIDATE_HAS_REFERENCE_VIP}" groupName="G1" groupTitle="Gelişmiş Arama" visibleInFilterBar="true">
+				<fb:control>
+					<CheckBox selected="{candidateListModel>/Filters/Isvic}"/>
+				</fb:control>
+			</fb:FilterGroupItem>
+			<fb:FilterGroupItem name="J" label="{i18n>CANDIDATE_RESOURCE}" groupName="G1" groupTitle="Gelişmiş Arama" visibleInFilterBar="true">
+				<fb:control>
+					<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Cansr' } ] }"
+						filterSecondaryValues="true" selectedKey="{candidateListModel>/Filters/Cansr}">
+						<core:ListItem key="{Key}" text="{Text}"/>
+					</ComboBox>
+				</fb:control>
+			</fb:FilterGroupItem>
+		</fb:filterGroupItems>
+	</fb:FilterBar>
+	<FlexBox width="100%" justifyContent="Center">
+		<Button text="Temizle" type="Reject" press="onResetCandidateFilter" icon="sap-icon://clear-filter" class="sapUiTinyMarginEnd"/>
+		<Button text="Filtrele" type="Accept" press="onApplyCandidateFilter" icon="sap-icon://filter" class="sapUiTinyMarginEnd"/>
+	</FlexBox>
+</core:FragmentDefinition>

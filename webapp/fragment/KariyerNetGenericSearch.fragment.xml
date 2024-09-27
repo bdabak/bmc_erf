@@ -1,0 +1,25 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<TableSelectDialog class="sapUiPopupWithPadding"
+		items="{path: '/KariyerNetValueHelpSet', filters : [ { path : 'Help', operator : 'EQ', value1 : 'DUMMY'}]}" search="onPerformSearch"
+		confirm="onConfirmSelection" contentWidth="{= ${device>/system/phone} ? '100%' : '60%'}" multiSelect="true" cancel="onCancelSearch"
+		busyIndicatorDelay="0">
+		<ColumnListItem>
+			<cells>
+				<Text text="{Text}"/>
+				<ObjectIdentifier title="{Key}"/>
+			</cells>
+		</ColumnListItem>
+		<columns>
+			<Column>
+				<header>
+					<Text text="{i18n>GENERIC_TEXT}"/>
+				</header>
+			</Column>
+			<Column>
+				<header>
+					<Text text="{i18n>GENERIC_KEY}"/>
+				</header>
+			</Column>
+		</columns>
+	</TableSelectDialog>
+</core:FragmentDefinition>

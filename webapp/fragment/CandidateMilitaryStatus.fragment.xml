@@ -1,0 +1,53 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<f:Form editable="true" id="MilitaryForm">
+		<f:layout>
+			<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanM="5" emptySpanS="0"
+				emptySpanL="4" emptySpanXL="4" columnsXL="4" columnsL="4" columnsM="4" singleContainerFullSize="true"/>
+		</f:layout>
+		<f:formContainers>
+			<f:FormContainer>
+				<f:formElements>
+					<f:FormElement label="{i18n>Wdart}">
+						<f:fields>
+							<ComboBox change="onChangeWdart" items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Wdart' } ] }"
+								selectedKey="{candidateModel>/candidateData/CandidateMilitaryStatus/Wdart}">
+								<core:Item key="{Key}" text="{Text}"></core:Item>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement visible="{= ${candidateModel>/candidateData/CandidateMilitaryStatus/Wdart} === '01' }" label="{i18n>Wdgrd}">
+						<f:fields>
+							<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Wdgrd' } ] }"
+								selectedKey="{candidateModel>/candidateData/CandidateMilitaryStatus/Wdgrd}">
+								<core:Item key="{Key}" text="{Text}"></core:Item>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement visible="{= ${candidateModel>/candidateData/CandidateMilitaryStatus/Wdart} === '01' }" label="{i18n>Wdein}">
+						<f:fields>
+							<Input value="{candidateModel>/candidateData/CandidateMilitaryStatus/Wdein}" type="Text" maxLength="40"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement visible="{= ${candidateModel>/candidateData/CandidateMilitaryStatus/Wdart} === '03' }" label="{i18n>Zmrsn}">
+						<f:fields>
+							<Input value="{candidateModel>/candidateData/CandidateMilitaryStatus/Zmrsn}" type="Text" maxLength="100"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Begda}">
+						<f:fields>
+							<DatePicker
+								value="{path: 'candidateModel>/candidateData/CandidateMilitaryStatus/Begda', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Endda}">
+						<f:fields>
+							<DatePicker
+								value="{path: 'candidateModel>/candidateData/CandidateMilitaryStatus/Endda', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+						</f:fields>
+					</f:FormElement>
+				</f:formElements>
+			</f:FormContainer>
+		</f:formContainers>
+	</f:Form>
+</core:FragmentDefinition>

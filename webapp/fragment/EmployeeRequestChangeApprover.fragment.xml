@@ -1,0 +1,47 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core"
+	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Dialog title="{i18n>CHANGE_FORM_APPROVER}" type="Message" state="Warning">
+		<content>
+			<f:Form editable="true">
+				<f:layout>
+					<f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0"
+						emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+				</f:layout>
+				<f:formContainers>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement label="{i18n>CURRENT_APPROVER}">
+								<f:fields>
+									<Text text="{recruitmentAdminModel>/changeApproverAction/CurrentApproverName}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>TARGET_APPROVER}">
+								<f:fields>
+									<Input
+										value="{ parts: [{ path: 'recruitmentAdminModel>/changeApproverAction/TargetApprover' }, { path: 'recruitmentAdminModel>/changeApproverAction/TargetApproverName'}], formatter: '.formatter.convertZeroObjectNumber'}"
+										required="true" valueHelpOnly="true" valueHelpRequest="onEmployeeValueRequest" showValueHelp="true" cd:sourceField="TargetApprover"
+										cd:includeInactive="false">
+										<layoutData>
+											<l:GridData span="XL10 L10 M10 S10"/>
+										</layoutData>
+									</Input>
+									<Button icon="sap-icon://reset" press="onResetEmployee" type="Reject" tooltip="{i18n>RESET_FIELD}" cd:sourceField="TargetApprover">
+										<layoutData>
+											<l:GridData span="XL2 L2 M2 S2"/>
+										</layoutData>
+									</Button>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+			</f:Form>
+		</content>
+		<beginButton>
+			<Button text="{i18n>CHANGE_APPROVER_ACTION}" type="Accept" press="onChangeFormApproverConfirmed"/>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>CANCEL_ACTION}" type="Reject" press="onChangeFormApproverCancelled"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

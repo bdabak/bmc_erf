@@ -1,0 +1,90 @@
+<mvc:View controllerName="com.bmc.hcm.erf.controller.RequestList" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.f.semantic"
+	xmlns:footerbar="sap.ushell.ui.footerbar" busy="{requestListView>/busy}" busyIndicatorDelay="100">
+	<Page showFooter="true" showHeader="true" floatingFooter="true" showNavButton="true" navButtonPress="onNavBack"
+		title="{i18n>EMPLOYEE_REQUEST_FORM_LIST}" class="erfListPage">
+		<IconTabBar id="idIconTabBar" select="onIconFilterSelect" class="erfMediumIconTab">
+			<items>
+				<IconTabFilter icon="sap-icon://activity-assigned-to-goal" iconColor="Positive" count="{requestListView>/searchResults/APM}"
+					text="{i18n>APPROVED_REQUESTS_ME}" key="APM"/>
+				<IconTabFilter icon="sap-icon://create-form" iconColor="Critical" count="{requestListView>/searchResults/APF}"
+					text="{i18n>APPROVED_REQUESTS_FR}" key="APF"/>
+				<IconTabFilter icon="sap-icon://detail-view" iconColor="Negative" count="{requestListView>/searchResults/APO}"
+					text="{i18n>APPROVED_REQUESTS_OT}" key="APO"/>
+				<IconTabSeparator/>
+				<IconTabFilter icon="sap-icon://checklist" iconColor="Default" count="{requestListView>/searchResults/ALL}" text="{i18n>ALL_REQUESTS}"
+					key="ALL"/>
+			</items>
+			<content>
+				<Table id="idEmployeeRequestTable" width="auto"
+					items="{ path: '/EmployeeRequestFormSet',filters : [ { path : 'Erfap', operator : 'EQ', value1 : 'REQUESTS_APPROVED'}, { path : 'Erfsf', operator : 'EQ', value1 : 'APP'}, { path : 'Erfrf', operator : 'EQ', value1 : 'APM'} ] }"
+					noDataText="{requestListView>/tableNoDataText}" busyIndicatorDelay="{requestListView>/tableBusyDelay}" growing="true"
+					growingScrollToLoad="true" updateFinished="onUpdateFinished" updateStarted="onUpdateStarted" class="erfTable">
+					<headerToolbar>
+						<Toolbar>
+							<ToolbarSpacer/>
+							<Button tooltip="Filtreyi Temizle" visible="{ path: 'requestListView>/statusFilters/', formatter: '.onCheckFilterActive' }" type="Reject"
+								icon="sap-icon://clear-filter" press="onRequestFilterReset"/>
+							<Button tooltip="Filtrele" type="{= ${path: 'requestListView>/statusFilters/', formatter: '.onCheckFilterActive'} ? 'Accept' : 'Default' }"
+								icon="sap-icon://filter" press="onRequestFilterPressed"/>
+							<SearchField id="searchField" placeholder="{i18n>REQUEST_SEARCH_TOOLTIP}" search="onSearch"
+								width="{= ${device>/system/phone} ? '100%' : '50%' }"></SearchField>
+						</Toolbar>
+					</headerToolbar>
+					<infoToolbar>
+						<Toolbar>
+							<Title id="tableHeader" text="{requestListView>/requestListTableTitle}"/>
+							<Text id="filterText" visible="{ path: 'requestListView>/statusFilters/', formatter: '.onCheckFilterActive' }"
+								text="{requestListView>/filterText}"/>
+						</Toolbar>
+					</infoToolbar>
+					<columns>
+						<Column id="idRequestNumberColumn">
+							<Text text="{i18n>ERF_NUMBER}"/>
+						</Column>
+						<Column id="idPositionColumn" minScreenWidth="Tablet" demandPopin="true">
+							<Text text="{i18n>POSITION}"/>
+						</Column>
+						<Column id="idRequestReasonColumn" minScreenWidth="Tablet" demandPopin="true">
+							<Text text="{i18n>REQUEST_REASON}"/>
+						</Column>
+						<Column id="idRequestOwnerColumn" minScreenWidth="Tablet" demandPopin="true">
+							<Text text="{i18n>REQUEST_OWNER}"/>
+						</Column>
+						<Column id="idRecruiterColumn" minScreenWidth="Tablet" demandPopin="true">
+							<Text text="{i18n>RECRUITER_NAME}"/>
+						</Column>
+						<Column id="idRequestDateColumn" minScreenWidth="Desktop" demandPopin="true">
+							<Text text="{i18n>REQUEST_DATE}"/>
+						</Column>
+						<Column id="idRequestStatusColumn" minScreenWidth="Desktop" demandPopin="true">
+							<Text text="{i18n>REQUEST_STATUS}"/>
+						</Column>
+						<Column id="idRequestOnWhoColumn" minScreenWidth="Desktop" demandPopin="true">
+							<Text text="{i18n>REQUEST_ON_WHO}"/>
+						</Column>
+						<Column id="idActionsColumn" minScreenWidth="Tablet" width="5rem" hAlign="Center">
+							<Text text="{i18n>ACTION_LIST}"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem type="Navigation" press="onPress">
+							<cells>
+								<ObjectIdentifier title="{Erfno}"/>
+								<Text text="{= ${Nopln} ? ${Plaft} : ${Plstx} }"/>
+								<Text text="{Erfrx}"/>
+								<Text text="{Rqowe}"/>
+								<Text text="{Erfoe}"/>
+								<Text
+									text="{ path: 'Rqdat', type: 'sap.ui.model.type.Date', formatOptions: { pattern:'dd.MM.yyyy'} } - { path: 'Rqtim', type: 'sap.ui.model.odata.type.Time', formatOptions: { pattern:'HH:mm'} }"/>
+								<Text text="{ parts: [ {path: 'Erfsx' }, {path: 'Erfsy' }], formatter: '.formatter.getStatusText' }"/>
+								<Text text="{Frone}"/>
+								<Button icon="sap-icon://menu" type="Accept" press="onAvailableRequestActions" tooltip="{i18n>ACTION_LIST}"
+									visible="{ path:'Erfrf', formatter: '.onCheckActionAvailable'}" class="erfActionButton"></Button>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</content>
+		</IconTabBar>
+	</Page>
+</mvc:View>

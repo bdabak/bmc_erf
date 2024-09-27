@@ -1,0 +1,24 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Dialog cd:operation="{candidateModel>/type/operation}" title="{i18n>CANDIDATE_NOTES_NEW}" cd:path="{candidateModel>/type/path}"
+		contentWidth="50%" stretch="{device>/system/phone}">
+		<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
+			adjustLabelSpan="false" emptySpanXL="2" emptySpanL="2" emptySpanM="2" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+			singleContainerFullSize="false">
+			<f:content>
+				<Label text="{i18n>CANDIDATE_COMMENT_OWNER}"/>
+				<Input
+					value="{ parts: [{ path: 'candidateModel>/CandidateNotesLine/Cmnow' }, { path: 'candidateModel>/CandidateNotesLine/Cmnon'}], formatter: '.formatter.convertZeroObjectNumber'}"
+					valueHelpOnly="true" valueHelpRequest="onEmployeeValueRequest" showValueHelp="true" cd:sourceField="Cmnow"/>
+				<Label text="{i18n>CANDIDATE_COMMENT}"/>
+				<TextArea value="{candidateModel>/CandidateNotesLine/Cmntx}" rows="5"/>
+			</f:content>
+		</f:SimpleForm>
+		<beginButton>
+			<Button type="Accept" text="{i18n>Accept}" press="onDialogSave" cd:model="CandidateNotes"/>
+		</beginButton>
+		<endButton>
+			<Button type="Reject" text="{i18n>Reject}" press="onDialogCancel" cd:model="CandidateNotes"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,5 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.bmc.hcm.erf.controller.App" displayBlock="true" xmlns="sap.m"
+	xmlns:smod="com.bmc.hcm.erf.control">
+	<App id="app" busy="{appView>/busy}" busyIndicatorDelay="{appView>/delay}"/>
+	<smod:SnackBar id="snack-bar-container"/>
+</mvc:View>

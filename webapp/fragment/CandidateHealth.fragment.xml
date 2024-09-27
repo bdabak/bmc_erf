@@ -1,0 +1,105 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<f:Form editable="true">
+		<f:layout>
+			<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="1" emptySpanL="1"
+				emptySpanM="1" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="1" singleContainerFullSize="false"/>
+		</f:layout>
+		<f:formContainers>
+			<f:FormContainer>
+				<f:formElements>
+					<f:FormElement label="{i18n>Hnccn}">
+						<f:fields>
+							<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Hnccn' } ] }"
+								selectedKey="{candidateModel>/candidateData/CandidateHealth/Hnccn}" change="onChangeHealthArea" cd:area="Hnccn">
+								<core:Item key="{Key}" text="{Text}"></core:Item>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Hndct}" visible="{= ${candidateModel>/candidateData/CandidateHealth/Hnccn} === '1' ? true : false }">
+						<f:fields>
+							<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Hndct' } ] }"
+								selectedKey="{candidateModel>/candidateData/CandidateHealth/Hndct}">
+								<core:Item key="{Key}" text="{Text}"></core:Item>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Hndpr}" visible="{= ${candidateModel>/candidateData/CandidateHealth/Hnccn} === '1' ? true : false }">
+						<f:fields>
+							<Input value="{candidateModel>/candidateData/CandidateHealth/Hndpr}" type="Number"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Hndex}" visible="{= ${candidateModel>/candidateData/CandidateHealth/Hnccn} === '1' ? true : false }">
+						<f:fields>
+							<TextArea value="{candidateModel>/candidateData/CandidateHealth/Hndex}"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Infds}">
+						<f:fields>
+							<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Infds' } ] }"
+								selectedKey="{candidateModel>/candidateData/CandidateHealth/Infds}" change="onChangeHealthArea" cd:area="Infde">
+								<core:Item key="{Key}" text="{Text}"></core:Item>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Infde}" visible="{= ${candidateModel>/candidateData/CandidateHealth/Infds} === '1' ? true : false }">
+						<f:fields>
+							<TextArea value="{candidateModel>/candidateData/CandidateHealth/Infde}"/>
+						</f:fields>
+					</f:FormElement>
+				</f:formElements>
+			</f:FormContainer>
+			<f:FormContainer>
+				<f:formElements>
+					<f:FormElement label="{i18n>Medrp}">
+						<f:fields>
+							<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Medrp' } ] }"
+								selectedKey="{candidateModel>/candidateData/CandidateHealth/Medrp}">
+								<core:Item key="{Key}" text="{Text}"></core:Item>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Chdse}">
+						<f:fields>
+							<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Chdse' } ] }"
+								selectedKey="{candidateModel>/candidateData/CandidateHealth/Chdse}" change="onChangeHealthArea" cd:area="Chdsx">
+								<core:Item key="{Key}" text="{Text}"></core:Item>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Chdsx}" visible="{= ${candidateModel>/candidateData/CandidateHealth/Chdse} === '1' ? true : false }">
+						<f:fields>
+							<TextArea value="{candidateModel>/candidateData/CandidateHealth/Chdsx}"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Prmdc}">
+						<f:fields>
+							<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Prmdc' } ] }"
+								selectedKey="{candidateModel>/candidateData/CandidateHealth/Prmdc}" change="onChangeHealthArea" cd:area="Prmde">
+								<core:Item key="{Key}" text="{Text}"></core:Item>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Prmde}" visible="{= ${candidateModel>/candidateData/CandidateHealth/Prmdc} === '1' ? true : false }">
+						<f:fields>
+							<TextArea value="{candidateModel>/candidateData/CandidateHealth/Prmde}"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Loscn}">
+						<f:fields>
+							<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Loscn' } ] }"
+								selectedKey="{candidateModel>/candidateData/CandidateHealth/Loscn}" change="onChangeHealthArea" cd:area="Losce">
+								<core:Item key="{Key}" text="{Text}"></core:Item>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Losce}" visible="{= ${candidateModel>/candidateData/CandidateHealth/Loscn} === '1' ? true : false }">
+						<f:fields>
+							<TextArea value="{candidateModel>/candidateData/CandidateHealth/Losce}"/>
+						</f:fields>
+					</f:FormElement>
+				</f:formElements>
+			</f:FormContainer>
+		</f:formContainers>
+	</f:Form>
+</core:FragmentDefinition>

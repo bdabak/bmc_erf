@@ -1,0 +1,480 @@
+<mvc:View controllerName="com.bmc.hcm.erf.controller.JobPosting" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core"
+	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	xmlns:rte="sap.ui.richtexteditor">
+	<Page id="idExternalJobPostingWizardPage" showHeader="true" showNavButton="true" navButtonPress="onNavBack"
+		title="{i18n>EXTERNAL_POSTING_EDIT}" class="erfExternalJobPostingPage" showFooter="true" floatingFooter="true">
+		<Panel headerText="{i18n>EXTERNAL_POSTING_COMPANY_INFO}">
+			<f:Form editable="true" id="idExternalPostingCompanyInfo">
+				<f:layout>
+					<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+						emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="1" singleContainerFullSize="false"/>
+				</f:layout>
+				<f:formContainers>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_COMPANY_NAME}">
+								<f:fields>
+									<Input value="{path:'externalJobPostingModel>/postingData/Cmpnm'}" required="true" editable="{externalJobPostingModel>/postingData/Ihdjp}"/>
+									<CheckBox text="{i18n>EXTERNAL_POSTING_COMPANY_NAME_HIDE}" selected="{externalJobPostingModel>/postingData/Ihdjp}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_COMPANY_PROFILE}">
+								<f:fields>
+									<ComboBox selectedKey="{path:'externalJobPostingModel>/postingData/Cmpid'}"
+										items="{ path: '/KariyerNetValueHelpSet', filters : [ { path : 'Help', operator : 'EQ', value1 : 'FIRM_PROFILE'}]}">
+										<core:Item key="{Key}" text="{Text}"/>
+									</ComboBox>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_COMPANY_LOGO}">
+								<f:fields>
+									<ComboBox selectedKey="{path:'externalJobPostingModel>/postingData/Cmplg'}"
+										items="{ path: '/KariyerNetValueHelpSet', filters : [ { path : 'Help', operator : 'EQ', value1 : 'FIRM_LOGO'}]}">
+										<core:Item key="{Key}" text="{Text}"/>
+									</ComboBox>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_COMPANY_SECTOR}">
+								<f:fields>
+									<MultiInput required="true" tokens="{path:'externalJobPostingModel>/KariyerNetSectorSelected', templateShareable: false}"
+										showValueHelp="true" valueHelpOnly="true" valueHelpRequest="onHandleGenericValueHelp" tokenUpdate="onHandleTokenDelete" maxTokens="5"
+										enableMultiLineMode="true" cd:targetField="/KariyerNetSectorSelected" cd:fieldType="Array" cd:helpKey="SECTOR">
+										<tokens>
+											<Token key="{externalJobPostingModel>Key}" text="{externalJobPostingModel>Text}"/>
+										</tokens>
+									</MultiInput>
+									<!--<MultiComboBox id="idExternalPostingCompanySector" required="true" selectedKeys="{externalJobPostingModel>/KariyerNetSectorSelected}"-->
+									<!--	items="{ path: '/KariyerNetValueHelpSet', filters : [ { path : 'Help', operator : 'EQ', value1 : 'SECTOR'}]}">-->
+									<!--	<core:Item key="{Key}" text="{Text}"/>-->
+									<!--</MultiComboBox>-->
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+			</f:Form>
+		</Panel>
+		<Panel headerText="{i18n>EXTERNAL_POSTING_DETAILS}">
+			<f:Form editable="true" id="idExternalPostingDetailsPart1">
+				<f:layout>
+					<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+						emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="1" singleContainerFullSize="false"/>
+				</f:layout>
+				<f:formContainers>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_REFERENCE_NUMBER}">
+								<f:fields>
+									<Input required="true" value="{path:'externalJobPostingModel>/postingData/JprefSap'}" maxLength="50"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_POSITION_CODE}">
+								<f:fields>
+									<Input required="true" value="{path:'externalJobPostingModel>/postingData/Posid', formatter:'._getPositionText' }" showSuggestion="false"
+										showValueHelp="true" valueHelpRequest="onHandleGenericValueHelp" valueHelpOnly="true" cd:fieldType="Variable"
+										cd:targetField="/postingData/Posid" cd:targetTextField="/postingData/Posnm" cd:helpKey="POSITION"></Input>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_POSITION_NAME}">
+								<f:fields>
+									<Input required="true" value="{path:'externalJobPostingModel>/postingData/Posnm'}" maxLength="50"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_POSITION_COUNT}">
+								<f:fields>
+									<Input required="true" type="Number" value="{path:'externalJobPostingModel>/postingData/Nmfhr'}" width="90px">
+										<layoutData>
+											<l:GridData span="XL2 L2 M3 S4"/>
+										</layoutData>
+									</Input>
+									<CheckBox text="{i18n>EXTERNAL_POSTING_POSITION_COUNT_SHOW}" selected="{path:'externalJobPostingModel>/postingData/Isnhr'}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_POSITION_CITY}">
+								<f:fields>
+									<MultiInput required="true" tokens="{path:'externalJobPostingModel>/KariyerNetPositionLocationSelected', templateShareable: false}"
+										showValueHelp="true" valueHelpOnly="true" valueHelpRequest="onHandleGenericValueHelp" tokenUpdate="onHandleTokenDelete" maxTokens="5"
+										enableMultiLineMode="true" cd:targetField="/KariyerNetPositionLocationSelected" cd:fieldType="Array" cd:helpKey="LOCATION_SEARCH">
+										<tokens>
+											<Token key="{externalJobPostingModel>Key}" text="{externalJobPostingModel>Text}"/>
+										</tokens>
+									</MultiInput>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_JOB_AREA}">
+								<f:fields>
+									<MultiInput required="true" tokens="{path:'externalJobPostingModel>/KariyerNetJobAreaSelected', templateShareable: false}"
+										showValueHelp="true" valueHelpOnly="true" valueHelpRequest="onHandleGenericValueHelp" tokenUpdate="onHandleTokenDelete" maxTokens="5"
+										enableMultiLineMode="true" cd:targetField="/KariyerNetJobAreaSelected" cd:fieldType="Array" cd:helpKey="LINE_OF_BUSINESS">
+										<tokens>
+											<Token key="{externalJobPostingModel>Key}" text="{externalJobPostingModel>Text}"/>
+										</tokens>
+									</MultiInput>
+									<!--<MultiComboBox required="true" id="idExternalPostingJobArea" selectedKeys="{externalJobPostingModel>/KariyerNetJobAreaSelected}"-->
+									<!--	items="{ path: '/KariyerNetValueHelpSet', filters : [ { path : 'Help', operator : 'EQ', value1 : 'LINE_OF_BUSINESS'}]}">-->
+									<!--	<core:Item key="{Key}" text="{Text}"/>-->
+									<!--</MultiComboBox>-->
+								</f:fields>
+							</f:FormElement>
+							<!--<f:FormElement label="{i18n>EXTERNAL_POSTING_DATE}">-->
+							<!--	<f:fields>-->
+							<!--		<DatePicker required="true" minDate="{path: 'externalJobPostingModel>/postingData/Pubdt', formatter:'.formatter.setRestrictDate'}"-->
+							<!--			value="{path: 'externalJobPostingModel>/postingData/Pubdt', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}">-->
+							<!--			<layoutData>-->
+							<!--				<l:GridData span="XL3 L3 M4 S6"/>-->
+							<!--			</layoutData>-->
+							<!--		</DatePicker>-->
+							<!--		<CheckBox text="{i18n>EXTERNAL_POSTING_PUBLISH}" selected="{path:'externalJobPostingModel>/postingData/Pubfl'}"/>-->
+							<!--	</f:fields>-->
+							<!--</f:FormElement>-->
+						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_TYPE}">
+								<f:fields>
+									<ComboBox required="true" selectedKey="{path:'externalJobPostingModel>/postingData/Jptyp'}"
+										items="{ path: '/KariyerNetValueHelpSet', filters : [ { path : 'Help', operator : 'EQ', value1 : 'JOB_POSTING_TYPE'}]}">
+										<core:Item key="{Key}" text="{Text}"/>
+									</ComboBox>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_TEMPLATE}">
+								<f:fields>
+									<ComboBox required="true" selectedKey="{path:'externalJobPostingModel>/postingData/Jptmp'}"
+										items="{ path: '/KariyerNetValueHelpSet', filters : [ { path : 'Help', operator : 'EQ', value1 : 'JOB_TEMPLATE'}]}">
+										<core:Item key="{Key}" text="{Text}"/>
+									</ComboBox>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_LANGUAGE}">
+								<f:fields>
+									<ComboBox required="true" selectedKey="{path:'externalJobPostingModel>/postingData/Jplan'}"
+										items="{ path: '/KariyerNetValueHelpSet', filters : [ { path : 'Help', operator : 'EQ', value1 : 'JOB_POSTING_LANGUAGE_ID'}]}">
+										<core:Item key="{Key}" text="{Text}"/>
+									</ComboBox>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_POSITION_TYPE}">
+								<f:fields>
+									<ComboBox required="true" selectedKey="{path:'externalJobPostingModel>/postingData/Wrkty'}"
+										items="{ path: '/KariyerNetValueHelpSet', filters : [ { path : 'Help', operator : 'EQ', value1 : 'WORKING_TYPE'}]}">
+										<core:Item key="{Key}" text="{Text}"/>
+									</ComboBox>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_POSITION_LEVEL}">
+								<f:fields>
+									<ComboBox required="true" selectedKey="{path:'externalJobPostingModel>/postingData/Pslvl'}"
+										items="{ path: '/KariyerNetValueHelpSet', filters : [ { path : 'Help', operator : 'EQ', value1 : 'POSITION_LEVEL'}]}">
+										<core:Item key="{Key}" text="{Text}"/>
+									</ComboBox>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_WAGE_INTERVAL}">
+								<f:fields>
+									<ComboBox required="true" selectedKey="{path:'externalJobPostingModel>/postingData/Mnetm'}"
+										items="{ path: '/KariyerNetValueHelpSet', filters : [ { path : 'Help', operator : 'EQ', value1 : 'WAGE_INTERVAL'}]}">
+										<core:Item key="{Key}" text="{Text}"/>
+									</ComboBox>
+									<CheckBox text="{i18n>EXTERNAL_POSTING_POSITION_COUNT_SHOW}" selected="{path:'externalJobPostingModel>/postingData/Mnetb'}"/>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+			</f:Form>
+			<f:Form editable="true" id="idExternalPostingDetailsPart2">
+				<f:layout>
+					<f:ResponsiveGridLayout labelSpanXL="2" labelSpanL="2" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="2" emptySpanL="2"
+						emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+				</f:layout>
+				<f:formContainers>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_GENERAL_QUALIFICATIONS}">
+								<f:fields>
+									<l:VerticalLayout class="sapUiNoContentPadding sapUiTinyMarginTop" width="100%">
+										<rte:RichTextEditor value="{externalJobPostingModel>/postingData/Genqa}" id="idExternalPostingRequiredQualificationsRTE" width="95%"
+											height="300px" editorType="TinyMCE4" showGroupUndo="true" showGroupFont="true" showGroupInsert="false" showGroupLink="false"
+											customToolBar="true"></rte:RichTextEditor>
+									</l:VerticalLayout>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_JOB_DESCRIPTION}">
+								<f:fields>
+									<l:VerticalLayout class="sapUiNoContentPadding sapUiTinyMarginTop" width="100%">
+										<rte:RichTextEditor value="{externalJobPostingModel>/postingData/Jobds}" id="idExternalPostingJobDescriptionRTE" width="95%" height="300px"
+											editorType="TinyMCE4" showGroupUndo="true" showGroupFont="true" showGroupInsert="false" customToolBar="true" showGroupLink="false"></rte:RichTextEditor>
+									</l:VerticalLayout>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_KEYWORDS}">
+								<f:fields>
+									<Input value="{externalJobPostingModel>/postingData/Keywr}" maxLength="255" width="95%"></Input>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+			</f:Form>
+		</Panel>
+		<Panel headerText="{i18n>EXTERNAL_POSTING_CANDIDATE_INFO}">
+			<f:Form editable="true" id="idExternalCandidateInfoPart1">
+				<f:layout>
+					<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+						emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="1" singleContainerFullSize="false"/>
+				</f:layout>
+				<f:formContainers>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_EDUCATION_STATUS}">
+								<f:fields>
+									<MultiComboBox required="true" id="idExternalPostingEducationStatus"
+										selectedKeys="{path:'externalJobPostingModel>/KariyerNetEducationSelected', templateShareable: false}"
+										items="{ path: '/KariyerNetValueHelpSet', filters : [ { path : 'Help', operator : 'EQ', value1 : 'EDUCATIONAL_STATUS'}]}">
+										<core:Item key="{Key}" text="{Text}"/>
+									</MultiComboBox>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_EXPERIENCE_POSITION}">
+								<f:fields>
+									<MultiInput tokens="{path:'externalJobPostingModel>/KariyerNetWorkExpPosSelected', templateShareable: false}" showValueHelp="true"
+										valueHelpOnly="true" valueHelpRequest="onHandleGenericValueHelp" tokenUpdate="onHandleTokenDelete" maxTokens="10" enableMultiLineMode="true"
+										cd:targetField="/KariyerNetWorkExpPosSelected" cd:fieldType="Array" cd:helpKey="POSITION">
+										<tokens>
+											<Token key="{externalJobPostingModel>Key}" text="{externalJobPostingModel>Text}"/>
+										</tokens>
+									</MultiInput>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_EXPERIENCE_SECTOR}">
+								<f:fields>
+									<MultiInput tokens="{path:'externalJobPostingModel>/KariyerNetWorkExpSecSelected', templateShareable: false}" showValueHelp="true"
+										valueHelpOnly="true" valueHelpRequest="onHandleGenericValueHelp" tokenUpdate="onHandleTokenDelete" maxTokens="10" enableMultiLineMode="true"
+										cd:targetField="/KariyerNetWorkExpSecSelected" cd:fieldType="Array" cd:helpKey="SECTOR">
+										<tokens>
+											<Token key="{externalJobPostingModel>Key}" text="{externalJobPostingModel>Text}"/>
+										</tokens>
+									</MultiInput>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_UNIVERSITY}">
+								<f:fields>
+									<MultiInput tokens="{path:'externalJobPostingModel>/KariyerNetUniversitySelected', templateShareable: false}" showValueHelp="true"
+										valueHelpOnly="true" valueHelpRequest="onHandleGenericValueHelp" tokenUpdate="onHandleTokenDelete" maxTokens="5" enableMultiLineMode="true"
+										cd:targetField="/KariyerNetUniversitySelected" cd:fieldType="Array" cd:helpKey="UNIVERSITY">
+										<tokens>
+											<Token key="{externalJobPostingModel>Key}" text="{externalJobPostingModel>Text}"/>
+										</tokens>
+									</MultiInput>
+									<!--<MultiComboBox id="idExternalPostingUniversity" selectedKeys="{externalJobPostingModel>/KariyerNetUniversitySelected}"-->
+									<!--	items="{ path: '/KariyerNetValueHelpSet', filters : [ { path : 'Help', operator : 'EQ', value1 : 'UNIVERSITY'}]}">-->
+									<!--	<core:Item key="{Key}" text="{Text}"/>-->
+									<!--</MultiComboBox>-->
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_UNIVERSITY_DEPARTMENT}">
+								<f:fields>
+									<MultiInput tokens="{path:'externalJobPostingModel>/KariyerNetUniversityDepSelected', templateShareable: false}" showValueHelp="true"
+										valueHelpOnly="true" valueHelpRequest="onHandleGenericValueHelp" tokenUpdate="onHandleTokenDelete" maxTokens="5" enableMultiLineMode="true"
+										cd:targetField="/KariyerNetUniversityDepSelected" cd:fieldType="Array" cd:helpKey="UNIVERSITY_DEPARTMENT">
+										<tokens>
+											<Token key="{externalJobPostingModel>Key}" text="{externalJobPostingModel>Text}"/>
+										</tokens>
+									</MultiInput>
+									<!--<MultiComboBox id="idExternalPostingUniversityDep" selectedKeys="{externalJobPostingModel>/KariyerNetUniversityDepSelected}"-->
+									<!--	items="{ path: '/KariyerNetValueHelpSet', filters : [ { path : 'Help', operator : 'EQ', value1 : 'UNIVERSITY_DEPARTMENT'}]}">-->
+									<!--	<core:Item key="{Key}" text="{Text}"/>-->
+									<!--</MultiComboBox>-->
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_MILITARY}">
+								<f:fields>
+									<MultiComboBox id="idExternalPostingMilitary"
+										selectedKeys="{path: 'externalJobPostingModel>/KariyerNetMilitaryStatusSelected', templateShareable: false}"
+										items="{ path: '/KariyerNetValueHelpSet', filters : [ { path : 'Help', operator : 'EQ', value1 : 'MILITARY_SERVICE_STATUS'}]}">
+										<core:Item key="{Key}" text="{Text}"/>
+									</MultiComboBox>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_EXPERIENCE_STATUS}">
+								<f:fields>
+									<RadioButtonGroup columns="3"
+										buttons="{ path: '/KariyerNetValueHelpSet', filters : [ { path : 'Help', operator : 'EQ', value1 : 'EXPERIENCE'}]}">
+										<buttons>
+											<RadioButton selected="{= ${externalJobPostingModel>/postingData/Exprn} === ${Key} }" text="{Text}" cd:radioValue="{Key}"
+												cd:targetField="Exprn" select="onHandleRadioButtonChange"></RadioButton>
+										</buttons>
+									</RadioButtonGroup>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_EXPERIENCE_STATUS_YEAR}" visible="{= ${externalJobPostingModel>/postingData/Exprn} === '1' }">
+								<f:fields>
+									<FlexBox alignItems="Center">
+										<Input required="{= ${externalJobPostingModel>/postingData/Exprn} === '1' }" type="Number"
+											value="{path: 'externalJobPostingModel>/postingData/Minex'}" placeholder="En az" width="90px">
+											<layoutData>
+												<l:GridData span="XL1 L1 M1 S2"/>
+											</layoutData>
+										</Input>
+										<Label text="-" class="sapUiTinyMarginBegin">
+											<layoutData>
+												<l:GridData span="XL1 L1 M1 S1"/>
+											</layoutData>
+										</Label>
+										<Input required="{= ${externalJobPostingModel>/postingData/Exprn} === '1' }" type="Number"
+											value="{path: 'externalJobPostingModel>/postingData/Maxex'}" placeholder="En fazla" width="90px" class="sapUiTinyMarginBegin">
+											<layoutData>
+												<l:GridData span="XL1 L1 M1 S2"/>
+											</layoutData>
+										</Input>
+									</FlexBox>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_GENDER}">
+								<f:fields>
+									<RadioButtonGroup columns="3" buttons="{ path: '/KariyerNetValueHelpSet', filters : [ { path : 'Help', operator : 'EQ', value1 : 'SEX'}]}">
+										<buttons>
+											<RadioButton selected="{= ${externalJobPostingModel>/postingData/Sex} === ${Key} }" text="{Text}" cd:radioValue="{Key}" cd:targetField="Sex"
+												select="onHandleRadioButtonChange"></RadioButton>
+										</buttons>
+									</RadioButtonGroup>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_RESIDENCE}">
+								<f:fields>
+									<MultiInput tokens="{path:'externalJobPostingModel>/KariyerNetCandidateLocationSelected', templateShareable: false}" showValueHelp="true"
+										valueHelpOnly="true" valueHelpRequest="onHandleGenericValueHelp" tokenUpdate="onHandleTokenDelete" maxTokens="10" enableMultiLineMode="true"
+										cd:targetField="/KariyerNetCandidateLocationSelected" cd:fieldType="Array" cd:helpKey="LOCATION_SEARCH">
+										<tokens>
+											<Token key="{externalJobPostingModel>Key}" text="{externalJobPostingModel>Text}"/>
+										</tokens>
+									</MultiInput>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_AGE_INTERVAL}">
+								<f:fields>
+									<FlexBox alignItems="Center">
+										<Input type="Number" value="{path: 'externalJobPostingModel>/postingData/Agemn'}" placeholder="En küçük" width="90px">
+											<layoutData>
+												<l:GridData span="XL1 L1 M1 S2"/>
+											</layoutData>
+										</Input>
+										<Label text="-" class="sapUiTinyMarginBegin">
+											<layoutData>
+												<l:GridData span="XL1 L1 M1 S1"/>
+											</layoutData>
+										</Label>
+										<Input type="Number" value="{path: 'externalJobPostingModel>/postingData/Agemx'}" placeholder="En büyük" width="90px"
+											class="sapUiTinyMarginBegin">
+											<layoutData>
+												<l:GridData span="XL1 L1 M1 S2"/>
+											</layoutData>
+										</Input>
+									</FlexBox>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_DRIVING_LICENSE}">
+								<f:fields>
+									<ComboBox selectedKey="{path:'externalJobPostingModel>/postingData/Drlcn'}"
+										items="{ path: '/KariyerNetValueHelpSet', filters : [ { path : 'Help', operator : 'EQ', value1 : 'DRIVING_LICENCE'}]}">
+										<core:Item key="{Key}" text="{Text}"/>
+									</ComboBox>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+			</f:Form>
+			<f:Form editable="true" id="idExternalCandidateInfoPart2">
+				<f:layout>
+					<f:ResponsiveGridLayout labelSpanXL="2" labelSpanL="2" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="2" emptySpanL="2"
+						emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+				</f:layout>
+				<f:formContainers>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement label="{i18n>EXTERNAL_POSTING_FOREIGN_LANGUAGE}">
+								<f:fields>
+									<Table items="{path:'externalJobPostingModel>/KariyerNetForeignLanguageSelected', templateShareable: false}">
+										<headerToolbar>
+											<Toolbar>
+												<Button text="{i18n>ADD_ACTION}" press="onAddNewForeignLanguage" icon="sap-icon://add" type="Accept"/>
+											</Toolbar>
+										</headerToolbar>
+										<items>
+											<ColumnListItem>
+												<cells>
+													<ComboBox selectedKey="{path:'externalJobPostingModel>Lanid'}" class="erfSmallComboBox"
+														items="{ path: '/KariyerNetValueHelpSet', templateShareable: false, filters : [ { path : 'Help', operator : 'EQ', value1 : 'LANGUAGE'}]}">
+														<core:Item key="{Key}" text="{Text}"/>
+													</ComboBox>
+													<ComboBox selectedKey="{path:'externalJobPostingModel>Lanrd'}" class="erfSmallComboBox"
+														items="{ path: '/KariyerNetValueHelpSet', templateShareable: false, filters : [ { path : 'Help', operator : 'EQ', value1 : 'LANGUAGE_SCALE'}]}">
+														<core:Item key="{Key}" text="{Text}"/>
+													</ComboBox>
+													<ComboBox selectedKey="{path:'externalJobPostingModel>Lanwr'}" class="erfSmallComboBox"
+														items="{ path: '/KariyerNetValueHelpSet', templateShareable: false, filters : [ { path : 'Help', operator : 'EQ', value1 : 'LANGUAGE_SCALE'}]}">
+														<core:Item key="{Key}" text="{Text}"/>
+													</ComboBox>
+													<ComboBox selectedKey="{path:'externalJobPostingModel>Lansp'}" class="erfSmallComboBox"
+														items="{ path: '/KariyerNetValueHelpSet', templateShareable: false, filters : [ { path : 'Help', operator : 'EQ', value1 : 'LANGUAGE_SCALE'}]}">
+														<core:Item key="{Key}" text="{Text}"/>
+													</ComboBox>
+													<Button press="onDeleteForeignLanguage" icon="sap-icon://delete" type="Reject"/>
+												</cells>
+											</ColumnListItem>
+										</items>
+										<columns>
+											<Column width="10rem">
+												<header>
+													<Text text="{i18n>EXTERNAL_POSTING_FOREIGN_LANGUAGE}"/>
+												</header>
+											</Column>
+											<Column demandPopin="true" minScreenWidth="Tablet">
+												<header>
+													<Text text="{i18n>EXTERNAL_POSTING_FOREIGN_LANGUAGE_READING}"/>
+												</header>
+											</Column>
+											<Column demandPopin="true" minScreenWidth="Tablet">
+												<header>
+													<Text text="{i18n>EXTERNAL_POSTING_FOREIGN_LANGUAGE_WRITING}"/>
+												</header>
+											</Column>
+											<Column demandPopin="true" minScreenWidth="Tablet">
+												<header>
+													<Text text="{i18n>EXTERNAL_POSTING_FOREIGN_LANGUAGE_SPEAKING}"/>
+												</header>
+											</Column>
+											<Column hAlign="Center" width="2rem" minScreenWidth="Tablet" demandPopin="true" popinDisplay="WithoutHeader">
+												<header>
+													<Text text="{i18n>DELETE_ACTION}"/>
+												</header>
+											</Column>
+										</columns>
+									</Table>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+			</f:Form>
+		</Panel>
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button type="Emphasized" icon="sap-icon://save" text="{i18n>SAVE_ACTION}" press="onSaveExternalJobPosting"/>
+				<Button type="Accept" icon="sap-icon://marketing-campaign" text="{i18n>PUBLISH_ACTION}" press="onPublishExternalJobPosting"/>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

@@ -1,0 +1,54 @@
+<mvc:View controllerName="com.bmc.hcm.erf.controller.CandidateProcess" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core"
+	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:smod="smod.ui5.controls.src.controls"
+	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<smod:SmodPage navButtonPressed="onNavBack">
+		<smod:header>
+			<smod:SmodPageHeader title="Aday İşe Alım Süreci"/>
+		</smod:header>
+		<smod:sideBar>
+			<smod:SmodPageSideBar showToggleButton="false" profileTitle="{i18n>CANDIDATE_INFO}"
+				sideBarItems="{candidateProcessModel>/SidebarData/navigationData}">
+				<smod:brandImage>
+					<Image src="/sap/opu/odata/sap/ZHCM_GENERIC_SRV/MimeInfoSet('%2FSAP%2FPublic%2FCustom_Images%2Fbrand_logo.png')/$value" width="35px"
+						height="21px"/>
+				</smod:brandImage>
+				<smod:profileInfo>
+					<smod:SmodProfileInfo profileData="{candidateProcessModel>/SidebarData/candidateInfo}"></smod:SmodProfileInfo>
+				</smod:profileInfo>
+				<smod:detailTabs>
+					<smod:SmodStatusInfo statusData="{candidateProcessModel>/SidebarData/candidateStatusInfo}" tabTitle="İşe Alım Süreci" tabCount="1"></smod:SmodStatusInfo>
+					<smod:SmodProfileInfo profileData="{candidateProcessModel>/SidebarData/requestOwnerInfo}" tabTitle="Talep Sahibi" tabCount="2"></smod:SmodProfileInfo>
+					<smod:SmodStatusInfo statusData="{candidateProcessModel>/SidebarData/requestStatusInfo}" tabTitle="Talep Bilgileri" tabCount="3"></smod:SmodStatusInfo>
+				</smod:detailTabs>
+				<smod:sideBarItems>
+					<smod:SmodPageSideBarItem icon="{candidateProcessModel>Icon}" text="{candidateProcessModel>Text}"
+						pageIndex="{candidateProcessModel>PageIndex}"/>
+				</smod:sideBarItems>
+				<smod:actionMenu>
+					<ActionSheet title="{i18n>CANDIDATE_ACTIONS}" showCancelButton="true" placement="Bottom"
+						visible="{= ${candidateProcessModel>/CandidateProcess/Cprso} === 'H01' }">
+						<Button text="{i18n>EDIT_EMAIL_ADDRESS}" icon="sap-icon://arobase" press="onCandidateEmailDialog"/>
+					</ActionSheet>
+				</smod:actionMenu>
+			</smod:SmodPageSideBar>
+		</smod:sideBar>
+		<smod:navContainer>
+			<NavContainer id="idPageNavigationContainer">
+				<pages>
+					<Page id="idMainCandidateProcessPage" class="erfProcessPage" title="{i18n>CANDIDATE_PROCESS_ACTIONS}" cd:defaultPage="true"></Page>
+					<Page id="idCandidateProcessHistoryPage" showFooter="false" class="erfProcessPage" title="{i18n>PROCESS_HISTORY}" cd:defaultPage="true">
+						<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateProcessHistory" type="XML"/>
+					</Page>
+					<Page id="idCandidateProcessSummaryPage" showFooter="true" class="erfProcessPage" title="{i18n>CANDIDATE_PROCESS_SUMMARY}"
+						cd:defaultPage="true">
+						<content>
+							<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateProcessSummaryAdmin" type="XML"/>
+						</content>
+					</Page>
+					<Page id="idNextCandidateProcessPage" showFooter="true" class="erfProcessPage" title="{i18n>CANDIDATE_PROCESS_ACTIONS}"
+						cd:defaultPage="true" showNavButton="true"></Page>
+				</pages>
+			</NavContainer>
+		</smod:navContainer>
+	</smod:SmodPage>
+</mvc:View>

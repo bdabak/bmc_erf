@@ -1,0 +1,128 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<f:Form editable="true" id="Additionalform">
+		<f:layout>
+			<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="1" emptySpanL="1"
+				emptySpanM="1" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="1"/>
+		</f:layout>
+		<f:formContainers>
+			<f:FormContainer>
+				<f:formElements>
+					<f:FormElement label="{i18n>Rfres}">
+						<f:fields>
+							<Input value="{candidateModel>/candidateData/CandidateAdditionalInfo/Rfres}" type="Text" maxLength="40"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Edust}">
+						<f:fields>
+							<ComboBox id="gradtype_id" items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Edust' } ] }"
+								selectedKey="{candidateModel>/candidateData/CandidateAdditionalInfo/Edust}">
+								<core:ListItem key="{Key}" text="{Text}"/>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Grdst}">
+						<f:fields>
+							<ComboBox id="graduate_id" items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Grdst' } ] }"
+								selectedKey="{candidateModel>/candidateData/CandidateAdditionalInfo/Grdst}">
+								<core:ListItem key="{Key}" text="{Text}"/>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Wrkst}">
+						<f:fields>
+							<ComboBox id="workstat_id" items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Wrkst' } ] }"
+								selectedKey="{candidateModel>/candidateData/CandidateAdditionalInfo/Wrkst}">
+								<core:ListItem key="{Key}" text="{Text}"/>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Blood}">
+						<f:fields>
+							<ComboBox id="blood_id" items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Blood' } ] }"
+								selectedKey="{candidateModel>/candidateData/CandidateAdditionalInfo/Blood}">
+								<core:ListItem key="{Key}" text="{Text}"/>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Drlcn}">
+						<f:fields>
+							<ComboBox id="drvlcnce_id" items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Drlcn' } ] }"
+								change="onCheckDrv" selectedKey="{candidateModel>/candidateData/CandidateAdditionalInfo/Drlcn}">
+								<core:ListItem key="{Key}" text="{Text}"/>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement id="drv1lcncefe_id" label="{i18n>Drlc1}">
+						<f:fields>
+							<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Drlc1' } ] }"
+								selectedKey="{candidateModel>/candidateData/CandidateAdditionalInfo/Drlc1}">
+								<core:ListItem key="{Key}" text="{Text}"/>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement id="drv1lcncdfe_id" label="{i18n>Drld1}">
+						<f:fields>
+							<DatePicker
+								value="{path: 'candidateModel>/candidateData/CandidateAdditionalInfo/Drld1', type: 'sap.ui.model.type.Date' , formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement id="drv2lcncefe_id" label="{i18n>Drlc2}">
+						<f:fields>
+							<ComboBox id="drv2lcnce_id" items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Drlc2' } ] }"
+								selectedKey="{candidateModel>/candidateData/CandidateAdditionalInfo/Drlc2}">
+								<core:ListItem key="{Key}" text="{Text}"/>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement id="drv2lcncdfe_id" label="{i18n>Drld2}">
+						<f:fields>
+							<DatePicker
+								value="{path: 'candidateModel>/candidateData/CandidateAdditionalInfo/Drld2', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+						</f:fields>
+					</f:FormElement>
+				</f:formElements>
+			</f:FormContainer>
+			<f:FormContainer>
+				<f:formElements>
+					<f:FormElement label="{i18n>Execn}">
+						<f:fields>
+							<ComboBox id="executive_id" items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Execn' } ] }"
+								selectedKey="{candidateModel>/candidateData/CandidateAdditionalInfo/Execn}">
+								<core:ListItem key="{Key}" text="{Text}"/>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Smoke}">
+						<f:fields>
+							<ComboBox id="smoke_id" items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Smoke' } ] }"
+								selectedKey="{candidateModel>/candidateData/CandidateAdditionalInfo/Smoke}">
+								<core:ListItem key="{Key}" text="{Text}"/>
+							</ComboBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Hobbs}">
+						<f:fields>
+							<TextArea value="{candidateModel>/candidateData/CandidateAdditionalInfo/Hobbs}" maxLength="40"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Mmshp}">
+						<f:fields>
+							<TextArea value="{candidateModel>/candidateData/CandidateAdditionalInfo/Mmshp}" maxLength="40"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Scspr}">
+						<f:fields>
+							<TextArea value="{candidateModel>/candidateData/CandidateAdditionalInfo/Scspr}"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>Comcm}">
+						<f:fields>
+							<TextArea value="{candidateModel>/candidateData/CandidateAdditionalInfo/Comcm}"/>
+						</f:fields>
+					</f:FormElement>
+				</f:formElements>
+			</f:FormContainer>
+		</f:formContainers>
+	</f:Form>
+</core:FragmentDefinition>

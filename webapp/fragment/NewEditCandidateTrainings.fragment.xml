@@ -1,0 +1,38 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<!--search="onF4ValueHelpSearch"-->
+	<Dialog cd:operation="{candidateModel>/type/operation}" contentWidth="40%" title="{i18n>TAKEN_TRAININGS}"
+		cd:path="{candidateModel>/type/path}">
+		<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
+			adjustLabelSpan="false" emptySpanXL="2" emptySpanL="2" emptySpanM="2" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+			singleContainerFullSize="false">
+			<f:content>
+				<Label text="{i18n>Trcor}"/>
+				<TextArea value="{candidateModel>/CandidateTrainingsLine/Trcor}" maxLength="180"/>
+				<Label text="{i18n>Trbdt}"/>
+				<DatePicker
+					value="{path: 'candidateModel>/CandidateTrainingsLine/Begda', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true, pattern: 'dd.MM.yyyy'}}"></DatePicker>
+				<Label text="{i18n>Tredt}"/>
+				<DatePicker
+					value="{path: 'candidateModel>/CandidateTrainingsLine/Endda', type: 'sap.ui.model.type.Date', formatOptions: {UTC:true , pattern: 'dd.MM.yyyy'}}"></DatePicker>
+				<Label text="{i18n>Trtpr}"/>
+				<Input value="{candidateModel>/CandidateTrainingsLine/Trtpr}" type="Number" maxLength="3"/>
+				<Label text="{i18n>Zeinh}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Zeinh' } ] }"
+					selectedKey="{candidateModel>/CandidateTrainingsLine/Zeinh}">
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Trrmr}"/>
+				<TextArea value="{candidateModel>/CandidateTrainingsLine/Trrmr}" maxLength="1000"/>
+				<Label text="{i18n>Trnme}"/>
+				<TextArea value="{candidateModel>/CandidateTrainingsLine/Trnme}" maxLength="180"/>
+			</f:content>
+		</f:SimpleForm>
+		<beginButton>
+			<Button type="Accept" text="{i18n>Accept}" press="onDialogSave" cd:model="CandidateTrainings"/>
+		</beginButton>
+		<endButton>
+			<Button type="Reject" text="{i18n>Reject}" press="onDialogCancel" cd:model="CandidateTrainings"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

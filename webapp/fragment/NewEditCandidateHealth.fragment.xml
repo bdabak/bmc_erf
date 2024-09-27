@@ -1,0 +1,64 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<!--search="onF4ValueHelpSearch"-->
+	<Dialog cd:operation="{candidateModel>/type/operation}" contentWidth="40%" title="{i18n>HEALTH_INFORMATION}"
+		cd:path="{candidateModel>/type/path}">
+		<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
+			adjustLabelSpan="false" emptySpanXL="2" emptySpanL="2" emptySpanM="2" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+			singleContainerFullSize="false">
+			<f:content>
+				<Label text="{i18n>Hnccn}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Hnccn' } ] }"
+					selectedKey="{candidateModel>/CandidateHealthLine/Hnccn}">
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Hndct}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Hndct' } ] }"
+					selectedKey="{candidateModel>/CandidateHealthLine/Hndct}">
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Hndpr}"/>
+				<Input value="{candidateModel>/CandidateHealthLine/Hndpr}" type="Number"/>
+				<Label text="{i18n>Hndex}"/>
+				<Input value="{candidateModel>/CandidateHealthLine/Hndex}" type="Text"/>
+				<Label text="{i18n>Medrp}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Medrp' } ] }"
+					selectedKey="{candidateModel>/CandidateHealthLine/Medrp}">
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Chdse}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Chdse' } ] }"
+					selectedKey="{candidateModel>/CandidateHealthLine/Chdse}">
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Chdsx}"/>
+				<Input value="{candidateModel>/CandidateHealthLine/Chdsx}" type="Text"/>
+				<Label text="{i18n>Prmdc}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Prmdc' } ] }"
+					selectedKey="{candidateModel>/CandidateHealthLine/Prmdc}">
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Prmde}"/>
+				<Input value="{candidateModel>/CandidateHealthLine/Prmde}" type="Text"/>
+				<Label text="{i18n>Loscn}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Loscn' } ] }"
+					selectedKey="{candidateModel>/CandidateHealthLine/Loscn}">
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Infds}"/>
+				<ComboBox items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Infds' } ] }"
+					selectedKey="{candidateModel>/CandidateHealthLine/Infds}">
+					<core:Item key="{Key}" text="{Text}"></core:Item>
+				</ComboBox>
+				<Label text="{i18n>Infde}"/>
+				<Input value="{candidateModel>/CandidateHealthLine/Infde}" type="Text"/>
+			</f:content>
+		</f:SimpleForm>
+		<beginButton>
+			<Button type="Accept" text="Kaydet" press="onDialogSave" cd:model="CandidateHealth"/>
+		</beginButton>
+		<endButton>
+			<Button type="Reject" text="İptal" press="onDialogCancel" cd:model="CandidateHealth"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

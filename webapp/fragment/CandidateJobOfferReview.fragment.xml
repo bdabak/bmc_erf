@@ -1,0 +1,12 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<ScrollContainer height="100%" width="100%" horizontal="true" vertical="true">
+		<PDFViewer
+			source="/sap/opu/odata/sap/ZHCM_RECRUITMENT_SRV/CandidateJobOfferPrintOutSet(Erfid='{candidateProcessModel>/CandidateProcess/Erfid}',Tclas='{candidateProcessModel>/CandidateProcess/Tclas}',Pernr='{candidateProcessModel>/CandidateProcess/Pernr}')/$value"
+			title="{i18n>JOB_OFFER_FORM}" height="700px">
+			<layoutData>
+				<FlexItemData growFactor="1"/>
+			</layoutData>
+		</PDFViewer>
+	</ScrollContainer>
+</core:FragmentDefinition>

@@ -1,0 +1,70 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Dialog
+		title="{= ${candidateProcessModel>/CandidateRequestExamEdit/Exmnm} === '' ? ${i18n>ADD_EDIT_EXAM_RESULT} : ${i18n>ADD_EDIT_EXAM_RESULT}.concat(' - ').concat(${candidateProcessModel>/CandidateRequestExamEdit/Exmnm})}">
+		<content>
+			<FlexBox direction="Column">
+				<f:Form editable="true">
+					<f:layout>
+						<f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0"
+							emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"/>
+					</f:layout>
+					<f:formContainers>
+						<f:FormContainer>
+							<f:formElements>
+								<f:FormElement label="{i18n>EXAM_DATE}">
+									<f:fields>
+										<DatePicker
+											value="{path:'candidateProcessModel>/CandidateRequestExamEdit/Exdat', type: 'sap.ui.model.type.Date', formatOptions:{ UTC: true, pattern: 'dd.MM.yyyy'}}"/>
+									</f:fields>
+								</f:FormElement>
+								<f:FormElement label="{i18n>EXAM_ID}">
+									<f:fields>
+										<ComboBox selectedKey="{path: 'candidateProcessModel>/CandidateRequestExamEdit/Exmid'}"
+											items="{ path:'/ValueHelpSet' , filters:[{path: 'Erfvh' , operator : 'EQ' , value1 : 'Exmid' } ] }">
+											<core:Item key="{Fldky}" text="{Fldvl}"/>
+										</ComboBox>
+									</f:fields>
+								</f:FormElement>
+								<f:FormElement label="{i18n>EXAM_NAME}">
+									<f:fields>
+										<Input value="{candidateProcessModel>/CandidateRequestExamEdit/Exmnm}" maxLength="250"/>
+									</f:fields>
+								</f:FormElement>
+								<f:FormElement label="{i18n>EXAM_MAKER_ESTABLISHMENT}">
+									<f:fields>
+										<Input value="{candidateProcessModel>/CandidateRequestExamEdit/Excor}" maxLength="250"/>
+									</f:fields>
+								</f:FormElement>
+								<f:FormElement label="{i18n>EXAM_RESULT_TYPE}">
+									<f:fields>
+										<ComboBox selectedKey="{path: 'candidateProcessModel>/CandidateRequestExamEdit/Exscl'}"
+											items="{ path:'/ValueHelpSet' , filters:[{path: 'Erfvh' , operator : 'EQ' , value1 : 'Exscl' } ] }">
+											<core:Item key="{Fldky}" text="{Fldvl}"/>
+										</ComboBox>
+									</f:fields>
+								</f:FormElement>
+								<f:FormElement label="{i18n>EXAM_RESULT}">
+									<f:fields>
+										<Input value="{candidateProcessModel>/CandidateRequestExamEdit/Exres}" maxLength="10"/>
+									</f:fields>
+								</f:FormElement>
+								<f:FormElement label="{i18n>EXAM_RESULT_DESCIPTION}">
+									<f:fields>
+										<TextArea value="{candidateProcessModel>/CandidateRequestExamEdit/Exrem}" maxLength="1250" rows="5"/>
+									</f:fields>
+								</f:FormElement>
+							</f:formElements>
+						</f:FormContainer>
+					</f:formContainers>
+				</f:Form>
+			</FlexBox>
+		</content>
+		<beginButton>
+			<Button type="Accept" text="{i18n>Accept}" press="onSaveRequestExam"/>
+		</beginButton>
+		<endButton>
+			<Button type="Reject" text="{i18n>Reject}" press="onCancelEditRequestExam"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

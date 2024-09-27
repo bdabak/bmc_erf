@@ -1,0 +1,42 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>CHANGE_FORM_STATUS}" type="Message" state="Warning">
+		<content>
+			<f:Form editable="true">
+				<f:layout>
+					<f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0"
+						emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+				</f:layout>
+				<f:formContainers>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement label="{i18n>CURRENT_STATUS}">
+								<f:fields>
+									<Text text="{recruitmentAdminModel>/formChangeStatus/CurrentStatus}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>STATUS_SELECTION}">
+								<f:fields>
+									<ComboBox required="true" selectedKey="{recruitmentAdminModel>/formChangeStatus/TargetStatus}"
+										items="{recruitmentAdminModel>/formStatusList}">
+										<core:Item key="{recruitmentAdminModel>Fldky}" text="{recruitmentAdminModel>Fldvl}"/>
+									</ComboBox>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>CHANGE_NOTE}">
+								<f:fields>
+									<TextArea required="true" rows="3" value="{recruitmentAdminModel>/formChangeStatus/StatusChangeNote}"/>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+			</f:Form>
+		</content>
+		<beginButton>
+			<Button text="{i18n>CHANGE_STATUS_ACTION}" type="Accept" press="onChangeFormStatusConfirmed"/>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>CANCEL_ACTION}" type="Reject" press="onChangeFormStatusCancelled"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,118 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<VBox class="sapUiNoContentPadding">
+		<f:Form editable="true">
+			<f:layout>
+				<f:ResponsiveGridLayout labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4"
+					emptySpanM="2" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer title="{i18n>REQUEST_DETAILS}">
+					<f:formElements>
+						<f:FormElement label="{i18n>CANDIDATE_RESOURCE}">
+							<f:fields>
+								<FlexBox direction="Row" alignItems="Center" justifyContent="Start" width="100%">
+									<CheckBox text="{i18n>EXTERNAL_APPLICANT}" selected="{employeeRequestView>/request/Extja}" tooltip="{i18n>EXTERNAL_APPLICANT_TOOLTIP}"
+										class="erfDisplayOnlyCheckBox" editable="false"/>
+									<CheckBox text="{i18n>INTERNAL_APPLICANT}" selected="{employeeRequestView>/request/Intja}" tooltip="{i18n>INTERNAL_APPLICANT_TOOLTIP}"
+										class="erfDisplayOnlyCheckBox" editable="false"/>
+								</FlexBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>REQUEST_REASON}">
+							<f:fields>
+								<Text text="{employeeRequestView>/request/Erfrx}"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>LEAVING_EMPLOYEE}" visible="{= ${employeeRequestView>/request/Erfrs} === '2' }">
+							<f:fields>
+								<Text text="{employeeRequestView>/request/Leaen}"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>TRANSFERRED_EMPLOYEE}" visible="{= ${employeeRequestView>/request/Erfrs} === '3' }">
+							<f:fields>
+								<Text text="{employeeRequestView>/request/Trnen}"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>POSITION}">
+							<f:fields>
+								<Text text="{= ${employeeRequestView>/request/Nopln} ? ${employeeRequestView>/request/Plaft} : ${employeeRequestView>/request/Plstx} }"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>JOB}">
+							<f:fields>
+								<Text text="{employeeRequestView>/request/Stetx}"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>ORGANIZATION_UNIT}">
+							<f:fields>
+								<Text text="{employeeRequestView>/request/Orgtx}"/>
+							</f:fields>
+						</f:FormElement>
+						<!--<f:FormElement label="{i18n>BUGDET_STATUS}">-->
+						<!--	<f:fields>-->
+						<!--		<Text text="{employeeRequestView>/request/Bdgix}"/>-->
+						<!--	</f:fields>-->
+						<!--</f:FormElement>-->
+						<f:FormElement label="{i18n>WORKPLACE}">
+							<f:fields>
+								<Text text="{employeeRequestView>/request/Erfwx}"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>CONTRACT_TYPE}">
+							<f:fields>
+								<Text text="{employeeRequestView>/request/Cnttx}"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>CONTRACT_END_DATE}" visible="{= ${employeeRequestView>/request/Cntty} === '2'}">
+							<f:fields>
+								<Text text="{path: 'employeeRequestView>/request/Cnted', type: 'sap.ui.model.type.Date', formatOptions:{ UTC: true, pattern: 'dd.MM.yyyy'}}"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label=" {i18n>STAFF_STATUS}">
+							<f:fields>
+								<Text text="{employeeRequestView>/request/Stasx}"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label=" {i18n>MILITARY_STATUS}">
+							<f:fields>
+								<FlexBox direction="Row" alignItems="Center" justifyContent="Start" width="100%">
+									<CheckBox text="{i18n>MILITARY_COMPLETED}" selected="true" editable="false" class="erfDisplayOnlyCheckBox"/>
+									<CheckBox text="{i18n>MILITARY_EXEMPTED}" selected="true" editable="false" class="erfDisplayOnlyCheckBox"/>
+									<CheckBox text="{i18n>MILITARY_POSTPONED}" selected="true" editable="false" class="erfDisplayOnlyCheckBox"/>
+								</FlexBox>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer title="{i18n>JOB_DETAILS}">
+					<f:formElements>
+						<f:FormElement label="{i18n>REQUIRED_QUALIFICATION_TR}">
+							<f:fields>
+								<TextArea value="{employeeRequestView>/request/ErfrqTr}" rows="5" editable="false"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>JOB_DESCRIPTION_TR}">
+							<f:fields>
+								<TextArea value="{employeeRequestView>/request/ErfjdTr}" rows="5" editable="false"/>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer title="{i18n>JOB_DETAILS_EN}" visible="{ path: 'employeeRequestView>/request/Stell', formatter: '._checkJobHigherLevel'}">
+					<f:formElements>
+						<f:FormElement label="{i18n>REQUIRED_QUALIFICATION_EN}">
+							<f:fields>
+								<TextArea value="{employeeRequestView>/request/ErfrqEn}" rows="5" editable="false"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>JOB_DESCRIPTION_EN}">
+							<f:fields>
+								<TextArea value="{employeeRequestView>/request/ErfjdEn}" rows="5" editable="false"/>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+	</VBox>
+</core:FragmentDefinition>

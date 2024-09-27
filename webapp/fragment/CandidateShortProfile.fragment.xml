@@ -1,0 +1,59 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<f:Form editable="true" id="idCandidateShortProfileForm">
+		<f:layout>
+			<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="1" emptySpanL="1"
+				emptySpanM="1" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+		</f:layout>
+		<f:toolbar>
+			<Toolbar>
+				<Title text="{i18n>CANDIDATE_INFO}"/>
+				<ToolbarSpacer/>
+				<Button press="onCandidateResumePrintOut" text="{i18n>CANDIDATE_RESUME_TILE}" icon="sap-icon://pdf-attachment"></Button>
+			</Toolbar>
+		</f:toolbar>
+		<f:formContainers>
+			<f:FormContainer>
+				<f:formElements>
+					<f:FormElement label="{i18n>CANDIDATE_FULLNAME}">
+						<f:fields>
+							<HBox alignItems="Center">
+								<Text text="{candidateProcessModel>/CandidateInfo/Ename}"/>
+								<core:Icon src="{= ${candidateProcessModel>/CandidateInfo/Gesch} === '1' ? 'sap-icon://mdi/gender-male' : 'sap-icon://mdi/gender-female' }"
+									size="20px" color="{= ${candidateProcessModel>/CandidateInfo/Gesch} === '1' ? '#5aab96' : '#d42447'}"></core:Icon>
+							</HBox>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>CANDIDATE_BIRTHDATE}">
+						<f:fields>
+							<Text
+								text="{path:'candidateProcessModel>/CandidateInfo/Gbdat',type: 'sap.ui.model.type.Date', formatOptions: {UTC:true , pattern: 'dd.MM.yyyy'}}"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>EDUCATION_SLART}">
+						<f:fields>
+							<Text
+								text="{ parts: [{path: 'candidateProcessModel>/CandidateInfo/Slarx'},{path:'candidateProcessModel>/CandidateInfo/Bolux'},{path:'candidateProcessModel>/CandidateInfo/Gyear'}], formatter: '.formatter.concatenateWithDash' }"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>MILITARY_STATUS}" visible="{= ${candidateProcessModel>/CandidateInfo/Gesch} === '1' }">
+						<f:fields>
+							<Text text="{path:'candidateProcessModel>/CandidateInfo/Wdarx'}"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>CANDIDATE_LAST_COMPANY_POSITION}" visible="{= ${candidateProcessModel>/CandidateProcess/Tclas} === 'B' }">
+						<f:fields>
+							<Text
+								text="{ parts: [{path: 'candidateProcessModel>/CandidateInfo/Lstcm'},{path:'candidateProcessModel>/CandidateInfo/Lstps'}], formatter: '.formatter.concatenateWithDash' }"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>TOTAL_WORK_EXPERIENCE}" visible="{= ${candidateProcessModel>/CandidateProcess/Tclas} === 'B' }">
+						<f:fields>
+							<Text text="{candidateProcessModel>/CandidateInfo/Wrext} {i18n>YEAR} "/>
+						</f:fields>
+					</f:FormElement>
+				</f:formElements>
+			</f:FormContainer>
+		</f:formContainers>
+	</f:Form>
+</core:FragmentDefinition>

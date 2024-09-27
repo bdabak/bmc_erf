@@ -1,0 +1,37 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<TableSelectDialog class="sapUiPopupWithPadding" items="{path: '/InternalCandidateAppliedSet'}" search="onPerformInternalCandidateSearch"
+		confirm="onConfirmInternalCandidateSelection" contentWidth="{= ${device>/system/phone} ? '100%' : '80%'}" multiSelect="false"
+		cancel="onCancelInternalCandidateSelection" busyIndicatorDelay="0" title="{i18n>ADD_INTERNAL_CANDIDATE}">
+		<ColumnListItem>
+			<cells>
+				<ObjectIdentifier title="{Ename}" text="{Pernr}"/>
+				<ObjectIdentifier title="{Plstx}" text="{Orgtx}"/>
+				<Text
+					text="{ path: 'Apldt', type: 'sap.ui.model.type.Date',formatOptions: { UTC: true, pattern: 'dd.MM.yyyy'}} - { path: 'Apltm', type: 'sap.ui.model.odata.type.Time', formatOptions:{pattern:'HH:mm'}}"/>
+				<core:Icon src="{= ${Isass} ? 'sap-icon://chevron-phase-2' : ''}" color="#2b7c2b"/>
+			</cells>
+		</ColumnListItem>
+		<columns>
+			<Column>
+				<header>
+					<Text text="{i18n>INTERNAL_APPLICANT}"/>
+				</header>
+			</Column>
+			<Column>
+				<header>
+					<Text text="{i18n>POSITION}"/>
+				</header>
+			</Column>
+			<Column>
+				<header>
+					<Text text="{i18n>APPLICATION_DATE}"/>
+				</header>
+			</Column>
+			<Column hAlign="Center">
+				<header>
+					<Text text="{i18n>IS_ASSIGNED}"/>
+				</header>
+			</Column>
+		</columns>
+	</TableSelectDialog>
+</core:FragmentDefinition>

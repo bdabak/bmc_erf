@@ -1,0 +1,110 @@
+<mvc:View controllerName="com.bmc.hcm.erf.controller.CandidateDetail" xmlns:l="sap.ui.layout" xmlns:f="sap.f" xmlns:core="sap.ui.core"
+	xmlns:u="sap.ui.unified" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<!--<Page id="idCandidateProfileEditPage" showHeader="true" showNavButton="true" class="cmnCandidateEditPage" busy="{candidateModel>/busy}"-->
+	<!--	busyIndicatorDelay="0" navButtonPress="onNavBack">-->
+	<!--	<content></content>-->
+	<!--	<footer>-->
+	<!--		<Toolbar>-->
+	<!--			<Button icon="sap-icon://message-popup" text="{candidateModel>/error/number}" type="Emphasized" press="onMessagePress"/>-->
+	<!--			<ToolbarSpacer/>-->
+	<!--			<Button text="{i18n>SAVE}" press="onSave" visible="{candidateModel>/visibility}" type="Emphasized" icon="sap-icon://save"/>-->
+	<!--		</Toolbar>-->
+	<!--	</footer>-->
+	<!--</Page>-->
+	<f:DynamicPage id="idCandidateProfileEditPage" headerExpanded="false" toggleHeaderOnTitleClick="false" busy="{employeeRequestView>/busy}"
+		busyIndicatorDelay="0" showFooter="true" class="erfRequestPage">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<FlexBox direction="Row" width="100%">
+						<core:Icon src="sap-icon://nav-back" press="onNavBack" color="#346187" class="erfPageBackButton"/>
+						<FlexBox direction="Row" alignContent="Center" alignItems="Start" class="sapUiSmallMarginBegin">
+							<Image src="/sap/opu/odata/sap/ZHCM_RECRUITMENT_SRV/CandidateSet(Tclas='B',Pernr='{candidateModel>/candidateData/Pernr}')/$value"
+								class="erfProfileImage" height="60px" width="60px" press="onCandidateImagePressed"/>
+							<Title text="{candidateModel>/candidateData/CandidatePersonalInfo/Vorna} {candidateModel>/candidateData/CandidatePersonalInfo/Nachn}"
+								class="erfHeaderTitle sapUiSmallMarginBegin"/>
+						</FlexBox>
+					</FlexBox>
+				</f:heading>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:content>
+			<IconTabBar id="initIconTab" class="cmnIconTabBar sapUiNoContentPadding" select="onFilterSelect">
+				<items>
+					<IconTabFilter design="Horizontal" key="init" icon="sap-icon://employee-pane" text="{i18n>BASIC_INFORMATION}">
+						<IconTabBar id="initSubIconTab" class="cmnIconTabBar" select="onSubFilterSelect">
+							<items>
+								<IconTabFilter text="{i18n>PERSONAL_INFORMATION}" key="CandidatePersonalInfo">
+									<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidatePersonalInfo" type="XML"/>
+								</IconTabFilter>
+								<IconTabFilter text="{i18n>RESOURCE_REFERENCE}" key="CandidateResourceReference">
+									<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateResourceReference" type="XML"/>
+								</IconTabFilter>
+								<IconTabFilter text="{i18n>ADRESS_INFORMATION}" key="CandidateAdress">
+									<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateAdress" type="XML"/>
+								</IconTabFilter>
+								<IconTabFilter text="{i18n>MILITARY_STATUS}" key="CandidateMilitaryStatus"
+									visible="{= ${candidateModel>/candidateData/CandidatePersonalInfo/Gesch} !== '2' ? true : false }">
+									<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateMilitaryStatus" type="XML"/>
+								</IconTabFilter>
+								<IconTabFilter text="{i18n>COMMUNICATION_INFORMATION}" key="CandidateCommunication">
+									<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateCommunication" type="XML"/>
+								</IconTabFilter>
+								<IconTabFilter text="{i18n>HEALTH_INFORMATION}" key="CandidateHealth">
+									<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateHealth" type="XML"/>
+								</IconTabFilter>
+								<IconTabFilter text="{i18n>ADDITIONAL_INFORMATION}" key="CandidateAdditionalInfo">
+									<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateAdditionalInfo" type="XML"/>
+								</IconTabFilter>
+							</items>
+						</IconTabBar>
+					</IconTabFilter>
+					<IconTabFilter design="Horizontal" icon="sap-icon://learning-assistant" text="{i18n>EDUCATION_EXPERIENCE}">
+						<IconTabBar class="cmnIconTabBar">
+							<items>
+								<IconTabFilter text="{i18n>WORK_EXPERIENCE}">
+									<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateWorkExperience" type="XML"/>
+								</IconTabFilter>
+								<IconTabFilter text="{i18n>EDUCATION_INFORMATION}">
+									<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateEducation" type="XML"/>
+								</IconTabFilter>
+								<IconTabFilter text="{i18n>FOREIGN_LANGUAGE}">
+									<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateForeignLanguage" type="XML"/>
+								</IconTabFilter>
+								<IconTabFilter text="{i18n>CERTIFICATE_INFORMATION}">
+									<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateCertificate" type="XML"/>
+								</IconTabFilter>
+								<IconTabFilter text="{i18n>TAKEN_TRAININGS}">
+									<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateTrainings" type="XML"/>
+								</IconTabFilter>
+								<IconTabFilter text="{i18n>EXAM_INFORMATION}">
+									<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateExam" type="XML"/>
+								</IconTabFilter>
+							</items>
+						</IconTabBar>
+					</IconTabFilter>
+					<IconTabFilter design="Horizontal" icon="sap-icon://kpi-managing-my-area" text="{i18n>REFERENCE_INFORMATION}">
+						<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateReferenceInfo" type="XML"/>
+					</IconTabFilter>
+					<IconTabFilter design="Horizontal" icon="sap-icon://citizen-connect" text="{i18n>INTEGRATION_INFORMATION}">
+						<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateIntegrationInfo" type="XML"/>
+					</IconTabFilter>
+					<IconTabFilter design="Horizontal" icon="sap-icon://attachment" text="{i18n>ATTACHMENT_INFORMATION}">
+						<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateAttachment" type="XML"/>
+					</IconTabFilter>
+					<IconTabFilter design="Horizontal" icon="sap-icon://notification-2" text="{i18n>CANDIDATE_NOTES_SHORT}">
+						<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidateNotes" type="XML"/>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</f:content>
+		<f:footer>
+			<Toolbar>
+				<Button icon="sap-icon://message-popup" text="{candidateModel>/error/number}" type="Emphasized" press="onMessagePress"/>
+				<ToolbarSpacer/>
+				<Button text="{i18n>SAVE}" press="onSave" visible="{candidateModel>/visibility}" type="Emphasized" icon="sap-icon://save"/>
+			</Toolbar>
+		</f:footer>
+	</f:DynamicPage>
+</mvc:View>

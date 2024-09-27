@@ -1,0 +1,27 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<f:Form editable="true">
+		<f:layout>
+			<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4"
+				emptySpanM="3" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+		</f:layout>
+		<f:formContainers>
+			<f:FormContainer>
+				<f:formElements>
+					<f:FormElement label="{i18n>PLANNED_BEGIN_DATE}">
+						<f:fields>
+							<DatePicker placeholder="{i18n>ENTER_PLANNED_BEGIN_DATE}"
+								value="{path:'candidateProcessModel>/CandidatePlannedStartDate', type: 'sap.ui.model.type.Date', formatOptions:{ UTC: true, pattern: 'dd.MM.yyyy'}}"/>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement label="{i18n>CORPORATE_PREFERRED_NAME}">
+						<f:fields>
+							<Input value="{path:'candidateProcessModel>/CandidateProcess/Prfnm'}" maxLength="30"
+								placeholder="{i18n>CORPORATE_PREFERRED_NAME_PLACEHOLDER}"/>
+						</f:fields>
+					</f:FormElement>
+				</f:formElements>
+			</f:FormContainer>
+		</f:formContainers>
+	</f:Form>
+</core:FragmentDefinition>

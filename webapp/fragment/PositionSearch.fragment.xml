@@ -1,0 +1,105 @@
+<core:FragmentDefinition xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout"
+	xmlns="sap.m" xmlns:table="sap.ui.table" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Dialog title="{i18n>POSITION_SELECTION}" showHeader="true" stretch="{device>/system/phone}" id="idPositionSearchDialog" resizable="true"
+		draggable="true" afterClose="onDialogClosed">
+		<content>
+			<IconTabBar applyContentPadding="false" expandable="false" select="onPositionTreeToggled">
+				<items>
+					<IconTabFilter text="Asıl">
+						<table:TreeTable rows="{path:'employeeRequestView>/positionList', parameters: {arrayNames:['children'],numberOfExpandedLevels:1}}"
+							selectionMode="MultiToggle" enableSelectAll="false" rowSelectionChange="onPositionRowSelected"
+							visibleRowCount="{= ${device>/system/phone} ? 10 : 15 }" id="idPositionTreeOriginal">
+							<table:extension>
+								<Toolbar>
+									<Title text="{i18n>ORGANIZATION_HIERARCHY}"/>
+								</Toolbar>
+							</table:extension>
+							<table:columns>
+								<table:Column width="25rem">
+									<Label text="{i18n>STAFF_PLAN}"/>
+									<table:template>
+										<FlexBox alignContent="Center" justifyContent="Center" direction="Row">
+											<core:Icon width="30px" size="17px"
+												src="{ parts: [{path: 'employeeRequestView>Otype'},{path: 'employeeRequestView>ObjidR1'},{path: 'employeeRequestView>Ismng'}], formatter: '.formatter.getObjectIcon'}"
+												tooltip="Nesne İkonu" class="sapUiSmallMarginEnd"
+												color="{ parts: [{path: 'employeeRequestView>Otype'},{path: 'employeeRequestView>ObjidR1'},{path: 'employeeRequestView>Ismng'}], formatter: '.formatter.getObjectIconColor'}"></core:Icon>
+											<Text text=" {employeeRequestView>Stext}" wrapping="false" tooltip="{employeeRequestView>Otype} {employeeRequestView>Objid}"/>
+										</FlexBox>
+									</table:template>
+								</table:Column>
+								<table:Column width="15rem">
+									<Label text="{i18n>OBJECT_CODE}"/>
+									<table:template>
+										<Text text="{employeeRequestView>Otype} {employeeRequestView>Objid}"/>
+									</table:template>
+								</table:Column>
+								<table:Column width="15rem" visible="{= ${employeeRequestView>/request/Erfrs} !== '4' }">
+									<Label text="{i18n>POSITION_HOLDER}"/>
+									<table:template>
+										<Text text="{employeeRequestView>StextR1}" wrapping="false" tooltip="{employeeRequestView>OtypeR1} {employeeRequestView>ObjidR1}"/>
+									</table:template>
+								</table:Column>
+								<table:Column width="{= ${employeeRequestView>/request/Erfrs} === '4' ? '15rem' : '30rem' }">
+									<Label text="{i18n>JOB}"/>
+									<table:template>
+										<Text text="{employeeRequestView>StextR3}" wrapping="false" tooltip="{employeeRequestView>OtypeR3} {employeeRequestView>ObjidR3}"/>
+									</table:template>
+								</table:Column>
+							</table:columns>
+						</table:TreeTable>
+					</IconTabFilter>
+					<IconTabFilter text="Vekil" visible="{path: 'employeeRequestView>/positionListProxy/', formatter: '.formatter.isArrayHasData'}">
+						<table:TreeTable rows="{path:'employeeRequestView>/positionListProxy', parameters: {arrayNames:['children'], numberOfExpandedLevels:1}}"
+							selectionMode="MultiToggle" enableSelectAll="false" rowSelectionChange="onPositionRowSelected"
+							visibleRowCount="{= ${device>/system/phone} ? 10 : 15 }" id="idPositionTreeProxy">
+							<table:extension>
+								<Toolbar>
+									<Title text="{i18n>ORGANIZATION_HIERARCHY}"/>
+								</Toolbar>
+							</table:extension>
+							<table:columns>
+								<table:Column width="25rem">
+									<Label text="{i18n>STAFF_PLAN}"/>
+									<table:template>
+										<FlexBox alignContent="Center" justifyContent="Center" direction="Row">
+											<core:Icon width="30px" size="17px"
+												src="{ parts: [{path: 'employeeRequestView>Otype'},{path: 'employeeRequestView>ObjidR1'},{path: 'employeeRequestView>Ismng'}], formatter: '.formatter.getObjectIcon'}"
+												tooltip="Nesne İkonu" class="sapUiSmallMarginEnd"
+												color="{ parts: [{path: 'employeeRequestView>Otype'},{path: 'employeeRequestView>ObjidR1'},{path: 'employeeRequestView>Ismng'}], formatter: '.formatter.getObjectIconColor'}"></core:Icon>
+											<Text text=" {employeeRequestView>Stext}" wrapping="false" tooltip="{employeeRequestView>Otype} {employeeRequestView>Objid}"/>
+										</FlexBox>
+									</table:template>
+								</table:Column>
+								<table:Column width="15rem">
+									<Label text="{i18n>OBJECT_CODE}"/>
+									<table:template>
+										<Text text="{employeeRequestView>Otype} {employeeRequestView>Objid}"/>
+									</table:template>
+								</table:Column>
+								<table:Column width="15rem" visible="{= ${employeeRequestView>/request/Erfrs} !== '4' }">
+									<Label text="{i18n>POSITION_HOLDER}"/>
+									<table:template>
+										<Text text="{employeeRequestView>StextR1}" wrapping="false" tooltip="{employeeRequestView>OtypeR1} {employeeRequestView>ObjidR1}"/>
+									</table:template>
+								</table:Column>
+								<table:Column width="{= ${employeeRequestView>/request/Erfrs} === '4' ? '15rem' : '30rem' }">
+									<Label text="{i18n>JOB}"/>
+									<table:template>
+										<Text text="{employeeRequestView>StextR3}" wrapping="false" tooltip="{employeeRequestView>OtypeR3} {employeeRequestView>ObjidR3}"/>
+									</table:template>
+								</table:Column>
+							</table:columns>
+						</table:TreeTable>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</content>
+		<buttons>
+			<Button text="{i18n>OTHER_POSITION}" tooltip="{i18n>OTHER_POSITION_TOOLTIP}" icon="sap-icon://forward" type="Emphasized"
+				press="onPositionOther" visible="{= ${employeeRequestView>/request/Erfrs} === '4' }"/>
+			<Button text="{i18n>ADD_ACTION}" icon="sap-icon://add" type="Accept" press="onPositionAdd"
+				enabled="{employeeRequestView>/positionHelp/enableAdd}"/>
+			<Button text="{i18n>CANCEL_ACTION}" icon="sap-icon://sys-cancel-2" press="onCancelPositionAdd" type="Reject"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

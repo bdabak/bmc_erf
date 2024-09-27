@@ -1,0 +1,91 @@
+<mvc:View controllerName="com.bmc.hcm.erf.controller.EmployeeRequest" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.f"
+	xmlns:layout="sap.ui.layout" xmlns:core="sap.ui.core">
+	<f:DynamicPage id="idEmployeeRequestEditMainPage" headerExpanded="false" toggleHeaderOnTitleClick="false" busy="{employeeRequestView>/busy}"
+		busyIndicatorDelay="0" showFooter="true" class="erfRequestPage">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<FlexBox direction="Row" width="100%">
+						<core:Icon src="sap-icon://nav-back" press="onCancelForm" color="#346187" class="erfPageBackButton"/>
+						<FlexBox direction="Row" alignContent="Center" alignItems="Start" class="sapUiSmallMarginBegin">
+							<Image src="/sap/opu/odata/sap/ZHCM_GENERIC_SRV/EmployeeSearchSet('{employeeRequestView>/request/Rqowp}')/$value" class="erfProfileImage"
+								width="50px"/>
+							<FlexBox direction="Column" class="sapUiSmallMarginBegin">
+								<Title text="{employeeRequestView>/request/Rqowe}" class="erfHeaderTitle"/>
+								<Label text="{employeeRequestView>/requestOwner/Plstx}" class="erfHeaderSubTitle"/>
+								<Label text="{employeeRequestView>/requestOwner/Butxt}" class="erfHeaderSubTitle"/>
+							</FlexBox>
+							<FlexBox direction="Row" class="sapUiMediumMarginBegin sapUiVisibleOnlyOnDesktop" visible="{= !${device>/system/phone} }">
+								<FlexBox direction="Column">
+									<Text text="{i18n>REQUEST_REASON}" class="erfHeaderLabel erfHeaderLabelOrange"/>
+									<Text text="{i18n>POSITION}" class="erfHeaderLabel erfHeaderLabelOrange"/>
+								</FlexBox>
+								<FlexBox direction="Column" class="sapUiTinyMarginBegin">
+									<Text text="{employeeRequestView>/request/Erfrx}" class="erfHeaderText"/>
+									<Text text="{= ${employeeRequestView>/request/Nopln} ? ${employeeRequestView>/request/Plaft} : ${employeeRequestView>/request/Plstx} }"
+										class="erfHeaderText"/>
+								</FlexBox>
+							</FlexBox>
+							<FlexBox direction="Row" class="sapUiSmallMarginBegin sapUiVisibleOnlyOnDesktop" visible="{= !${device>/system/phone} }">
+								<FlexBox direction="Column">
+									<Text text="{i18n>REQUEST_STATUS}" class="erfHeaderLabel erfHeaderLabelRed"/>
+									<Text text="{i18n>REQUEST_DATE}" class="erfHeaderLabel erfHeaderLabelRed"/>
+								</FlexBox>
+								<FlexBox direction="Column" class="sapUiTinyMarginBegin">
+									<Text
+										text="{ parts: [ {path: 'employeeRequestView>/request/Erfsx' }, {path: 'employeeRequestView>/request/Erfsy' }], formatter: '.formatter.getStatusText' }"
+										class="erfHeaderText"/>
+									<Text text="{path: 'employeeRequestView>/request/Rqdat', type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd.MM.yyyy'}}"
+										class="erfHeaderText"/>
+								</FlexBox>
+							</FlexBox>
+							<FlexBox direction="Row" class="sapUiMediumMarginBegin sapUiVisibleOnlyOnDesktop">
+								<FlexBox direction="Column">
+									<Text text="{i18n>ERF_NUMBER}" class="erfHeaderLabel erfHeaderLabelPurple"/>
+								</FlexBox>
+								<FlexBox direction="Column" class="sapUiTinyMarginBegin">
+									<Text text="{employeeRequestView>/request/Erfno}" class="erfHeaderText"/>
+								</FlexBox>
+							</FlexBox>
+						</FlexBox>
+					</FlexBox>
+				</f:heading>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:content>
+			<IconTabBar id="idRequestInfoIconTabBar" selectedKey="key1" upperCase="false" class="sapUiResponsiveContentPadding">
+				<items>
+					<IconTabFilter id="idRequestInfoFilter" text="{i18n>REQUEST_INFORMATION}" key="key1" icon="sap-icon://detail-view">
+						<content></content>
+					</IconTabFilter>
+					<IconTabFilter text="{i18n>REQUEST_HISTORY}" key="key2" icon="sap-icon://history" iconColor="Negative">
+						<content>
+							<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.EmployeeRequestHistory" type="XML"/>
+						</content>
+					</IconTabFilter>
+					<IconTabFilter text="{i18n>JOB_POSTINGS}" key="key3" icon="sap-icon://pushpin-on" iconColor="Critical"
+						visible="{= ( ${employeeRequestView>/request/Erfsf} === 'APP' || ${employeeRequestView>/request/Erfsf} === 'CMP' ) &amp;&amp; ${employeeRequestView>/request/Erfso} === 'H01' }">
+						<content>
+							<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.JobPostingList" type="XML"/>
+						</content>
+					</IconTabFilter>
+					<IconTabFilter text="{i18n>CANDIDATES_OF_REQUEST}" key="key4" icon="sap-icon://personnel-view" iconColor="Positive"
+						count="{employeeRequestView>/candidateCount}"
+						visible="{= ${employeeRequestView>/request/Erfsf} === 'APP' || ${employeeRequestView>/request/Erfsf} === 'CMP' }">
+						<content>
+							<core:Fragment fragmentName="com.bmc.hcm.erf.fragment.CandidatesOfRequest" type="XML"/>
+						</content>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</f:content>
+		<!-- DynamicPage Footer -->
+		<f:footer>
+			<OverflowToolbar visible="false">
+				<ToolbarSpacer/>
+				<Button id="idFormActionsButton" busyIndicatorDelay="0" icon="sap-icon://menu2" type="Emphasized" tooltip="{i18n>ACTION_LIST}"
+					press="onOpenFormActions" text="{i18n>ACTION_LIST}" visible="false"/>
+			</OverflowToolbar>
+		</f:footer>
+	</f:DynamicPage>
+</mvc:View>

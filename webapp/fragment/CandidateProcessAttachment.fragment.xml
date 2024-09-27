@@ -1,0 +1,98 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<VBox>
+		<items>
+			<Table id="idCandidateProcessAttachmentList" busy="{candidateProcessModel>/busy}" busyIndicatorDelay="0" inset="true"
+				items="{path:'/CandidateAttachmentSet'}">
+				<headerToolbar>
+					<Toolbar>
+						<content>
+							<Title text="{i18n>CANDIDATE_PROCESS_ATTACHMENT}"/>
+							<ToolbarSpacer/>
+							<MenuButton text="{i18n>DocTy}" visible="{candidateProcessModel>/ViewSettings/EditCandidate}">
+								<menu>
+									<Menu items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Erfat'}]}" cd:callerTable="CPA"
+										itemSelected="onMenuSelect">
+										<MenuItem key="{Key}" text="{Text}" icon="{Icon}"/>
+									</Menu>
+								</menu>
+							</MenuButton>
+						</content>
+					</Toolbar>
+				</headerToolbar>
+				<columns>
+					<Column >
+						<Text text="{i18n>Aname}"/>
+					</Column>
+					<Column demandPopin="true" minScreenWidth="Tablet" popinDisplay="WithoutHeader">
+						<Text text="{i18n>DocTy}"/>
+					</Column>
+					<Column hAlign="Center" demandPopin="true" minScreenWidth="Tablet" popinDisplay="WithoutHeader">
+						<Text text="{i18n>Crdat}"/>
+					</Column>
+					<Column hAlign="Center" demandPopin="true" minScreenWidth="Tablet" popinDisplay="WithoutHeader"
+						visible="{candidateProcessModel>/ViewSettings/EditCandidate}">
+						<Text text="{i18n>Operation}"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
+							<Link press="onAttachDownload" text="{Aname}"/>
+							<Text text="{parts: [{path:'candidateProcessModel>/CandidateValueHelpText/Erfat'}, {path:'Attty'}], formatter: '._getValueHelpText' }"/>
+							<Text text="{ path: 'Crdat', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd.MM.yyyy'}}"/>
+							<HBox justifyContent="Center">
+								<Button type="Reject" class="sapUiSmallMarginEnd" icon="sap-icon://delete" press="onDeleteAttachment"/>
+							</HBox>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			<Table id="idCandidateAttachmentList" busy="{candidateProcessModel>/busy}" busyIndicatorDelay="0" inset="true"
+				items="{path:'/CandidateAttachmentSet'}">
+				<headerToolbar>
+					<Toolbar>
+						<content>
+							<Title text="{i18n>ATTACHMENT_INFORMATION}"/>
+							<ToolbarSpacer/>
+							<MenuButton text="{i18n>DocTy}" visible="{candidateProcessModel>/ViewSettings/EditCandidate}">
+								<menu>
+									<Menu items="{ path:'/CandidateValueHelpSet' , filters:[{path: 'Help' , operator : 'EQ' , value1 : 'Canat'}]}" cd:callerTable="CA"
+										itemSelected="onMenuSelect">
+										<MenuItem key="{Key}" text="{Text}" icon="{Icon}"/>
+									</Menu>
+								</menu>
+							</MenuButton>
+						</content>
+					</Toolbar>
+				</headerToolbar>
+				<columns>
+					<Column >
+						<Text text="{i18n>Aname}"/>
+					</Column>
+					<Column >
+						<Text text="{i18n>DocTy}"/>
+					</Column>
+					<Column hAlign="Center">
+						<Text text="{i18n>Crdat}"/>
+					</Column>
+					<Column hAlign="Center" visible="{candidateProcessModel>/ViewSettings/EditCandidate}">
+						<Text text="{i18n>Operation}"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
+							<Link press="onAttachDownload" text="{Aname}"/>
+							<Text text="{parts: [{path:'candidateProcessModel>/CandidateValueHelpText/Canat'}, {path:'Attty'}], formatter: '._getValueHelpText' }"/>
+							<Text text="{ path: 'Crdat', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd.MM.yyyy'}}"/>
+							<HBox justifyContent="Center">
+								<Button type="Reject" class="sapUiSmallMarginEnd" icon="sap-icon://delete" press="onDeleteAttachment"/>
+							</HBox>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</items>
+	</VBox>
+</core:FragmentDefinition>

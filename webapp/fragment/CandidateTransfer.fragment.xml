@@ -1,0 +1,52 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Table id="idTravel" inset="false" items="{/CandidateTransferFormSet}">
+		<headerToolbar>
+			<Toolbar>
+				<content>
+					<ToolbarSpacer/>
+					<Button icon="sap-icon://sys-add" type="Accept" text="{i18n>newRecord}" press="onNewTransfer"></Button>
+				</content>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column >
+				<Text text="{i18n>Intty}"/>
+			</Column>
+			<Column >
+				<Text text="{i18n>Intdt}"/>
+			</Column>
+			<Column >
+				<Text text="{i18n>Plcar}"/>
+			</Column>
+			<Column >
+				<Text text="{i18n>Cnard}"/>
+			</Column>
+			<Column >
+				<Text text="{i18n>Plcdp}"/>
+			</Column>
+			<Column >
+				<Text text="{i18n>Plard}"/>
+			</Column>
+			<Column hAlign="Center">
+				<Text text="{i18n>Operation}"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="{parts: [{path:'candidateModel>/helpText/Intty'}, {path:'Intty'}], formatter: '._getValueHelpText' }"/>
+					<Text text="{ path: 'Intdt', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd.MM.yyyy'}}"/>
+					<Text text="{Plcar}"/>
+					<Text text="{ path: 'Cnard', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd.MM.yyyy'}}"/>
+					<Text text="{Plcdp}"/>
+					<Text text="{ path: 'Plard', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd.MM.yyyy'}}"/>
+					<HBox justifyContent="Center">
+						<Button type="Reject" class="sapUiSmallMarginEnd" icon="sap-icon://delete" press="onDeleteTransfer"/>
+						<Button type="Emphasized" icon="sap-icon://edit" press="onEditTransfer"/>
+					</HBox>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

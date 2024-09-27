@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout"
+	xmlns="sap.m" xmlns:table="sap.ui.table" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Dialog title="{i18n>STATUS_CHANGE_CONFIRMATION}" showHeader="true" stretch="{device>/system/phone}" id="idStatusChangeDialog"
+		resizable="false" draggable="false" type="Message" afterClose="onStatusChangeDialogClosed" state="Warning">
+		<content>
+			<Text text="{employeeRequestView>/statusChangeDialog/informationNote}" wrapping="true" renderWhitespace="true"></Text>
+			<TextArea value="{employeeRequestView>/statusChangeDialog/statusChangeNote}" valueLiveUpdate="true" width="100%"
+				placeholder="{employeeRequestView>/statusChangeDialog/statusChangePlaceholder}" rows="5"></TextArea>
+		</content>
+		<beginButton>
+			<Button type="{ path: 'employeeRequestView>/statusChangeDialog/beginButtonType', formatter: '.formatter.getFormActionType' }"
+				icon="{employeeRequestView>/statusChangeDialog/beginButtonIcon}" text="{employeeRequestView>/statusChangeDialog/beginButtonText}"
+				press="onStatusChangeConfirmed"
+				enabled="{ parts:[ { path: 'employeeRequestView>/statusChangeDialog/statusChangeNoteRequired' }, { path: 'employeeRequestView>/statusChangeDialog/statusChangeNote'} ], formatter: '.formatter.getFormActionEnabled' }"></Button>
+		</beginButton>
+		<endButton>
+			<Button type="Default" text="{i18n>CANCEL_ACTION}" press="onStatusChangeCancelled"></Button>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

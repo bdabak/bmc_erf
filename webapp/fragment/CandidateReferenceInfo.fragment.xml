@@ -1,0 +1,45 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Table id="idCandidateReferenceInfo" busy="{candidateModel>/busy}" busyIndicatorDelay="0" inset="true"
+		items="{candidateModel>/candidateData/CandidateReferenceInfoSet}">
+		<headerToolbar>
+			<Toolbar>
+				<content>
+					<ToolbarSpacer/>
+					<Button icon="sap-icon://sys-add" type="Accept" text="{i18n>newRecord}" press="onNewDialogFragment" cd:ftype="CandidateReferenceInfo"></Button>
+				</content>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column >
+				<Text text="{i18n>Refnm}"/>
+			</Column>
+			<Column >
+				<Text text="{i18n>Refsr}"/>
+			</Column>
+			<Column >
+				<Text text="{i18n>Refph}"/>
+			</Column>
+			<Column>
+				<Text text="{i18n>Refty}"/>
+			</Column>
+			<Column hAlign="Center">
+				<Text text="{i18n>Operation}"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="{candidateModel>Refnm}"/>
+					<Text text="{candidateModel>Refsr}"/>
+					<Text text="{candidateModel>Refph}"/>
+					<Text text="{parts: [{path:'candidateModel>/helpText/Refty'}, {path:'candidateModel>Refty'}], formatter: '._getValueHelpText' }"/>
+					<HBox justifyContent="Center">
+						<Button type="Reject" class="sapUiSmallMarginEnd" icon="sap-icon://delete" press="onDelete" cd:mdl="CandidateReferenceInfoSet"/>
+						<Button type="Emphasized" icon="sap-icon://edit" press="onEdit" cd:mdl="CandidateReferenceInfoSet"/>
+					</HBox>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

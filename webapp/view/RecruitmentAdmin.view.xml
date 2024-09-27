@@ -1,0 +1,125 @@
+<mvc:View controllerName="com.bmc.hcm.erf.controller.RecruitmentAdmin" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic" xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:smod="smod.ui5.controls.src.controls">
+	<Page showFooter="true" showHeader="true" floatingFooter="true" showNavButton="true" navButtonPress="onNavBack"
+		title="{i18n>RECRUITMENT_ADMIN_PAGE}" class="erfListPage" busy="{recruitmentAdminModel>/busy}" busyIndicatorDelay="100">
+		<IconTabBar id="idRecAdmIconTab" class="erfWideIconTab">
+			<items>
+				<IconTabFilter icon="sap-icon://form" iconColor="Positive" count="{recruitmentAdminModel>/searchResults/ERF}"
+					text="{i18n>EMPLOYEE_REQUEST_FORM_LIST}" key="ERF" design="Horizontal">
+					<Table id="idRecAdmEmployeeRequestTable" width="auto" alternateRowColors="true"
+						items="{ path: '/EmployeeRequestFormSet',filters : [ { path : 'Erfap', operator : 'EQ', value1 : 'REQUEST_LIST_ADMIN'}, { path : 'Erfsf', operator : 'EQ', value1 : 'ALL'}] }"
+						noDataText="{recruitmentAdminModel>/tableNoDataText}" busyIndicatorDelay="0" growing="true" growingScrollToLoad="true"
+						updateFinished="onRequestUpdateFinished" updateStarted="onRequestUpdateStarted" class="erfTable" busy="{recruitmentAdminModel>/busyRequest}">
+						<headerToolbar>
+							<Toolbar>
+								<ToolbarSpacer/>
+								<SearchField id="idRequestSearchField" placeholder="{i18n>REQUEST_SEARCH_TOOLTIP}" search="onRequestSearch"
+									width="{= ${device>/system/phone} ? '100%' : '50%' }"></SearchField>
+								<Button type="Emphasized" icon="sap-icon://refresh" text="{i18n>REFRESH_ACTION}" press="onRequestRefresh"/>
+							</Toolbar>
+						</headerToolbar>
+						<columns>
+							<Column id="idPositionColumn" minScreenWidth="Tablet" demandPopin="true">
+								<Text text="{i18n>POSITION}"/>
+							</Column>
+							<Column id="idRequestReasonColumn" minScreenWidth="Tablet" demandPopin="true">
+								<Text text="{i18n>REQUEST_REASON}"/>
+							</Column>
+							<Column id="idRequestOwnerColumn" minScreenWidth="Tablet" demandPopin="true">
+								<Text text="{i18n>REQUEST_OWNER}"/>
+							</Column>
+							<Column id="idRequestStatusColumn" minScreenWidth="Desktop" demandPopin="true">
+								<Text text="{i18n>REQUEST_STATUS}"/>
+							</Column>
+							<Column id="idRequestDateColumn" minScreenWidth="Desktop" demandPopin="true">
+								<Text text="{i18n>REQUEST_DATE}"/>
+							</Column>
+							<Column id="idRecruiterColumn" minScreenWidth="Tablet" demandPopin="true">
+								<Text text="{i18n>RECRUITER_NAME}"/>
+							</Column>
+							<Column id="idRequestOnWhoColumn" minScreenWidth="Desktop" demandPopin="true">
+								<Text text="{i18n>REQUEST_ON_WHO}"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem type="Navigation" press="onRequestPress">
+								<cells>
+									<ObjectIdentifier title="{= ${Nopln} ? ${Plaft} : ${Plstx} }" text="{Erfno}"/>
+									<Text text="{Erfrx}"/>
+									<Text text="{Rqowe}"/>
+									<Text text="{ parts: [ {path: 'Erfsx' }, {path: 'Erfsy' }], formatter: '.formatter.getStatusText' }"/>
+									<Text
+										text="{ path: 'Rqdat', type: 'sap.ui.model.type.Date', formatOptions: { pattern:'dd.MM.yyyy'} } - { path: 'Rqtim', type: 'sap.ui.model.odata.type.Time', formatOptions: { pattern:'HH:mm'} }"/>
+									<Text text="{Erfoe}"/>
+									<Text text="{Frone}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</IconTabFilter>
+				<IconTabFilter icon="sap-icon://employee-lookup" iconColor="Critical" count="{recruitmentAdminModel>/searchResults/CPR}"
+					text="{i18n>CANDIDATE_PROCESSES}" key="CPR" design="Horizontal">
+					<Table id="idCandidateProcessTable" items="{recruitmentAdminModel>/processList}" busyIndicatorDelay="0" class="erfTable"
+						busy="{recruitmentAdminModel>/busyProcess}">
+						<headerToolbar>
+							<Toolbar>
+								<ToolbarSpacer/>
+								<Button type="Emphasized" icon="sap-icon://refresh" text="{i18n>REFRESH_ACTION}" press="onProcessRefresh"/>
+							</Toolbar>
+						</headerToolbar>
+						<columns>
+							<Column mergeDuplicates="true">
+								<Text text="{i18n>EMPLOYEE_REQUEST_FORM}"/>
+							</Column>
+							<Column>
+								<Text text="{i18n>CANDIDATE_NAME}"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<Text text="{i18n>CANDIDATE_PROCESS_OWNER}"/>
+							</Column>
+							<Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true" popinDisplay="WithoutHeader">
+								<Text text="{i18n>CANDIDATE_PROCESS_PROGRESS}"/>
+							</Column>
+							<!--<Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true" popinDisplay="WithoutHeader">-->
+							<!--	<Text text="{i18n>ACTION_LIST}"/>-->
+							<!--</Column>-->
+						</columns>
+						<items>
+							<ColumnListItem type="Navigation" press="onProcessPress">
+								<cells>
+									<ObjectIdentifier title="{recruitmentAdminModel>Erfno} - {recruitmentAdminModel>Plstx}" text="{recruitmentAdminModel>Rqowe}"/>
+									<HBox alignItems="Center">
+										<Image
+											src="/sap/opu/odata/sap/ZHCM_RECRUITMENT_SRV/CandidateSet(Tclas='{recruitmentAdminModel>Tclas}',Pernr='{recruitmentAdminModel>Pernr}')/$value"
+											width="50px" height="50px" class="sapUiSmallMarginEnd erfProfileImage"/>
+										<VBox>
+											<ObjectIdentifier title="{recruitmentAdminModel>Ename}" text="{recruitmentAdminModel>Pernr}"/>
+											<Text text="{= ${recruitmentAdminModel>Tclas} === 'A' ? ${i18n>INTERNAL_APPLICANT} : ${i18n>EXTERNAL_APPLICANT} }"/>
+										</VBox>
+									</HBox>
+									<Text text="{recruitmentAdminModel>Prone}"/>
+									<FlexBox justifyContent="Center" direction="Column" alignContent="Center" alignItems="Center">
+										<Text text="{recruitmentAdminModel>Cansx}"/>
+										<Text visible="{= ${recruitmentAdminModel>Cansy} ? true : false }" text="{recruitmentAdminModel>Cansy}"/>
+										<smod:PieChartJS id="idPieChartTable" datasets="{recruitmentAdminModel>ChartData}" titleDisplay="false" legendDisplay="false"
+											tooltipEnabled="false" isDoughnut="true" cutoutPercentage="75" maintainAspectRatio="false" width="50px" height="50px"></smod:PieChartJS>
+										<Label text="{path: 'recruitmentAdminModel>Perct', formatter: '.formatter.convertToDecimalOne'} %" class="smod-list-label-small"></Label>
+									</FlexBox>
+									<!--<MenuButton text="{i18n>SELECT_AN_ACTION}">-->
+									<!--	<menu>-->
+									<!--		<Menu items="{recruitmentAdminModel>ActionList}">-->
+									<!--			<items>-->
+									<!--				<MenuItem text="{ path:'recruitmentAdminModel>Text', formatter: '.onGetText'}" icon="{recruitmentAdminModel>Icon}" press="onProcessAction"/>-->
+									<!--			</items>-->
+									<!--		</Menu>-->
+									<!--	</menu>-->
+									<!--</MenuButton>-->
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</IconTabFilter>
+			</items>
+		</IconTabBar>
+	</Page>
+</mvc:View>
